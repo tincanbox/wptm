@@ -1,0 +1,70 @@
+/* 
+    Document   : header_additional_plain_css
+    Created on : Nov 23, 2016, 1:56:37 PM
+    Author     : hokosha yamada
+    Description:
+        sass経由でのCSS生成に不慣れのため、プレーンのCSSを上書きして読み込ませる。
+*/
+
+
+/**
+*
+* HEADERのメニューがプルダウンになる境目Width
+*
+**/
+
+/**/
+@media (min-width: 768px){
+    #content{
+        padding-top: 120px;
+    }
+    .navbar-header{
+        top: 20px;
+        position: relative;
+    }
+    .navbar-nav{
+        margin: 20px 0;
+        border-radius: 13px;
+        border-top: none;
+        box-shadow: 0 3px 0px #bba800;
+    }
+    .navbar-nav > li:nth-child(1){
+        border-left:none;
+        border-radius: 13px 0 0 13px;
+    }
+    .navbar-nav > li:nth-child(4){
+        border-left:none;
+        border-radius:0 13px 13px 0;
+    }
+    .navbar-nav > li{
+        border-left: 1px solid rgba(0,0,0,0.1);
+        background: #fff805;
+        background: -moz-linear-gradient(top,  #fff805 0%, #dec300 100%);
+        background: -webkit-linear-gradient(top,  #fff805 0%,#dec300 100%);
+        background: linear-gradient(to bottom,  #fff805 0%,#dec300 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff805', endColorstr='#dec300',GradientType=0 );
+    }
+    .navbar-nav > li:hover{
+        background: #fff805;
+        background: -moz-linear-gradient(top,  #dec300 0%, #fff805 100%);
+        background: -webkit-linear-gradient(top,  #dec300 0%,#fff805 100%);
+        background: linear-gradient(to bottom,  #dec300 0%,#fff805 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dec300', endColorstr='#fff805',GradientType=0 );
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #1d1d1d;
+        font-weight: bolder;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+    .navbar-default .navbar-nav > li > a:hover {
+        color: #000000;
+    }
+    .nav>.open>a, .nav>.open>a:hover {
+        color:inherit!important;
+        background-color:inherit!important;
+    }
+    .navbar-nav>li>.dropdown-menu {
+        margin-top: 10px;
+        border-radius: 8px;
+    }
+}

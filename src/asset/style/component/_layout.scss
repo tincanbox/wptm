@@ -1,0 +1,44 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  position: relative;
+}
+
+#container {
+  position: relative;
+  height: auto;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+#header {
+  &+.container {
+    margin-top: 62px;
+  }
+  .navbar-brand {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    img {
+      max-height: 40px;
+      width: auto;
+    }
+  }
+}
+
+#content {
+  margin: auto;
+  padding-bottom: 80px;
+}
+
+#footer {
+  padding: 2em 1em;
+  background-color: #eee;
+  bottom: 0;
+  width: 100%;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
