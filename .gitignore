@@ -3,3 +3,6 @@ package-lock.json
 log
 cache
 dist
+
+wp-content/*
+!wp-content/.gitkeep
