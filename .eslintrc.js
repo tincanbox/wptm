@@ -7,16 +7,10 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint"
   ],
-  "globals": {
-    "document": true,
-    "window": true,
-    "$": true,
-  },
   "plugins": [
     "@typescript-eslint"
   ],
   "env": {
-    "browser": true,
     "node": true,
     "es6": true
   },

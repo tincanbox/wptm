@@ -15,7 +15,7 @@ module.exports = {
     ENTRY: {
       "bootstrap": "./src"
     },
-    DIST_DIR: "wptm/asset/dist",
+    DIST_DIR: "wptm/asset",
 
     // Gulp-GLOB and Webpack.exclude, both uses this.
     EXCLUDE: [

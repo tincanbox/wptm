@@ -50,7 +50,7 @@ if($post){
 <meta name="keyword" content="<?php echo implode(',', $keywords); ?>">
 <meta name="description" content="<?php echo get_bloginfo('description'); echo $description; ?>">
 
-<script src="<?php echo get_bloginfo('template_directory'); ?>/asset/script/vendor/jquery/jquery-1.12.3.min.js"></script>
+<script src="<?php echo get_bloginfo('template_directory'); ?>/asset/lib/vendor/jquery/jquery-1.12.3.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/lib/bootstrap/css/bootstrap.min.css'; ?>">
 <script src="<?php echo get_bloginfo('template_directory'); ?>/asset/lib/bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/lib/font-awesome/css/font-awesome.min.css'; ?>">

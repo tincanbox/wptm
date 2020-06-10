@@ -35,9 +35,6 @@ function bind_config(type, ...cbs){
   }));
 }
 
-// Generates gulp.src directories.
-// Automatically EXCLUDES directories.
-//
 function generate_src_list(C, glob_type){
   return (Object.keys(C.build.ENTRY).map((k) => {
       return (C.build.ENTRY[k] + (glob_type ? ("/" + C.build.ASSET_GLOB[glob_type.toUpperCase()]) : ""));
