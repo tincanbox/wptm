@@ -36,4 +36,4 @@ services:
     depends_on:
       - db
     ports:
-      - 88881:80
+      - 8888:80
