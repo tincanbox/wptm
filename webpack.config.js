@@ -1,6 +1,8 @@
 const path = require('path');
 const glob = require('glob');
 
+const html_webpack_plug = require('html-webpack-plugin');
+
 const C = (() => {
   return require("./workspace.config.js");
 })();
@@ -25,7 +27,7 @@ let conf = {
   })(),
 
   output: {
-    path: path.resolve(__dirname, C.build.DIST_DIR),
+    path: path.resolve(__dirname, C.build.DESTINATION),
     filename: "[name].js"
   },
 
@@ -40,8 +42,12 @@ let conf = {
   },
 
   plugins: [
-    new (require('vue-loader/lib/plugin'))()
-  ],
+    new (require('vue-loader/lib/plugin'))(),
+  ].concat((() => {
+    return C.build.PAGE.map((p) => {
+      return new html_webpack_plug({ template: p })
+    })
+  })()),
 
   module: {
     rules: [
@@ -55,6 +61,10 @@ let conf = {
       //    'sass-loader',
       //  ],
       //},
+      {
+        test: /\.htm(l?)$/i,
+        loader: 'html-loader',
+      },
       {
         test: /\.vue$/,
         exclude: [].concat(exclude_reg_list),

@@ -1,0 +1,16 @@
+
+=door($deg, $vec:1, $LorR: 1, $speed: .4, $perspective: 600px, $open: true)
+
+  +experimental(perspective, $perspective)
+
+  @if $open
+    +on('hover', ':after')
+      transform: rotateY($vec * $deg)
+
+  +bg-block
+    +easing($speed)
+    @if $LorR > 0
+      transform-origin: left center
+    @else
+      transform-origin: right center
+    @content

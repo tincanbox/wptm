@@ -1,0 +1,42 @@
+
+
+@mixin scene($keys:()) {
+  @each $name,$frame,$styles in $keys {
+    @keyframes #{$name} #{$styles};
+  }
+}
+
+
+@mixin play($prop...) {
+
+  @include vp(animation-fill-mode, forwards);
+
+  @if type-of($prop)==arglist {
+    @if length($prop) == 1 {
+      $prop: append((), $prop, comma);
+    }
+    $s: ();
+    $d: ();
+    $previous: null;
+    @each $p in $prop {
+      $s: append($s, $p forwards, comma);
+
+      @if $previous == null {
+        $d: append($d, 0s, comma);
+      }
+
+      @if length($previous) >= 2 {
+          $d: append($d, nth($previous, 2), comma);
+      }
+
+      $previous: $p;
+    }
+    @include vp(animation, $s);
+    @if length($d) {
+      @include vp(animation-delay, $d);
+    }
+  }
+  @else {
+    @include vp(animation, $prop);
+  }
+}

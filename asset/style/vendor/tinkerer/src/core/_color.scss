@@ -1,0 +1,29 @@
+
+@function color($name:'', $val: null){
+  @if str-length(#{$name}) > 0 {
+    @if type-of($name) == string {
+      @each $color in $color-list {
+        @if nth($color, 1) == $name {
+          @return nth($color, 2);
+        }
+      }
+      @return unquote($name)
+    }
+    @else {
+      @return $name;
+    }
+  }
+  @else{
+    @return $color-list
+  }
+}
+
+@function color-rate($color, $r: 1) {
+  $c: color($color);
+  @return if($r == 1,
+    $c,
+    if($r > 1,
+      lighten($c, ($r * 100) - 100),
+      darken($c,  100 - ($r * 100))
+    ));
+}

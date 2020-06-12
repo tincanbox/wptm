@@ -1,0 +1,25 @@
+
+
+// Simply, make a namespace.
+@mixin component($name){
+  .#{$name}{
+    @content
+  }
+}
+
+// Property applier.
+// Set a new property to self parent.
+@mixin property($name, $isolated-prop: false, $prefix: '-'){
+  @at-root (without: all) {
+    @if $isolated-prop{
+      #{&}.#{$prefix}#{$name}{
+        @content
+      }
+    }
+    @else{
+      #{&}#{&}#{$prefix}#{$name}{
+        @content
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+
+@function offset($p) {
+  $len: length($p);
+
+  $t: null;
+  $l: null;
+  $b: null;
+  $r: null;
+
+  @if type-of($p) == list {
+    @if      $len == 4 {
+      $t: nth($p, 1);
+      $l: nth($p, 2);
+      $b: nth($p, 3);
+      $r: nth($p, 4);
+    }
+    @else if $len == 3 {
+      $t: nth($p, 1);
+      $l: nth($p, 2);
+      $b: nth($p, 3);
+      $r: $l;
+    }
+    @else if $len == 2 {
+      $t: nth($p, 1);
+      $l: nth($p, 2);
+      $b: $t;
+      $r: $l;
+    }
+    @else if $len == 1 {
+      $t: nth($p, 1);
+      $l: $t;
+      $b: $t;
+      $r: $t;
+    }
+    @else if $len == 0 {
+      $t: 0;
+      $l: 0;
+      $b: 0;
+      $r: 0;
+    }
+    @else {
+      @warn "`offset()` can not take #{length($p)} elements list as an argument.";
+    }
+  }
+  @else if type-of($p) == number {
+    $t: $p;
+    $l: $p;
+    $b: $p;
+    $r: $p;
+  }
+  @else {
+    @warn "Invalid type for `offset()`: #{type-of($p)}";
+  }
+
+  @return ($t, $l, $b, $r);
+}

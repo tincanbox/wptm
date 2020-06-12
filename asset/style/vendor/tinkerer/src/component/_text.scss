@@ -1,0 +1,43 @@
+
+@mixin font($c){
+  @if map-has-key($c, color){
+    color: color(map-get($c, color));
+  }
+  $cs: (
+    size font-size,
+    family font-family,
+    style font-style,
+    variant font-variant,
+    weight font-weight,
+    deco text-decoration,
+    indent text-indent,
+    case text-transform,
+    align text-align,
+    height line-height,
+    space letter-spacing
+  );
+  @each $r in $cs{
+    $k: nth($r, 1);
+    $n: nth($r, 2);
+    @if map-has-key($c, $k){
+      #{$n}: map-get($c, $k);
+    }
+  }
+}
+
+
+// This is a really cool mixin.
+@mixin text-bevel($size: .025em, $color: black, $range: (0 360), $boke: 0) {
+  @include bevel('text', $size, $color, $range, $boke);
+}
+
+@mixin text-3d($size: .25em, $color: #fff) {
+  @include bevel3d('text', $size, $color);
+}
+
+@mixin text-block($height: 1.2em){
+  display: inline-block;
+  height: $height;
+  line-height: $height;
+  vertical-align: middle;
+}

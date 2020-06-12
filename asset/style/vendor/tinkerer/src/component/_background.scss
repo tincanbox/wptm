@@ -1,0 +1,83 @@
+@mixin pseudo-block($p: 0){
+
+  $o: offset($p);
+
+  $t: nth($o, 1);
+  $l: nth($o, 2);
+  $b: nth($o, 3);
+  $r: nth($o, 4);
+
+  content: '';
+  display: block;
+  position: absolute;
+  top:    $t;
+  left:   if($l, $l, $t);
+  bottom: if($b, $b, $t);
+  right:  if($r, $r, $t);
+
+}
+
+@mixin bg-block($p: 0, $padding: true){
+
+  $o: offset($p);
+
+  $t: nth($o, 1);
+  $l: nth($o, 2);
+  $b: nth($o, 3);
+  $r: nth($o, 4);
+
+  position: relative;
+  z-index: 0;
+
+  &:after {
+    @include pseudo-block($p);
+    @content;
+    z-index: -1;
+  }
+
+  @if $t and $padding {
+    padding-top: $t;
+  }
+
+  @if $l and $padding {
+    padding-left: $l;
+  }
+
+  @if $b and $padding {
+    padding-bottom: $b;
+  }
+
+  @if $r and $padding {
+    padding-right: $r;
+  }
+}
+
+
+@mixin bg-fill() {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+
+@mixin bg-grid($images: url(), $size: 3px, $deg: 45deg){
+  background-image: $images;
+  background-size: $size;
+  background-repeat: repeat;
+}
+
+
+@mixin bg-stripe($color: black, $base:white, $width: 20%, $size: 3px){
+  @include bg-grid(stripe($color, $base, $width), ($size $size, cover));
+}
+
+@mixin bg-image($url, $size: cover, $position: auto auto) {
+  background-color: transparent;
+  background-image: url($url);
+  background-size: $size;
+  background-position: $position;
+}
+
+@mixin bg-color($color){
+  background-color: color($color)
+}

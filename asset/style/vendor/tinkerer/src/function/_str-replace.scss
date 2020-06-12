@@ -1,0 +1,29 @@
+
+@function str-replace($str, $substr, $replace:'', $all: 1) {
+
+  @if type-of($substr) == list {
+    @each $sb in $substr {
+      $str: str-replace($str, $sb, $replace, $all: 0);
+    }
+  } @else {
+
+    //@warn "#{$str} in #{$substr}";
+
+    $found: str-index($str, $substr);
+
+    @while ($found and $found > 0) {
+      $len: str-length($substr);
+      $pre: str-slice($str, 0, $found - 1);
+      $suf: str-slice($str, $found + $len);
+      $str: $pre + $replace + $suf;
+
+      $found: 0;
+
+      @if ($all > 0) {
+        $found: str-index($str, $substr);
+      }
+    }
+
+  }
+  @return $str;
+}

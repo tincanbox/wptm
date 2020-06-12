@@ -63,15 +63,16 @@ console.log("CLI arg", arg);
 
 gulp.task('clean', bind_config("series",
   (C) => {
-    return del.sync([C.build.DIST_DIR]);
+    return del.sync([C.build.DESTINATION]);
   })
 );
 
 gulp.task("server", bind_config("series",
   (C) => {
     browsersync({
+      port: 3033,
       server: {
-        baseDir: C.build.DIST_DIR
+        baseDir: C.build.DESTINATION
       }
     });
   })
@@ -79,6 +80,7 @@ gulp.task("server", bind_config("series",
 
 gulp.task('watch', bind_config("series",
   (C) => {
+    gulp.watch(generate_src_list(C, 'template'), gulp.series('bundle-webpack'));
     gulp.watch(generate_src_list(C, 'script'), gulp.series('bundle-webpack'));
     // watching .scss, .sass, .css files
     gulp.watch(generate_src_list(C, 'style'), gulp.series('bundle-style'));
@@ -94,7 +96,7 @@ gulp.task('bundle-webpack', bind_config("parallel",
     let wcf = webpack_config_factory(arg);
     return gulp.src(generate_src_list(C))
       .pipe(webpack_stream(wcf))
-      .pipe(gulp.dest(C.build.DIST_DIR))
+      .pipe(gulp.dest(C.build.DESTINATION))
   })
 );
 
@@ -110,7 +112,7 @@ gulp.task('bundle-style', bind_config("parallel",
       .pipe(gulp_rename({extname: '.min.css'}))
       .pipe(gulp_clean_css())
       .pipe(gulp_sourcemaps.write())
-      .pipe(gulp.dest(C.build.DIST_DIR));
+      .pipe(gulp.dest(C.build.DESTINATION));
   })
 );
 
@@ -120,4 +122,4 @@ gulp.task('bundle-style', bind_config("parallel",
 
 gulp.task('build', gulp.parallel('bundle-webpack', 'bundle-style'));
 gulp.task('pack', gulp.series('clean', 'build'));
-gulp.task('default', gulp.series('pack', 'watch'));
+gulp.task('default', gulp.series('pack', 'watch', 'server'));

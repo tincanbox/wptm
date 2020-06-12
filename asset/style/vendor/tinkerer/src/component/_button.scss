@@ -1,0 +1,31 @@
+
+
+
+@mixin button-effect($color){
+
+  background: $color;
+  border: 1px solid $color;
+
+  @include on('hover'){
+    border-color: lighten($color, 5%);
+    background-color: lighten($color, 12%);
+  }
+
+  @include on('active'){
+    background-color: darken($color, 8%);
+  }
+
+}
+
+@mixin make-button($color, $padding: 8px 1em 7px){
+
+  -webkit-appearance: none;
+  display: inline-block;
+  cursor: pointer;
+  line-height: 1em;
+  padding: $padding;
+  border: 1px solid $color;
+  @content;
+
+  @include button-effect($color);
+}

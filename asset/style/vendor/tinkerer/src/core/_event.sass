@@ -1,0 +1,19 @@
+
+
+//
+//
+= on($name, $target: '')
+  @if str-length($target) > 0
+    // Pseudo
+    @if str-index($target, ':')
+      &:#{$name}#{$target},
+      &.#{$name}#{$target}
+        @content
+    @else
+      &:#{$name} #{$target},
+      &.#{$name} #{$target}
+        @content
+  @else
+    &:#{$name},
+    &.#{$name}
+      @content

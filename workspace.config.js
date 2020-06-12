@@ -12,20 +12,28 @@ module.exports = {
     // Adjust src/dist path accordingly.
     // bootstrap: "src" means...
     // glob(./src/*.js),or .ts is an entry point.
+    // EntryName: [ FROM:string, TO:string ]
     ENTRY: {
-      "bootstrap": "./src"
+      "bootstrap": "./asset"
     },
-    DIST_DIR: "wptm/asset",
+
+    DESTINATION: "./wptm/asset",
+
+    PAGE: [
+      "./src/index.html"
+    ],
 
     // Gulp-GLOB and Webpack.exclude, both uses this.
     EXCLUDE: [
       'node_modules',
       'vendor',
       'log',
-      'cache'
+      'cache',
+      'lib'
     ],
 
     ASSET_GLOB: {
+      TEMPLATE: "**/*.{html,htm,vue}",
       STYLE: "**/*.{scss,sass,css}",
       SCRIPT: "**/*.{ts,js}",
     }

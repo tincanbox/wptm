@@ -1,0 +1,14 @@
+
+
+= group($name:null)
+  @if $name
+    .#{$name}
+      @content
+  @else
+    @content
+
+
+= member($name)
+  @at-root
+    #{&}-#{$name}
+      @content

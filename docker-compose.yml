@@ -2,8 +2,10 @@ version: "3"
 services:
   db:
     image: mysql:5.7
-    #container_name: "mysql57"
+    container_name: "mysql57"
     restart: always
+    volumes:
+      - ./volume/database/mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root_pass_fB3uWvTS
       MYSQL_DATABASE: wordpress_db
@@ -12,15 +14,15 @@ services:
 
   wordpress:
     image: wordpress:latest
-    #container_name: "wordpress"
+    container_name: "wordpress"
     volumes:
-      - ./wp-content:/var/www/html/wp-content
-      - ./wptm:/var/www/html/wp-content/themes/wptm
+      - ./volume/wp-content:/var/www/html/wp-content
+      - ./theme:/var/www/html/wp-content/themes/wptm
     restart: always
     depends_on:
       - db
     ports:
-      - 8080:80
+      - 80:80
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_NAME: wordpress_db
@@ -29,9 +31,9 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    #container_name: "phpmyadmin"
+    container_name: "phpmyadmin"
     restart: always
     depends_on:
       - db
     ports:
-      - 8888:80
+      - 88881:80

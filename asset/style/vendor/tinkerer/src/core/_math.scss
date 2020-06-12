@@ -1,0 +1,23 @@
+@function radian($deg: 0){
+  @return $deg * pi() / 180;
+}
+
+@function coordinate_around($deg, $distance, $pos: (0, 0)) {
+  $r: radian($deg);
+  $x: $distance * cos($r) + nth($pos, 1);
+  $y: $distance * sin($r) + nth($pos, 2);
+  @return ($x, $y);
+}
+
+@function add-unit($number, $unit) {
+  $strings: 'px' 'cm' 'mm' '%' 'ch' 'pica' 'in' 'em' 'rem' 'pt' 'pc' 'ex' 'vw' 'vh' 'vmin' 'vmax';
+  $units:   1px  1cm  1mm  1%  1ch  1pica  1in  1em  1rem  1pt  1pc  1ex  1vw  1vh  1vmin  1vmax;
+  $index: index($strings, $unit);
+
+  @if not $index {
+    @warn "Unknown unit `#{$unit}`.";
+    @return false;
+  }
+
+  @return $number * nth($units, $index);
+}

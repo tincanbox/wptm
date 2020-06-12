@@ -1,0 +1,129 @@
+@mixin keep-ratio($ratio: 66.666%, $sel: ':after'){
+  position: relative;
+  padding-bottom: #{$ratio};
+  &#{unquote($sel)} {
+    content: '';
+    display: block;
+    position: absolute;
+    padding-bottom: #{$ratio};
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    @content;
+  }
+}
+
+@mixin box($w: null, $h: null) {
+  @if $w {
+    width: $w
+  }
+  @if $h {
+    height: $h
+  }
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+
+@mixin square($size:100%) {
+  display: inline-block;
+  height: $size;
+  width: $size;
+}
+
+
+@mixin rectangle($w:100%, $h:100%) {
+  display: inline-block;
+  width: $w;
+  height: $h;
+}
+
+
+@mixin circle($r:100%) {
+  display: inline-block;
+  box-sizing: border-box;
+  width: $r;
+  height: $r;
+  border-radius: $r/2;
+}
+
+
+@mixin image-box($ratio:66.6%) {
+  @include bg-fill;
+  //@include keep-ratio($ratio);
+}
+
+@mixin object-box($ratio:66.6%){
+  position: relative;
+  padding-bottom: $ratio;
+  padding-top: 25px;
+  height: 0;
+
+  @content;
+
+  iframe, embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+}
+
+
+@mixin bevel($type: 'box', $size: .025em, $color: black, $range: (0 360), $boke: 0, $rate: (1, 1, 1), $push: ()) {
+
+  $st: ();
+
+  $un: unit($size);
+  $df:
+    if($un==px, 0.1,
+    if($un==em, 0.01,
+    0.1));
+
+  $rx:  nth($rate, 1);
+  $ry:  nth($rate, 2);
+  $rc:  nth($rate, 3);
+  $p_c: null;
+
+  $from: nth($range, 1);
+  $to  : nth($range, 2);
+  $orig: 0#{unit($size)};
+  $unit: unit($size);
+
+  $i: $df;
+
+  @while $i <= $size {
+
+    $c:  color-rate(if($p_c, $p_c, $color), $rc);
+
+    @if $from == $to {
+      $cr: coordinate_around($from, $i);
+      $x:  add-unit(nth($cr, 1), $unit);
+      $y:  add-unit(nth($cr, 2), $unit);
+      $st: append($st, $x $y*-1 $boke $c, comma);
+    }
+    @else  {
+      $ii  : $from;
+      @while $ii <= $to {
+        $cr: coordinate_around($ii, $i);
+        $x:  add-unit(nth($cr, 1), $unit);
+        $y:  add-unit(nth($cr, 2), $unit);
+        $st: append($st, $x $y*-1 $boke $c, comma);
+        $ii: $ii + 4;
+      }
+    }
+
+    $p_c: $c;
+    $i: $i + $df;
+  }
+
+  #{$type}-shadow: append($st, $push, comma);
+}
+
+
+@mixin bevel3d($type: 'box', $height: .2em, $color: #fff, $color2: rgba(0,0,0,.6), $deg: 270){
+  @include bevel($type, $height, $color, ($deg $deg), 0px, (1, 1, 0.975), 0 $height $height/2 $color2);
+}

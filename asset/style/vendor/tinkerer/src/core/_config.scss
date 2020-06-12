@@ -1,0 +1,27 @@
+
+
+@function tinkerer-config($args...){
+  $arglen: length($args);
+  @if $arglen == 1 {
+    $n: nth($args, 1);
+    @if type-of($n) == list {
+      $rec: $TINKERER-CONFIGURATION;
+      @each $k in $n {
+        $ret: map-get($rec, $k);
+        @if $ret {
+          @if type-of($ret) == list {
+            $rec: $ret;
+          }@else {
+            @return $ret;
+          }
+        }@else {
+          @return $ret;
+        }
+      }
+    }@else{
+      @return map-get($TINKERER-CONFIGURATION, $n);
+    }
+  }
+  @else if $arglen == 2 {
+  }
+}

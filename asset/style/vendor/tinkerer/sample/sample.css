@@ -1,0 +1,551 @@
+/* line 1, src/bootstrap/_reset.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 6, src/bootstrap/_reset.scss */
+body {
+  line-height: 1;
+}
+
+/* line 7, src/bootstrap/_reset.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* line 8, src/bootstrap/_reset.scss */
+nav ul {
+  list-style: none;
+}
+
+/* line 9, src/bootstrap/_reset.scss */
+blockquote, q {
+  quotes: none;
+}
+
+/* line 10, src/bootstrap/_reset.scss */
+blockquote:before, blockquote:after, q:before, q:after {
+  content: none;
+}
+
+/* line 11, src/bootstrap/_reset.scss */
+a {
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+/* line 12, src/bootstrap/_reset.scss */
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+/* line 13, src/bootstrap/_reset.scss */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* line 14, src/bootstrap/_reset.scss */
+del {
+  text-decoration: line-through;
+}
+
+/* line 15, src/bootstrap/_reset.scss */
+abbr[title], dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+/* line 16, src/bootstrap/_reset.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 17, src/bootstrap/_reset.scss */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/* line 18, src/bootstrap/_reset.scss */
+input, select {
+  vertical-align: middle;
+}
+
+/* line 20, src/bootstrap/_reset.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 25, src/bootstrap/_reset.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 29, src/bootstrap/_reset.scss */
+blockquote:before, blockquote:after {
+  content: "";
+}
+
+/* line 33, src/bootstrap/_reset.scss */
+a {
+  outline: none;
+}
+
+/* line 35, src/bootstrap/_reset.scss */
+input[type=search] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+/* line 40, src/bootstrap/_reset.scss */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* line 1, src/bootstrap/_helper.sass */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  line-height: 1em;
+  font-style: normal;
+  font-weight: normal;
+  -webkit-appearance: none;
+}
+
+/* line 45, src/core/_animation.scss */
+.play {
+  width: 10px;
+  overflow: hidden;
+  display: block;
+  background: red;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation: a1 1s forwards, a2 1s forwards;
+  -moz-animation: a1 1s forwards, a2 1s forwards;
+  -o-animation: a1 1s forwards, a2 1s forwards;
+  animation: a1 1s forwards, a2 1s forwards;
+  -webkit-animation-delay: 0s, 1s;
+  -moz-animation-delay: 0s, 1s;
+  -o-animation-delay: 0s, 1s;
+  animation-delay: 0s, 1s;
+}
+
+@-webkit-keyframes a1 {
+  from {
+    width: 10px;
+  }
+  to {
+    width: 100px;
+  }
+}
+@-moz-keyframes a1 {
+  from {
+    width: 10px;
+  }
+  to {
+    width: 100px;
+  }
+}
+@-o-keyframes a1 {
+  from {
+    width: 10px;
+  }
+  to {
+    width: 100px;
+  }
+}
+@keyframes a1 {
+  from {
+    width: 10px;
+  }
+  to {
+    width: 100px;
+  }
+}
+@-webkit-keyframes a2 {
+  from {
+    background: red;
+  }
+  to {
+    background: skyblue;
+  }
+}
+@-moz-keyframes a2 {
+  from {
+    background: red;
+  }
+  to {
+    background: skyblue;
+  }
+}
+@-o-keyframes a2 {
+  from {
+    background: red;
+  }
+  to {
+    background: skyblue;
+  }
+}
+@keyframes a2 {
+  from {
+    background: red;
+  }
+  to {
+    background: skyblue;
+  }
+}
+@-webkit-keyframes a3 {
+  from {
+    background: none;
+  }
+  to {
+    background: skyblue;
+  }
+}
+@-moz-keyframes a3 {
+  from {
+    background: none;
+  }
+  to {
+    background: skyblue;
+  }
+}
+@-o-keyframes a3 {
+  from {
+    background: none;
+  }
+  to {
+    background: skyblue;
+  }
+}
+@keyframes a3 {
+  from {
+    background: none;
+  }
+  to {
+    background: skyblue;
+  }
+}
+/* line 5, src/core/_component.scss */
+.label {
+  color: #fefefe;
+  background-color: #777;
+  padding: 5px 3px 3px;
+  font-size: 0.8em;
+  line-height: 0.8em;
+  display: inline-block;
+  border-radius: 3px;
+  text-align: center;
+  font-weight: bold;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+}
+/* line 15, src/core/_component.scss */
+.label.-required {
+  background-color: #fa7535;
+}
+
+/* line 5, src/component/_list.sass */
+.list.list-dictionary > * {
+  padding: 6px 0 0;
+}
+/* line 8, src/component/_list.sass */
+.list.list-dictionary > * .caption {
+  font-weight: bolder;
+  margin-bottom: 0.75em;
+}
+/* line 12, src/component/_list.sass */
+.list.list-dictionary > * .body {
+  line-height: 1.4em;
+  margin-bottom: 1em;
+  margin-left: 1em;
+}
+
+/* line 13, src/core/_group.sass */
+.fill-width {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+/* line 13, src/core/_group.sass */
+.fill-height {
+  height: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 931px) {
+  /* line 1, src/media/_desktop.scss */
+  .mobile-only {
+    display: none;
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 930px) {
+  /* line 17, src/media/_bootstrap.scss */
+  .palmtop-only {
+    display: none;
+  }
+
+  /* line 18, src/media/_bootstrap.scss */
+  .desktop-only {
+    display: none;
+  }
+}
+@media only screen and (max-width: 600px) {
+  /* line 27, src/media/_bootstrap.scss */
+  .desktop-only {
+    display: none;
+  }
+
+  /* line 28, src/media/_bootstrap.scss */
+  .tablet-only {
+    display: none;
+  }
+}
+@media (max-width: 930px) {
+  /* line 1, src/media/_palmtop.scss */
+  input[type=text],
+  input[type=search],
+  input[type=password],
+  input[type=url],
+  input[type=number],
+  select {
+    font-size: 16px;
+  }
+}
+/* line 3, src/sample.sass */
+body {
+  font-family: Futura;
+}
+
+/* line 6, src/sample.sass */
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+/* line 11, src/sample.sass */
+.header + * {
+  margin-top: 80px;
+}
+
+/* line 14, src/sample.sass */
+#content {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 100px;
+}
+
+/* line 20, src/sample.sass */
+h1 {
+  padding: 12px;
+  color: #fefefe;
+  font-size: 2.8em;
+  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0) 40%, #ffffff 40%, #ffffff 60%, rgba(0, 0, 0, 0) 60%), linear-gradient(#ffd700, #ffd700);
+  background-size: 3px 3px, cover;
+}
+
+/* line 25, src/sample.sass */
+h2 {
+  font-size: 2.2em;
+}
+
+/* line 28, src/sample.sass */
+pre {
+  margin-top: 1em;
+  padding: 6px;
+  border: 1px solid #ccc;
+  font-size: 1.2em;
+}
+
+/* line 34, src/sample.sass */
+.caption {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  font-size: 1.6em;
+}
+
+/* line 39, src/sample.sass */
+.parent {
+  display: inline-block;
+  padding: 12px;
+  cursor: pointer;
+}
+/* line 17, src/core/_event.sass */
+.parent:hover, .parent.hover {
+  opacity: 0.8;
+}
+/* line 13, src/core/_event.sass */
+.parent:hover .child, .parent.hover .child {
+  background-color: #445aef;
+}
+/* line 50, src/sample.sass */
+.parent .child {
+  padding: 6px;
+}
+
+/* line 53, src/sample.sass */
+.door {
+  border: 6px solid brown;
+  width: 100px;
+  height: 200px;
+  display: inline-block;
+  box-sizing: border-box;
+  background-color: transparent;
+  background-image: url("http://www.nostalghia.cz/dvd/txt/screen/norstejn_pohadka.jpg");
+  background-size: cover;
+  background-position: -100;
+  -webkit-perspective: 400;
+  -moz-perspective: 400;
+  -ms-perspective: 400;
+  -o-perspective: 400;
+  perspective: 400;
+  position: relative;
+  z-index: 0;
+  padding-top: 0;
+  padding-left: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+}
+/* line 9, src/core/_event.sass */
+.door:hover:after, .door.hover:after {
+  transform: rotateY(-65deg);
+}
+/* line 32, src/component/_background.scss */
+.door:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  -ms-transition: all 0.1s linear;
+  -o-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  transform-origin: right center;
+  background: #fa7535;
+  z-index: -1;
+}
+
+/* line 60, src/sample.sass */
+.bg-block {
+  width: 100px;
+  text-align: center;
+  border: 1px solid #ccc;
+  display: inline-block;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+  position: relative;
+  z-index: 0;
+  padding-top: 4px;
+  padding-left: 8px;
+  padding-bottom: 4px;
+  padding-right: 8px;
+}
+/* line 32, src/component/_background.scss */
+.bg-block:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  bottom: 4px;
+  right: 8px;
+  background: #eee;
+  z-index: -1;
+}
+
+/* line 68, src/sample.sass */
+.bg-block_bg-fill {
+  -webkit-transition: all 0.08s linear;
+  -moz-transition: all 0.08s linear;
+  -ms-transition: all 0.08s linear;
+  -o-transition: all 0.08s linear;
+  transition: all 0.08s linear;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background-color: #fa7535;
+  padding: 6px;
+  position: relative;
+  z-index: 0;
+  padding-top: 6;
+  padding-left: 6;
+  padding-bottom: 6;
+  padding-right: 6;
+}
+/* line 73, src/sample.sass */
+.bg-block_bg-fill:hover {
+  transform: scale(1.2, 1.2);
+}
+/* line 32, src/component/_background.scss */
+.bg-block_bg-fill:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 6;
+  left: 6;
+  bottom: 6;
+  right: 6;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 88px;
+  height: 88px;
+  border-radius: 44px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-color: transparent;
+  background-image: url("http://upload.wikimedia.org/wikipedia/en/e/e3/Skazka_skazok_%28screenshot%29.jpg");
+  background-size: cover;
+  background-position: auto auto;
+  z-index: -1;
+}
+
+/* line 80, src/sample.sass */
+.text-stroke {
+  color: white;
+  font-size: 2.4em;
+  font-family: serif;
+  text-indent: 1em;
+  text-transform: uppercase;
+  text-align: left;
+  text-shadow: -0.05px 0.0866px 0 black, -0.04384px 0.08988px 0 black, -0.03746px 0.09272px 0 black, -0.0309px 0.09511px 0 black, -0.02419px 0.09703px 0 black, -0.01736px 0.09848px 0 black, -0.01045px 0.09945px 0 black, -0.00349px 0.09994px 0 black, 0.00349px 0.09994px 0 black, 0.01045px 0.09945px 0 black, 0.01736px 0.09848px 0 black, 0.02419px 0.09703px 0 black, 0.0309px 0.09511px 0 black, 0.03746px 0.09272px 0 black, 0.04384px 0.08988px 0 black, 0.05px 0.0866px 0 black, -0.1px 0.17321px 0 black, -0.08767px 0.17976px 0 black, -0.07492px 0.18544px 0 black, -0.0618px 0.19021px 0 black, -0.04838px 0.19406px 0 black, -0.03473px 0.19696px 0 black, -0.02091px 0.1989px 0 black, -0.00698px 0.19988px 0 black, 0.00698px 0.19988px 0 black, 0.02091px 0.1989px 0 black, 0.03473px 0.19696px 0 black, 0.04838px 0.19406px 0 black, 0.0618px 0.19021px 0 black, 0.07492px 0.18544px 0 black, 0.08767px 0.17976px 0 black, 0.1px 0.17321px 0 black, -0.15px 0.25981px 0 black, -0.13151px 0.26964px 0 black, -0.11238px 0.27816px 0 black, -0.09271px 0.28532px 0 black, -0.07258px 0.29109px 0 black, -0.05209px 0.29544px 0 black, -0.03136px 0.29836px 0 black, -0.01047px 0.29982px 0 black, 0.01047px 0.29982px 0 black, 0.03136px 0.29836px 0 black, 0.05209px 0.29544px 0 black, 0.07258px 0.29109px 0 black, 0.09271px 0.28532px 0 black, 0.11238px 0.27816px 0 black, 0.13151px 0.26964px 0 black, 0.15px 0.25981px 0 black, -0.2px 0.34641px 0 black, -0.17535px 0.35952px 0 black, -0.14984px 0.37087px 0 black, -0.12361px 0.38042px 0 black, -0.09677px 0.38812px 0 black, -0.06946px 0.39392px 0 black, -0.04181px 0.39781px 0 black, -0.01396px 0.39976px 0 black, 0.01396px 0.39976px 0 black, 0.04181px 0.39781px 0 black, 0.06946px 0.39392px 0 black, 0.09677px 0.38812px 0 black, 0.12361px 0.38042px 0 black, 0.14984px 0.37087px 0 black, 0.17535px 0.35952px 0 black, 0.2px 0.34641px 0 black, -0.25px 0.43301px 0 black, -0.21919px 0.4494px 0 black, -0.1873px 0.46359px 0 black, -0.15451px 0.47553px 0 black, -0.12096px 0.48515px 0 black, -0.08682px 0.4924px 0 black, -0.05226px 0.49726px 0 black, -0.01745px 0.4997px 0 black, 0.01745px 0.4997px 0 black, 0.05226px 0.49726px 0 black, 0.08682px 0.4924px 0 black, 0.12096px 0.48515px 0 black, 0.15451px 0.47553px 0 black, 0.1873px 0.46359px 0 black, 0.21919px 0.4494px 0 black, 0.25px 0.43301px 0 black, -0.3px 0.51962px 0 black, -0.26302px 0.53928px 0 black, -0.22476px 0.55631px 0 black, -0.18541px 0.57063px 0 black, -0.14515px 0.58218px 0 black, -0.10419px 0.59088px 0 black, -0.06272px 0.59671px 0 black, -0.02094px 0.59963px 0 black, 0.02094px 0.59963px 0 black, 0.06272px 0.59671px 0 black, 0.10419px 0.59088px 0 black, 0.14515px 0.58218px 0 black, 0.18541px 0.57063px 0 black, 0.22476px 0.55631px 0 black, 0.26302px 0.53928px 0 black, 0.3px 0.51962px 0 black, -0.35px 0.60622px 0 black, -0.30686px 0.62916px 0 black, -0.26222px 0.64903px 0 black, -0.21631px 0.66574px 0 black, -0.16935px 0.67921px 0 black, -0.12155px 0.68937px 0 black, -0.07317px 0.69617px 0 black, -0.02443px 0.69957px 0 black, 0.02443px 0.69957px 0 black, 0.07317px 0.69617px 0 black, 0.12155px 0.68937px 0 black, 0.16935px 0.67921px 0 black, 0.21631px 0.66574px 0 black, 0.26222px 0.64903px 0 black, 0.30686px 0.62916px 0 black, 0.35px 0.60622px 0 black, -0.4px 0.69282px 0 black, -0.3507px 0.71904px 0 black, -0.29969px 0.74175px 0 black, -0.24721px 0.76085px 0 black, -0.19354px 0.77624px 0 black, -0.13892px 0.78785px 0 black, -0.08362px 0.79562px 0 black, -0.02792px 0.79951px 0 black, 0.02792px 0.79951px 0 black, 0.08362px 0.79562px 0 black, 0.13892px 0.78785px 0 black, 0.19354px 0.77624px 0 black, 0.24721px 0.76085px 0 black, 0.29969px 0.74175px 0 black, 0.3507px 0.71904px 0 black, 0.4px 0.69282px 0 black, -0.45px 0.77942px 0 black, -0.39453px 0.80891px 0 black, -0.33715px 0.83447px 0 black, -0.27812px 0.85595px 0 black, -0.21773px 0.87327px 0 black, -0.15628px 0.88633px 0 black, -0.09408px 0.89507px 0 black, -0.03141px 0.89945px 0 black, 0.03141px 0.89945px 0 black, 0.09408px 0.89507px 0 black, 0.15628px 0.88633px 0 black, 0.21773px 0.87327px 0 black, 0.27812px 0.85595px 0 black, 0.33715px 0.83447px 0 black, 0.39453px 0.80891px 0 black, 0.45px 0.77942px 0 black, -0.5px 0.86603px 0 black, -0.43837px 0.89879px 0 black, -0.37461px 0.92718px 0 black, -0.30902px 0.95106px 0 black, -0.24192px 0.9703px 0 black, -0.17365px 0.98481px 0 black, -0.10453px 0.99452px 0 black, -0.0349px 0.99939px 0 black, 0.0349px 0.99939px 0 black, 0.10453px 0.99452px 0 black, 0.17365px 0.98481px 0 black, 0.24192px 0.9703px 0 black, 0.30902px 0.95106px 0 black, 0.37461px 0.92718px 0 black, 0.43837px 0.89879px 0 black, 0.5px 0.86603px 0 black, -0.55px 0.95263px 0 black, -0.48221px 0.98867px 0 black, -0.41207px 1.0199px 0 black, -0.33992px 1.04616px 0 black, -0.26611px 1.06733px 0 black, -0.19101px 1.08329px 0 black, -0.11498px 1.09397px 0 black, -0.03839px 1.09933px 0 black, 0.03839px 1.09933px 0 black, 0.11498px 1.09397px 0 black, 0.19101px 1.08329px 0 black, 0.26611px 1.06733px 0 black, 0.33992px 1.04616px 0 black, 0.41207px 1.0199px 0 black, 0.48221px 0.98867px 0 black, 0.55px 0.95263px 0 black, -0.6px 1.03923px 0 black, -0.52605px 1.07855px 0 black, -0.44953px 1.11262px 0 black, -0.37082px 1.14127px 0 black, -0.29031px 1.16435px 0 black, -0.20838px 1.18177px 0 black, -0.12543px 1.19343px 0 black, -0.04188px 1.19927px 0 black, 0.04188px 1.19927px 0 black, 0.12543px 1.19343px 0 black, 0.20838px 1.18177px 0 black, 0.29031px 1.16435px 0 black, 0.37082px 1.14127px 0 black, 0.44953px 1.11262px 0 black, 0.52605px 1.07855px 0 black, 0.6px 1.03923px 0 black, -0.65px 1.12583px 0 black, -0.56988px 1.16843px 0 black, -0.48699px 1.20534px 0 black, -0.40172px 1.23637px 0 black, -0.3145px 1.26138px 0 black, -0.22574px 1.28025px 0 black, -0.13589px 1.29288px 0 black, -0.04537px 1.29921px 0 black, 0.04537px 1.29921px 0 black, 0.13589px 1.29288px 0 black, 0.22574px 1.28025px 0 black, 0.3145px 1.26138px 0 black, 0.40172px 1.23637px 0 black, 0.48699px 1.20534px 0 black, 0.56988px 1.16843px 0 black, 0.65px 1.12583px 0 black, -0.7px 1.21244px 0 black, -0.61372px 1.25831px 0 black, -0.52445px 1.29806px 0 black, -0.43262px 1.33148px 0 black, -0.33869px 1.35841px 0 black, -0.24311px 1.37873px 0 black, -0.14634px 1.39233px 0 black, -0.04886px 1.39915px 0 black, 0.04886px 1.39915px 0 black, 0.14634px 1.39233px 0 black, 0.24311px 1.37873px 0 black, 0.33869px 1.35841px 0 black, 0.43262px 1.33148px 0 black, 0.52445px 1.29806px 0 black, 0.61372px 1.25831px 0 black, 0.7px 1.21244px 0 black, -0.75px 1.29904px 0 black, -0.65756px 1.34819px 0 black, -0.56191px 1.39078px 0 black, -0.46353px 1.42658px 0 black, -0.36288px 1.45544px 0 black, -0.26047px 1.47721px 0 black, -0.15679px 1.49178px 0 black, -0.05235px 1.49909px 0 black, 0.05235px 1.49909px 0 black, 0.15679px 1.49178px 0 black, 0.26047px 1.47721px 0 black, 0.36288px 1.45544px 0 black, 0.46353px 1.42658px 0 black, 0.56191px 1.39078px 0 black, 0.65756px 1.34819px 0 black, 0.75px 1.29904px 0 black, -0.8px 1.38564px 0 black, -0.70139px 1.43807px 0 black, -0.59937px 1.48349px 0 black, -0.49443px 1.52169px 0 black, -0.38708px 1.55247px 0 black, -0.27784px 1.57569px 0 black, -0.16725px 1.59124px 0 black, -0.05584px 1.59903px 0 black, 0.05584px 1.59903px 0 black, 0.16725px 1.59124px 0 black, 0.27784px 1.57569px 0 black, 0.38708px 1.55247px 0 black, 0.49443px 1.52169px 0 black, 0.59937px 1.48349px 0 black, 0.70139px 1.43807px 0 black, 0.8px 1.38564px 0 black, -0.85px 1.47224px 0 black, -0.74523px 1.52795px 0 black, -0.63683px 1.57621px 0 black, -0.52533px 1.6168px 0 black, -0.41127px 1.6495px 0 black, -0.2952px 1.67417px 0 black, -0.1777px 1.69069px 0 black, -0.05933px 1.69896px 0 black, 0.05933px 1.69896px 0 black, 0.1777px 1.69069px 0 black, 0.2952px 1.67417px 0 black, 0.41127px 1.6495px 0 black, 0.52533px 1.6168px 0 black, 0.63683px 1.57621px 0 black, 0.74523px 1.52795px 0 black, 0.85px 1.47224px 0 black, -0.9px 1.55885px 0 black, -0.78907px 1.61783px 0 black, -0.67429px 1.66893px 0 black, -0.55623px 1.7119px 0 black, -0.43546px 1.74653px 0 black, -0.31257px 1.77265px 0 black, -0.18815px 1.79014px 0 black, -0.06282px 1.7989px 0 black, 0.06282px 1.7989px 0 black, 0.18815px 1.79014px 0 black, 0.31257px 1.77265px 0 black, 0.43546px 1.74653px 0 black, 0.55623px 1.7119px 0 black, 0.67429px 1.66893px 0 black, 0.78907px 1.61783px 0 black, 0.9px 1.55885px 0 black, -0.95px 1.64545px 0 black, -0.83291px 1.70771px 0 black, -0.71175px 1.76165px 0 black, -0.58713px 1.80701px 0 black, -0.45965px 1.84356px 0 black, -0.32993px 1.87113px 0 black, -0.1986px 1.88959px 0 black, -0.06631px 1.89884px 0 black, 0.06631px 1.89884px 0 black, 0.1986px 1.88959px 0 black, 0.32993px 1.87113px 0 black, 0.45965px 1.84356px 0 black, 0.58713px 1.80701px 0 black, 0.71175px 1.76165px 0 black, 0.83291px 1.70771px 0 black, 0.95px 1.64545px 0 black, -1.0px 1.73205px 0 black, -0.87674px 1.79759px 0 black, -0.74921px 1.85437px 0 black, -0.61803px 1.90211px 0 black, -0.48384px 1.94059px 0 black, -0.3473px 1.96962px 0 black, -0.20906px 1.98904px 0 black, -0.0698px 1.99878px 0 black, 0.0698px 1.99878px 0 black, 0.20906px 1.98904px 0 black, 0.3473px 1.96962px 0 black, 0.48384px 1.94059px 0 black, 0.61803px 1.90211px 0 black, 0.74921px 1.85437px 0 black, 0.87674px 1.79759px 0 black, 1.0px 1.73205px 0 black, -1.05px 1.81865px 0 black, -0.92058px 1.88747px 0 black, -0.78667px 1.94709px 0 black, -0.64894px 1.99722px 0 black, -0.50804px 2.03762px 0 black, -0.36466px 2.0681px 0 black, -0.21951px 2.0885px 0 black, -0.07329px 2.09872px 0 black, 0.07329px 2.09872px 0 black, 0.21951px 2.0885px 0 black, 0.36466px 2.0681px 0 black, 0.50804px 2.03762px 0 black, 0.64894px 1.99722px 0 black, 0.78667px 1.94709px 0 black, 0.92058px 1.88747px 0 black, 1.05px 1.81865px 0 black, -1.1px 1.90526px 0 black, -0.96442px 1.97735px 0 black, -0.82413px 2.0398px 0 black, -0.67984px 2.09232px 0 black, -0.53223px 2.13465px 0 black, -0.38203px 2.16658px 0 black, -0.22996px 2.18795px 0 black, -0.07678px 2.19866px 0 black, 0.07678px 2.19866px 0 black, 0.22996px 2.18795px 0 black, 0.38203px 2.16658px 0 black, 0.53223px 2.13465px 0 black, 0.67984px 2.09232px 0 black, 0.82413px 2.0398px 0 black, 0.96442px 1.97735px 0 black, 1.1px 1.90526px 0 black, -1.15px 1.99186px 0 black, -1.00825px 2.06723px 0 black, -0.8616px 2.13252px 0 black, -0.71074px 2.18743px 0 black, -0.55642px 2.23168px 0 black, -0.39939px 2.26506px 0 black, -0.24042px 2.2874px 0 black, -0.08027px 2.2986px 0 black, 0.08027px 2.2986px 0 black, 0.24042px 2.2874px 0 black, 0.39939px 2.26506px 0 black, 0.55642px 2.23168px 0 black, 0.71074px 2.18743px 0 black, 0.8616px 2.13252px 0 black, 1.00825px 2.06723px 0 black, 1.15px 1.99186px 0 black, -1.2px 2.07846px 0 black, -1.05209px 2.15711px 0 black, -0.89906px 2.22524px 0 black, -0.74164px 2.28254px 0 black, -0.58061px 2.32871px 0 black, -0.41676px 2.36354px 0 black, -0.25087px 2.38685px 0 black, -0.08376px 2.39854px 0 black, 0.08376px 2.39854px 0 black, 0.25087px 2.38685px 0 black, 0.41676px 2.36354px 0 black, 0.58061px 2.32871px 0 black, 0.74164px 2.28254px 0 black, 0.89906px 2.22524px 0 black, 1.05209px 2.15711px 0 black, 1.2px 2.07846px 0 black, -1.25px 2.16506px 0 black, -1.09593px 2.24699px 0 black, -0.93652px 2.31796px 0 black, -0.77254px 2.37764px 0 black, -0.6048px 2.42574px 0 black, -0.43412px 2.46202px 0 black, -0.26132px 2.4863px 0 black, -0.08725px 2.49848px 0 black, 0.08725px 2.49848px 0 black, 0.26132px 2.4863px 0 black, 0.43412px 2.46202px 0 black, 0.6048px 2.42574px 0 black, 0.77254px 2.37764px 0 black, 0.93652px 2.31796px 0 black, 1.09593px 2.24699px 0 black, 1.25px 2.16506px 0 black, -1.3px 2.25167px 0 black, -1.13976px 2.33686px 0 black, -0.97398px 2.41068px 0 black, -0.80344px 2.47275px 0 black, -0.629px 2.52277px 0 black, -0.45149px 2.5605px 0 black, -0.27177px 2.58576px 0 black, -0.09074px 2.59842px 0 black, 0.09074px 2.59842px 0 black, 0.27177px 2.58576px 0 black, 0.45149px 2.5605px 0 black, 0.629px 2.52277px 0 black, 0.80344px 2.47275px 0 black, 0.97398px 2.41068px 0 black, 1.13976px 2.33686px 0 black, 1.3px 2.25167px 0 black, -1.35px 2.33827px 0 black, -1.1836px 2.42674px 0 black, -1.01144px 2.5034px 0 black, -0.83435px 2.56785px 0 black, -0.65319px 2.6198px 0 black, -0.46885px 2.65898px 0 black, -0.28223px 2.68521px 0 black, -0.09423px 2.69836px 0 black, 0.09423px 2.69836px 0 black, 0.28223px 2.68521px 0 black, 0.46885px 2.65898px 0 black, 0.65319px 2.6198px 0 black, 0.83435px 2.56785px 0 black, 1.01144px 2.5034px 0 black, 1.1836px 2.42674px 0 black, 1.35px 2.33827px 0 black, -1.4px 2.42487px 0 black, -1.22744px 2.51662px 0 black, -1.0489px 2.59611px 0 black, -0.86525px 2.66296px 0 black, -0.67738px 2.71683px 0 black, -0.48621px 2.75746px 0 black, -0.29268px 2.78466px 0 black, -0.09772px 2.79829px 0 black, 0.09772px 2.79829px 0 black, 0.29268px 2.78466px 0 black, 0.48621px 2.75746px 0 black, 0.67738px 2.71683px 0 black, 0.86525px 2.66296px 0 black, 1.0489px 2.59611px 0 black, 1.22744px 2.51662px 0 black, 1.4px 2.42487px 0 black, -1.45px 2.51147px 0 black, -1.27128px 2.6065px 0 black, -1.08636px 2.68883px 0 black, -0.89615px 2.75806px 0 black, -0.70157px 2.81386px 0 black, -0.50358px 2.85594px 0 black, -0.30313px 2.88411px 0 black, -0.10121px 2.89823px 0 black, 0.10121px 2.89823px 0 black, 0.30313px 2.88411px 0 black, 0.50358px 2.85594px 0 black, 0.70157px 2.81386px 0 black, 0.89615px 2.75806px 0 black, 1.08636px 2.68883px 0 black, 1.27128px 2.6065px 0 black, 1.45px 2.51147px 0 black, -1.5px 2.59808px 0 black, -1.31511px 2.69638px 0 black, -1.12382px 2.78155px 0 black, -0.92705px 2.85317px 0 black, -0.72577px 2.91089px 0 black, -0.52094px 2.95442px 0 black, -0.31359px 2.98357px 0 black, -0.1047px 2.99817px 0 black, 0.1047px 2.99817px 0 black, 0.31359px 2.98357px 0 black, 0.52094px 2.95442px 0 black, 0.72577px 2.91089px 0 black, 0.92705px 2.85317px 0 black, 1.12382px 2.78155px 0 black, 1.31511px 2.69638px 0 black, 1.5px 2.59808px 0 black, -1.55px 2.68468px 0 black, -1.35895px 2.78626px 0 black, -1.16128px 2.87427px 0 black, -0.95795px 2.94828px 0 black, -0.74996px 3.00792px 0 black, -0.53831px 3.0529px 0 black, -0.32404px 3.08302px 0 black, -0.10819px 3.09811px 0 black, 0.10819px 3.09811px 0 black, 0.32404px 3.08302px 0 black, 0.53831px 3.0529px 0 black, 0.74996px 3.00792px 0 black, 0.95795px 2.94828px 0 black, 1.16128px 2.87427px 0 black, 1.35895px 2.78626px 0 black, 1.55px 2.68468px 0 black, -1.6px 2.77128px 0 black, -1.40279px 2.87614px 0 black, -1.19874px 2.96699px 0 black, -0.98885px 3.04338px 0 black, -0.77415px 3.10495px 0 black, -0.55567px 3.15138px 0 black, -0.33449px 3.18247px 0 black, -0.11168px 3.19805px 0 black, 0.11168px 3.19805px 0 black, 0.33449px 3.18247px 0 black, 0.55567px 3.15138px 0 black, 0.77415px 3.10495px 0 black, 0.98885px 3.04338px 0 black, 1.19874px 2.96699px 0 black, 1.40279px 2.87614px 0 black, 1.6px 2.77128px 0 black, -1.65px 2.85788px 0 black, -1.44662px 2.96602px 0 black, -1.2362px 3.05971px 0 black, -1.01976px 3.13849px 0 black, -0.79834px 3.20198px 0 black, -0.57304px 3.24987px 0 black, -0.34494px 3.28192px 0 black, -0.11517px 3.29799px 0 black, 0.11517px 3.29799px 0 black, 0.34494px 3.28192px 0 black, 0.57304px 3.24987px 0 black, 0.79834px 3.20198px 0 black, 1.01976px 3.13849px 0 black, 1.2362px 3.05971px 0 black, 1.44662px 2.96602px 0 black, 1.65px 2.85788px 0 black, -1.7px 2.94449px 0 black, -1.49046px 3.0559px 0 black, -1.27366px 3.15243px 0 black, -1.05066px 3.23359px 0 black, -0.82253px 3.29901px 0 black, -0.5904px 3.34835px 0 black, -0.3554px 3.38137px 0 black, -0.11866px 3.39793px 0 black, 0.11866px 3.39793px 0 black, 0.3554px 3.38137px 0 black, 0.5904px 3.34835px 0 black, 0.82253px 3.29901px 0 black, 1.05066px 3.23359px 0 black, 1.27366px 3.15243px 0 black, 1.49046px 3.0559px 0 black, 1.7px 2.94449px 0 black, -1.75px 3.03109px 0 black, -1.5343px 3.14578px 0 black, -1.31112px 3.24514px 0 black, -1.08156px 3.3287px 0 black, -0.84673px 3.39604px 0 black, -0.60777px 3.44683px 0 black, -0.36585px 3.48083px 0 black, -0.12215px 3.49787px 0 black, 0.12215px 3.49787px 0 black, 0.36585px 3.48083px 0 black, 0.60777px 3.44683px 0 black, 0.84673px 3.39604px 0 black, 1.08156px 3.3287px 0 black, 1.31112px 3.24514px 0 black, 1.5343px 3.14578px 0 black, 1.75px 3.03109px 0 black, -1.8px 3.11769px 0 black, -1.57814px 3.23566px 0 black, -1.34858px 3.33786px 0 black, -1.11246px 3.4238px 0 black, -0.87092px 3.49306px 0 black, -0.62513px 3.54531px 0 black, -0.3763px 3.58028px 0 black, -0.12564px 3.59781px 0 black, 0.12564px 3.59781px 0 black, 0.3763px 3.58028px 0 black, 0.62513px 3.54531px 0 black, 0.87092px 3.49306px 0 black, 1.11246px 3.4238px 0 black, 1.34858px 3.33786px 0 black, 1.57814px 3.23566px 0 black, 1.8px 3.11769px 0 black, -1.85px 3.20429px 0 black, -1.62197px 3.32554px 0 black, -1.38604px 3.43058px 0 black, -1.14336px 3.51891px 0 black, -0.89511px 3.59009px 0 black, -0.6425px 3.64379px 0 black, -0.38676px 3.67973px 0 black, -0.12913px 3.69775px 0 black, 0.12913px 3.69775px 0 black, 0.38676px 3.67973px 0 black, 0.6425px 3.64379px 0 black, 0.89511px 3.59009px 0 black, 1.14336px 3.51891px 0 black, 1.38604px 3.43058px 0 black, 1.62197px 3.32554px 0 black, 1.85px 3.20429px 0 black, -1.9px 3.2909px 0 black, -1.66581px 3.41542px 0 black, -1.42351px 3.5233px 0 black, -1.17426px 3.61401px 0 black, -0.9193px 3.68712px 0 black, -0.65986px 3.74227px 0 black, -0.39721px 3.77918px 0 black, -0.13262px 3.79769px 0 black, 0.13262px 3.79769px 0 black, 0.39721px 3.77918px 0 black, 0.65986px 3.74227px 0 black, 0.9193px 3.68712px 0 black, 1.17426px 3.61401px 0 black, 1.42351px 3.5233px 0 black, 1.66581px 3.41542px 0 black, 1.9px 3.2909px 0 black, -1.95px 3.3775px 0 black, -1.70965px 3.5053px 0 black, -1.46097px 3.61602px 0 black, -1.20517px 3.70912px 0 black, -0.9435px 3.78415px 0 black, -0.67723px 3.84075px 0 black, -0.40766px 3.87864px 0 black, -0.13611px 3.89762px 0 black, 0.13611px 3.89762px 0 black, 0.40766px 3.87864px 0 black, 0.67723px 3.84075px 0 black, 0.9435px 3.78415px 0 black, 1.20517px 3.70912px 0 black, 1.46097px 3.61602px 0 black, 1.70965px 3.5053px 0 black, 1.95px 3.3775px 0 black;
+}
+/* line 17, src/core/_event.sass */
+.text-stroke:hover, .text-stroke.hover {
+  -webkit-transform: scale(1.2, 1.2) 1s;
+  -moz-transform: scale(1.2, 1.2) 1s;
+  -o-transform: scale(1.2, 1.2) 1s;
+  transform: scale(1.2, 1.2) 1s;
+}

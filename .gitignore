@@ -3,6 +3,6 @@ package-lock.json
 log
 cache
 dist
+volume
 
-wp-content/*
-!wp-content/.gitkeep
+!/**/.gitkeep
