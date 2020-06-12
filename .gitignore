@@ -1,8 +1,8 @@
 node_modules
 package-lock.json
 log
-cache
 dist
 volume
+tmp
 
 !/**/.gitkeep
