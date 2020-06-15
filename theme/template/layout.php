@@ -5,6 +5,14 @@ if($q = $this->wp_global('wp_query')){
   $wp_query = $q;
 }
 
+if( WPTM::option('basis_maintenance') == 1){
+  $k = WPTM::option('basis_maintenance_secret_key');
+  if(WPTM::option('basis_maintenance_secret_value') != @$_GET[$k] ){
+    WPTM::render('template/page/maintenance');
+    exit();
+  }
+}
+
 ?><html>
   <head>
   <?php wp_head(); ?>

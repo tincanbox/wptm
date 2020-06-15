@@ -32,23 +32,32 @@ return array(
   ),
 
   'theme_background_color' => array(
-    'default' => '#eee'
+    'default' => '#eee',
+    'control' => array(
+      'label' => '背景色',
+      'description' => ''
+    )
   ),
 
   'theme_background_font_color_visibility' => array(
     'default' => '#eee',
     'control' => array(
-      'label' => '背景色対応フォントカラー'
+      'label' => '背景色対応フォントカラー',
+      'description' => '指定した色が .theme-font-color-background-escape に反映されます'
     )
   ),
 
   'theme_background_image' => array(
-    'default' => ''
+    'default' => '',
+    'control' => array(
+      'label' => '背景画像マスクレイヤー',
+    )
   ),
 
   'theme_background_image_size' => array(
     'default' => 'cover',
     'control' => array(
+      'label' => '背景画像マスクレイヤー：サイズ',
       'choices' => array('cover' => 'cover', 'repeat' => 'repeat')
     )
   ),
@@ -56,6 +65,7 @@ return array(
   'theme_background_image_mask_opacity' => array(
     'default' => '25',
     'control' => array(
+      'label' => '背景画像マスクレイヤー：透明度',
       'description' => 'format: 0-99'
     )
   ),
@@ -63,12 +73,16 @@ return array(
   'theme_background_image_mask_colorhex' => array(
     'default' => '0,0,0',
     'control' => array(
+      'label' => '背景画像マスクレイヤー：色',
       'description' => 'format: 0-255, 0-255, 0-255',
     )
   ),
 
   'theme_footer_background_color' => array(
-    'default' => '#eeeeee'
+    'default' => '#eeeeee',
+    'control' => array(
+      'label' => 'フッター：背景色'
+    )
   ),
 
   'jumbotron_url_post_meta_key' => array(
@@ -81,41 +95,48 @@ return array(
   'jumbotron_post_type' => array(
     'default' => 'post',
     'control' => array(
-      'label' => 'ジャンボトロン-投稿タイプ'
+      'label' => 'ジャンボトロン-投稿タイプ',
+      'description' => 'ジャンボトロンとして表示する記事の投稿タイプを指定します。(別途追加している場合など)'
     )
   ),
   'jumbotron_category' => array(
     'default' => 'jumbotron',
     'control' => array(
-      'label' => 'ジャンボトロン-カテゴリー'
+      'label' => 'ジャンボトロン-カテゴリー',
+      'description' => 'ジャンボトロンとして表示する記事のカテゴリーを指定します。'
     )
   ),
 
   'post_comment_disabled_category_list' => array(
     'control' => array(
       'label' => 'コメント非許可カテゴリ',
+      'description' => '指定したカテゴリの記事に対してコメント機能を無効化します。'
     )
   ),
   'post_article_list_noimage_url' => array(
     'control' => array(
       'label' => 'アイキャッチ未指定用イメージ',
+      'description' => 'アイキャッチ画像が未指定の場合、指定された画像を表示します。'
     )
   ),
   'post_article_list_read_more_label' => array(
     'default' => 'Read More &raquo;',
     'control' => array(
-      'label' => '記事一覧: 『もっと見る』用ラベル'
+      'label' => '記事一覧: 『もっと見る』用ラベル',
+      'description' => ''
     )
   ),
   'post_badge_new_interval' => array(
     'control' => array(
       'label' => '投稿: NEWバッヂ表示期間(単位: 日)',
+      'description' => ''
     )
   ),
   'post_meta_key_eyecatch_link' => array(
     'default' => 'url',
     'control' => array(
       'label' => 'カスタムフィールド: アイキャッチ外部URL',
+      'description' => ''
     )
   ),
   'sidebar_post_type' => array(
@@ -155,6 +176,7 @@ return array(
     'default' => 'url',
     'control' => array(
       'label' => 'URL用カスタムフィールド名',
+      'description' => 'サイドバーに表示する記事をクリックした際に外部URLへ移動します。'
     )
   ),
   'sidebar_post_meta_key_open_tab' => array(

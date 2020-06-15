@@ -1,18 +1,27 @@
 <?php
 
 # Brand logo.
-$customizer->UI->build()->panel('appearance', array('title' => '外観'))
-  ->section('logo', array('title' => 'ロゴ'))
+$customizer->UI->build()->panel('basis', array('title' => 'Basis'))
+  ->section('maintenace', array('title' => 'Maintenance'))
+    ->control('checkbox', 'basis_maintenance')
+    ->control('text', 'basis_maintenance_secret_key')
+    ->control('text', 'basis_maintenance_secret_value')
+  ;
+
+
+# Brand logo.
+$customizer->UI->build()->panel('appearance', array('title' => 'Appearance'))
+  ->section('logo', array('title' => 'Logo'))
     ->control('upload', 'logo')
     ->control('upload', 'logo_footer')
-  ->section('background', array('title' => '背景'))
+  ->section('background', array('title' => 'Background'))
     ->control('color', 'theme_background_color')
     ->control('color', 'theme_background_font_color_visibility')
     ->control('upload', 'theme_background_image')
     ->control('select', 'theme_background_image_size')
     ->control('text', 'theme_background_image_mask_opacity')
     ->control('text', 'theme_background_image_mask_colorhex')
-  ->section('footer', array('title' => 'フッター'))
+  ->section('footer', array('title' => 'Footer'))
     ->control('color', 'theme_footer_background_color')
   ;
 
@@ -35,7 +44,7 @@ $customizer->UI->build()->panel('post')
   ;
 
 # Sidebanner
-$customizer->UI->build()->panel('sidebar', array('title' => 'サイドバー'))
+$customizer->UI->build()->panel('sidebar', array('title' => 'Side Bar'))
   ->section('basis')
   ->control('checkbox', 'sidebar_toggle')
   ->control('text', 'sidebar_post_type')
@@ -52,23 +61,23 @@ $customizer->UI->build()->panel('sidebar', array('title' => 'サイドバー'))
 
 $cats = get_categories();
 $t = array();
-$panel = $customizer->UI->build()->panel('category', array('title' => 'カテゴリー'));
+$panel = $customizer->UI->build()->panel('category', array('title' => 'Category'));
 foreach($cats as $i => $c){
   $t[$c->slug] = $c->name;
   $panel
-    ->section('comment disabled', array('title' => 'コメント機能無効化'))
+    ->section('comment disabled', array('title' => 'Comment: Disabled'))
     ->control('checkbox', 'post_comment_disabled_category_list['.$c->slug.']', array('label' => $c->name));
 
   $panel
-    ->section('search exclude', array('title' => '検索除外カテゴリー'))
+    ->section('search exclude', array('title' => 'Category: Excludes From Search'))
     ->control('checkbox', 'category_list_search_excluded['.$c->slug.']', array('label' => $c->name));
 
   $panel
-    ->section('article category', array('title' => '記事用カテゴリー選択'))
+    ->section('article category', array('title' => 'Category: For Articles'))
     ->control('checkbox', 'category_for_article_manage['.$c->slug.']', array('label' => $c->name));
 
   $panel
-    ->section('menu content categories', array('title' => 'メニュー表示カテゴリー'))
+    ->section('menu content categories', array('title' => 'Category: Visible in the Menu'))
     ->control('checkbox', 'category_for_global_menu['.$c->slug.']', array('label' => $c->name));
 
 }
@@ -81,10 +90,10 @@ if($b){
     $ps[] = $c;
     $c = get_category_by_slug($c);
     if($c){
-      $customizer->UI->build()->panel('categories', array('title' => '記事用カテゴリー'))
+      $customizer->UI->build()->panel('categories', array('title' => 'Category: List'))
         ->section('Category: '.$c->slug)
-        ->control('text', 'category['.$c->slug.'][article_count]', array('label' => 'トップ記事数'))
-        ->control('text', 'category['.$c->slug.'][display_priority]', array('label' => 'トップ表示順'))
+        ->control('text', 'category['.$c->slug.'][article_count]', array('label' => 'TopPage: Article counts'))
+        ->control('text', 'category['.$c->slug.'][display_priority]', array('label' => 'TopPage: Display Priority'))
         ;
     }
   }
