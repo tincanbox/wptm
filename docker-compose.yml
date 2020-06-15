@@ -15,9 +15,9 @@ services:
       - 80:80
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: "${DB_NAME}"
-      WORDPRESS_DB_USER: "${DB_USER}"
-      WORDPRESS_DB_PASSWORD: "${DB_PASSWORD}"
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
 
   db:
     image: mysql:5.7
@@ -26,10 +26,10 @@ services:
     volumes:
       - ./volume/database/mysql_data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "${DB_SECRET}"
-      MYSQL_DATABASE: "${DB_NAME}"
-      MYSQL_USER: "${DB_USER}"
-      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: ${DB_SECRET}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
