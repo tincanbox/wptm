@@ -1,0 +1,3 @@
+FROM wordpress:latest
+
+#ENTRYPOINT [ "/bin/bash" "-c" "/usr/local/bin/entrypoint.sh" ] 

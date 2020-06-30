@@ -1,13 +1,19 @@
-version: "3"
+version: "3.7"
 services:
 
   wordpress:
     image: wordpress:latest
     container_name: "wordpress"
+    env_file: .env
+    #build:
+    #  context: .
+    #  dockerfile: ./build/Dockerfile.setup
     volumes:
-      - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - ./volume/wordpress:/var/www/html
+      - ./volume/static:/var/www/html/static
       - ./theme:/var/www/html/wp-content/themes/wptm
+      - ./build:/opt/build
+      - ./config:/opt/config
     restart: always
     depends_on:
       - db
@@ -18,10 +24,12 @@ services:
       WORDPRESS_DB_NAME: ${DB_NAME}
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+    command: /opt/build/entrypoint.sh
 
   db:
     image: mysql:5.7
     container_name: "mysql57"
+    env_file: .env
     restart: always
     volumes:
       - ./volume/database/mysql_data:/var/lib/mysql
