@@ -1,9 +1,13 @@
 .structure-navigation {
     li {
+        display: flex;
+        align-items: center;
         &:not(:last-child):after {
-            content: " ▹ ";
+            content: " ▷ ";
             color: #aaa;
-            margin: 0 .4em;
+            font-size: .8em;
+            margin: 0 .8em;
         }
     }
+    * { vertical-align: middle; }
 }

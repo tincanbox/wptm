@@ -18,11 +18,14 @@ html { margin-top: 0px !important; }
 body {
   &.home {
     .article-list-group {
-      @media (min-width: 768px) and (max-width: 992px){
-        .article:last-of-type:nth-child(2n-1) {
+      @media (min-width: 576px) and (max-width: 767.98px){
+        .article:last-of-type:nth-child(2n-1):not(nth-child(1)) {
           display: none;
         }
-      } } } }
+      }
+    }
+  }
+}
 
 .navbar-toggler { border: none; background: transparent !important;
   &:focus { outline: none; background: transparent !important; }
