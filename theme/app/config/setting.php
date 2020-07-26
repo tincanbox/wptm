@@ -78,10 +78,30 @@ return array(
     )
   ),
 
+  'theme_header_background_color' => array(
+    'default' => '#fefefe',
+    'control' => array(
+      'label' => 'ヘッダー：背景色'
+    )
+  ),
+  'theme_header_font_color' => array(
+    'default' => '#555555',
+    'control' => array(
+      'label' => 'ヘッダー：文字'
+    )
+  ),
+
   'theme_footer_background_color' => array(
     'default' => '#eeeeee',
     'control' => array(
       'label' => 'フッター：背景色'
+    )
+  ),
+
+  'theme_footer_font_color' => array(
+    'default' => '#555555',
+    'control' => array(
+      'label' => 'フッター：文字色`'
     )
   ),
 
@@ -100,7 +120,7 @@ return array(
     )
   ),
   'jumbotron_category' => array(
-    'default' => 'jumbotron',
+    'default' => 'featured',
     'control' => array(
       'label' => 'ジャンボトロン-カテゴリー',
       'description' => 'ジャンボトロンとして表示する記事のカテゴリーを指定します。'
@@ -127,9 +147,10 @@ return array(
     )
   ),
   'post_badge_new_interval' => array(
+    'default' => 7,
     'control' => array(
       'label' => '投稿: NEWバッヂ表示期間(単位: 日)',
-      'description' => ''
+      'description' => '',
     )
   ),
   'post_meta_key_eyecatch_link' => array(
@@ -137,6 +158,20 @@ return array(
     'control' => array(
       'label' => 'カスタムフィールド: アイキャッチ外部URL',
       'description' => ''
+    )
+  ),
+
+  'sidebar_toggle' => array(
+    'default' => 'on',
+    'control' => array(
+      'label' => 'サイドバー　有効化'
+    )
+  ),
+  'sidebar_align' => array(
+    'default' => 'right',
+    'control' => array(
+      'label' => 'サイドバー　位置',
+      'choices' => array('left' => 'lefttt', 'right' => 'righttt')
     )
   ),
   'sidebar_post_type' => array(

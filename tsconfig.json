@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-      "module": "es2015",
+      "module": "es6",
       "moduleResolution": "node",
       "noImplicitAny": true,
       "removeComments": true,
       "preserveConstEnums": true,
-      "sourceMap": true
+      "sourceMap": true,
+      "checkJs": false,
+      "allowJs": true
   },
   "include": [
-      "./src/**/*",
+      "./asset/**/*.ts",
   ],
   "exclude": [
       "node_modules",

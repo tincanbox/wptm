@@ -50,20 +50,16 @@ if($post){
 <meta name="keyword" content="<?php echo implode(',', $keywords); ?>">
 <meta name="description" content="<?php echo get_bloginfo('description'); echo $description; ?>">
 
-<script src="<?php echo get_bloginfo('template_directory'); ?>/asset/lib/vendor/jquery/jquery-1.12.3.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/lib/bootstrap/css/bootstrap.min.css'; ?>">
-<script src="<?php echo get_bloginfo('template_directory'); ?>/asset/lib/bootstrap/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/lib/font-awesome/css/font-awesome.min.css'; ?>">
+<script src="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/jquery/jquery-1.12.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/static/vendor/bootstrap/css/bootstrap.min.css'; ?>">
+<script src="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/static/vendor/font-awesome/css/font-awesome.min.css'; ?>">
 
 <?php WPTM::render('template/partial/common/share/prepare_facebook'); ?>
 <?php WPTM::render('template/partial/common/share/prepare_twitter'); ?>
 <?php WPTM::render('template/partial/common/share/prepare_line'); ?>
 
 
-<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/css/base.css'; ?>">
-<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/css/theme/default.css'; ?>">
-
-<!--SASS4経由のCSS生成が不慣れのためプレーンCSSを読み込み-->
-<!--<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/css/theme/additional_plain_css.css'; ?>">-->
+<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/bootstrap.css'; ?>">
 
 <?php WPTM::render('template/partial/common/head_theme_style'); ?>

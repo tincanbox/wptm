@@ -3,6 +3,7 @@
 <?php
 
 $og = array(
+  'app_id' => WPTM::option('facebook_app_id'),
   'url' => get_bloginfo('url'),
   'title' => get_bloginfo('name'),
   'description' => get_bloginfo('description'),
@@ -33,7 +34,7 @@ if($og['image']){
 }
 
 ?>
-<meta property="fb:app_id" content="717842694934617">
+<meta property="fb:app_id" content="<?php echo $og['app_id']; ?>">
 <meta property="og:url"           content="<?php echo $og['url']; ?>" />
 <meta property="og:type"          content="website" />
 <meta property="og:title"         content="<?php echo $og['title']; ?>" />

@@ -19,6 +19,10 @@ And set your own info.
     cp .env.default .env
     vi .env
 
+Make or put your Certification file.
+
+    mkcert localhost 127.0.0.1
+
 
 Then, build up the container.
 

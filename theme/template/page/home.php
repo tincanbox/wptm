@@ -35,11 +35,16 @@ foreach($priority as $p => $s){
   <?php $c = get_category_by_slug($s['slug']); ?>
   <?php if($c){ ?>
     <div class="category-<?php echo $c->slug; ?>">
-      <div class="article-list-group-caption-wrap">
-        <h3 class="article-list-group-caption theme-font-color-background-escape col-sm-12 col-md-8"><?php echo $c->name; ?></h3>
+      <div class="article-list-group-caption-wrap row">
+        <h3 class="article-list-group-caption theme-font-color col-sm-12 col-md-10">
+          <?php if(@$s['icon']){ ?>
+            <span class="wptm-category-icon align-middle" style="background-image: url(<?php echo $s['icon']; ?>);"></span>
+          <?php } ?>
+          <span class="align-middle"><?php echo $c->name; ?></span>
+        </h3>
         <a
           href="<?php echo get_category_link($c->cat_ID); ?>"
-          class="link-read-more theme-font-color-background-escape col-sm-12 col-md-4 hidden-xs"><?php echo $link_read_more_label; ?></a>
+          class="theme-font-color col-sm-12 col-md-2 text-right"><?php echo $link_read_more_label; ?></a>
       </div>
       <?php WPTM::render('template/partial/article/list/group_category', array(
         'list_type' => 'with_picture',
@@ -48,10 +53,12 @@ foreach($priority as $p => $s){
           'posts_per_page' => $s['article_count']
         )
       )); ?>
-            <a
-              href="<?php echo get_category_link($c->cat_ID); ?>"
-              class="link-read-more theme-font-color-background-escape col-sm-12 col-md-4 visible-xs"
-              style="margin-bottom: 4.2em;"><?php echo $link_read_more_label; ?></a>
+      <div class="text-right">
+        <a
+          href="<?php echo get_category_link($c->cat_ID); ?>"
+          class="theme-font-color"
+          style="margin-bottom: 4.2em;"><?php echo __($link_read_more_label); ?> <?php echo $c->name; ?></a>
+      </div>
     </div>
   <?php } ?>
   <?php

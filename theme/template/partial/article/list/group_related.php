@@ -24,7 +24,7 @@ if($post_type){
   }
 
   ?>
-  <h4 class="section" style="margin-top: 1.8em;">関連記事</h4>
+  <h4 style="margin-top: 1.8em;"><?php echo __(@$group_caption); ?></h4>
   <?php
 
   WPTM::render('template/partial/article/list/group_'.$template, array(

@@ -17,22 +17,21 @@ if(!$image_uri){
       href="<?php the_permalink(); ?>"
       style="<?php echo @$image_uri ? "background-image:url('".$image_uri[0]."');'" : ''; ?>"></a>
     <div
-      class="article-list-column-caption">
+      class="article-list-column-caption category-background-color category-font-color-escape">
       <div class="upper">
-        <div class="data date"><?php the_time('Y.m.d'); ?></div>
+        <?php if(WPTM::option('post_show_time')){ ?>
+          <div class="data date"><?php the_time('Y.m.d'); ?></div>
+        <?php } ?>
         <?php
-
         $now = time();
         $time = get_the_time('U');
-
         if($now - $time < 60 * 60 * 24 * (int)WPTM::option('post_badge_new_interval')){
           ?><div class="badge badge-new" style="">New</div><?php
         }
-
         ?>
       </div>
-      <div class="data title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
-      <div class="data category" style="text-align: right;">
+      <div class="data title category-font-color-escape"><a class="category-font-color-escape" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
+      <div class="data category category-font-color-escape" style="text-align: right;">
       <?php
 
         $cats = get_the_category($post->ID);

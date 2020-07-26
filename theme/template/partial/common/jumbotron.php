@@ -6,11 +6,11 @@ $current_template_name = basename($template);
 if($current_template_name == "home.php"){
 
 ?>
-<div>
+<div class="kamisibai">
 
-<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/asset/lib/owl.carousel/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/asset/lib/owl.carousel/assets/owl.theme.default.min.css">
-<script src="<?php echo get_bloginfo('template_directory'); ?>/asset/lib/owl.carousel/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/owl.carousel/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/owl.carousel/assets/owl.theme.default.min.css">
+<script src="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/owl.carousel/owl.carousel.min.js"></script>
 <?php
 
 $posts = get_posts(array_merge(array(
@@ -44,8 +44,9 @@ foreach($posts as $post){
   $link = @$meta[0] ? $meta[0] : get_permalink();
   ?>
   <a
+    class="jumbotron-slide-image"
     href="<?php echo $link; ?>"
-    style="display: block; background-image: url('<?php echo $image_uri[0]; ?>'); background-position: center center; background-size: cover; padding-bottom: 40%; width: 100%;">
+    style="display: block; background-image: url('<?php echo $image_uri[0]; ?>'); background-position: center center; background-size: cover; width: 100%;">
   </a>
   <?php
   wp_reset_postdata();

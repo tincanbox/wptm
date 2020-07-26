@@ -13,7 +13,7 @@ if( WPTM::option('basis_maintenance') == 1){
   }
 }
 
-?><html>
+?><html style="margin-top:0 !important;">
   <head>
   <?php wp_head(); ?>
   <?php WPTM::render('template/partial/common/head'); ?>
@@ -26,18 +26,27 @@ if( WPTM::option('basis_maintenance') == 1){
         <div class="container">
           <div class="row">
             <?php if( WPTM::option('sidebar_toggle') == 1){ ?>
+              <?php if( WPTM::option('sidebar_align') == "left" ){ ?>
+                <div class="col-md-3">
+                  <?php WPTM::render('template/partial/common/sidebar'); ?>
+                </div>
+              <?php } ?>
               <div class="col-md-9">
                 <?php @$hide_structure_navigation ? '' : WPTM::render('template/partial/common/structure_navigation', array(
                   'main_query' => $wp_query
                 )); ?>
                 <div id="yield">{{{ yield }}}</div>
                 <div style="text-align: right;">
-                  <a class="gototop theme-font-color-background-escape"><i class="glyphicon glyphicon-arrow-up"></i> トップへ戻る</a>
+                  <a class="gototop theme-font-color-background-escape">
+                    <span class="far fa-arrow-alt-circle-up">&#9650;</span> <span><?php echo __('Top'); ?></span>
+                  </a>
                 </div>
               </div>
-              <div class="col-md-3">
-                <?php WPTM::render('template/partial/common/sidebar'); ?>
-              </div>
+              <?php if( WPTM::option('sidebar_align') == "right" ){ ?>
+                <div class="col-md-3">
+                  <?php WPTM::render('template/partial/common/sidebar'); ?>
+                </div>
+              <?php } ?>
             <?php }else{ ?>
               <div class="col-md-12">
                 <?php @$hide_structure_navigation ? '' : WPTM::render('template/partial/common/structure_navigation', array(
@@ -45,7 +54,9 @@ if( WPTM::option('basis_maintenance') == 1){
                 )); ?>
                 <div id="yield">{{{ yield }}}</div>
                 <div style="text-align: right;">
-                  <a class="gototop theme-font-color-background-escape"><i class="glyphicon glyphicon-arrow-up"></i> トップへ戻る</a>
+                  <a class="gototop theme-font-color-background-escape">
+                    <span class="far fa-arrow-alt-circle-up">&#9650;</span> <span><?php echo __('Top'); ?></span>
+                  </a>
                 </div>
               </div>
             <?php } ?>
@@ -55,6 +66,6 @@ if( WPTM::option('basis_maintenance') == 1){
       <?php WPTM::render('template/partial/common/footer'); ?>
     </div>
     <?php wp_footer(); ?>
-    <script src="<?php echo get_template_directory_uri(); ?>/asset/script/main.js"></script>
+    <script src="<?php echo get_template_directory_uri(); ?>/asset/bootstrap.js"></script>
   </body>
 </html>

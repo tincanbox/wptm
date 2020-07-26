@@ -3,12 +3,18 @@
 
 $mq = $main_query;
 
-while($mq->have_posts()){ $mq->the_post(); $post = get_post(); ?>
+while($mq->have_posts()){ $mq->the_post(); $post = get_post();
+
+  ?>
 
   <div class="post-content section">
 
     <h2 class="post-title"><?php the_title(); ?></h2>
-    <div class="post-time"><span class="date"><?php the_time('Y.m.d'); ?></span> <span class="time"><?php echo the_time('H:i'); ?></span></div>
+    <?php if(WPTM::option('post_show_time')){ ?>
+      <div class="post-time">
+        <span class="date"><?php the_time('Y.m.d'); ?></span> <span class="time"><?php echo the_time('H:i'); ?></span>
+      </div>
+    <?php } ?>
     <div class="post-yield">
       <?php if(has_post_thumbnail()): ?>
         <?php
@@ -55,9 +61,13 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post(); ?>
     $categories = get_the_category();
     $query_category_in = array();
     $disabled = WPTM::option('post_comment_disabled_category_list');
+    
+    $is_category_list_disabled = (!@WPTM::option('post_show_category_list')) || false;
 
     if($categories){
-      ?><div class="post-category-area"><h4 class="caption"><?php echo _e('Categories'); ?></h4><?php
+      if(!$is_category_list_disabled){
+        ?><div class="post-category-area"><h4 class="caption"><?php echo _e('Categories'); ?></h4><?php
+      }
       foreach($categories as $c){
         $query_category_in[] = $c->cat_ID;
         if($disabled){
@@ -70,11 +80,17 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post(); ?>
             }
           }
         }
-        ?><span class="slug-pill post-category category-<?php echo $c->slug; ?>">
-          <a class="post-category-link" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
-        </span><?php
+        if(!$is_category_list_disabled){
+          ?>
+          <span class="slug-pill post-category category-<?php echo $c->slug; ?>">
+            <a class="post-category-link" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
+          </span>
+          <?php
+        }
       }
-      ?></div><?php
+      if(!$is_category_list_disabled){
+        ?></div><?php
+      }
     }
 
     ?>
@@ -106,14 +122,23 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post(); ?>
     );
   }
 
+  ?>
+
+  <div class="section">
+  <?php
+
   WPTM::render('template/partial/article/list/group_related', array(
     'show_group_caption' => true,
-    'group_caption' => '関連記事',
+    'group_caption' => '関連コンテンツ',
     'list_type' => 'with_picture',
     'post' => $post,
     'query' => $q
   ));
 
+  ?>
+  </div>
+
+  <?php
   $s = $post;
   global $post;
   $post = $s;
@@ -128,4 +153,5 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post(); ?>
 }
 
 ?>
+
 </div>

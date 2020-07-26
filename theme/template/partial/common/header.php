@@ -1,117 +1,106 @@
-<div id="header" class="header navbar navbar-fixed-top navbar-default">
-  <div class="container">
+<div id="header">
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-expand-md fixed-top wptm-header-background-color">
+    <a class="navbar-brand wptm-header-font-color" href="/"><?php echo get_bloginfo('title'); ?></a>
+    <button class="navbar-toggler collapsed" type="button"
+      data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" >
+      <span class="icon-bar top-bar wptm-header-background-color-escape"></span>
+      <span class="icon-bar middle-bar wptm-header-background-color-escape"></span>
+      <span class="icon-bar bottom-bar wptm-header-background-color-escape"></span>	
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav ml-auto">
+        <?php
 
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+        $allslug = array();
 
-    <div class="navbar-header">
-      <a class="navbar-brand" href="<?php bloginfo('url'); ?>">
-        <img alt="logo" src="<?php echo WPTM::option('logo'); ?>">
-      </a>
-    </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a
-            href="#"
-            class="dropdown-toggle"
-            data-toggle="dropdown"
-            role="button"
-            aria-haspopup="true"
-            aria-expanded="false"><span class="text">コンテンツ</span> <span class="caret"></span></a>
+        $cats = WPTM::option('category_for_article_manage');
+        $conf = WPTM::option('category');
 
-          <ul class="dropdown-menu">
-            <?php
-
-            $cats = WPTM::option('category_for_article_manage');
-            $conf = WPTM::option('category');
-
-            if($cats){
-              $d = array();
-              foreach($cats as $slug => $b){
-                if($b && isset($conf[$slug])){
-                  $c = $conf[$slug];
-                  $p = (int)$c['display_priority'];
-                  if(!@$d[$p]){
-                    $d[$p] = array();
-                  }
-                  $d[$p][] = array_merge(array('slug' => $slug), $c);
-                }
+        if($cats){
+          $d = array();
+          foreach($cats as $slug => $b){
+            if($b && isset($conf[$slug])){
+              $c = $conf[$slug];
+              $p = (int)$c['display_priority'];
+              if(!@$d[$p]){
+                $d[$p] = array();
               }
-
-              ksort($d);
-
-              foreach($d as $priority => $g){
-                foreach($g as $cat){
-                  $c = get_category_by_slug($cat['slug']);
-                  if($c){
-                    ?><li class="category-<?php echo $c->slug; ?>">
-                      <a href="<?php echo get_category_link($c->cat_ID); ?>">
-                        <span class="text"><?php echo $c->name; ?></span></a>
-                    </li><?php
-                  }
-                }
-              }
-
+              $d[$p][$slug] = array_merge(array('slug' => $slug), $c);
             }
+          }
+
+          ksort($d);
+
+          foreach($d as $priority => $g){
+            foreach($g as $cat){
+              $c = get_category_by_slug($cat['slug']);
+              if($c){
+                ?><li class="nav-item category-<?php echo $c->slug; ?>">
+                 <a class="nav-link" href="<?php echo get_category_link($c->cat_ID); ?>">
+                    <?php if(@$cat['icon']){ ?>
+                      <span class="wptm-category-icon" style="background-image: url(<?php echo $cat['icon']; ?>);"></span>
+                    <?php } ?>
+                    <span class="text category-font-color"><?php echo $c->name; ?></span>
+                  </a>
+                </li><?php
+
+                $allslug[] = $cat['slug'];
+              }
+            }
+          }
+
+        }
+        ?>
+        <?php
+        $ms = WPTM::option('category_for_global_menu');
+        if(@count($ms)){
+
+          $cats = array();
+          foreach($ms as $slug => $b){
+            if($b && !in_array($slug, $allslug)){
+              $cats[] = $slug;
+            }
+          }
+
+          if($cats){
             ?>
+            <li role="separator" class="nav-item dropdown-divider"></li>
             <?php
-            $ms = WPTM::option('category_for_global_menu');
-            if(count($ms)){
 
-              $cats = array();
-              foreach($ms as $slug => $b){
-                if($b){
-                  $cats[] = $slug;
-                }
+            foreach($cats as $c){
+              $c = get_category_by_slug($c);
+              if($c){
+                ?><li class="nav-item category-<?php echo $c->slug; ?>">
+                  <a class="nav-link" href="<?php echo get_category_link($c->cat_ID); ?>">
+                    <span class="text wptm-header-font-color"><?php echo $c->name; ?></span></a>
+                </li><?php
               }
+            }
 
-              if($cats){
-                ?>
-                <li role="separator" class="divider"></li>
-                <?php
+          }
+          ?>
+        <?php } ?>
 
-                foreach($cats as $c){
-                  $c = get_category_by_slug($c);
-                  if($c){
-                    ?><li class="category-<?php echo $c->slug; ?>">
-                      <a href="<?php echo get_category_link($c->cat_ID); ?>">
-                        <span class="text"><?php echo $c->name; ?></span></a>
-                    </li><?php
-                  }
-                }
-
-              }
-              ?>
-            <?php } ?>
-          </ul>
-        </li>
-
-        <li class="hidden-sm">
-          <form class="navbar-form navbar-left" role="search" action="<?php echo home_url('/'); ?>" style="margin-right: 0; margin-left: 0;">
-            <div class="form-group">
-            <div class="input-group">
-              <!--<span class="input-group-addon"><i class="fa fa-user"></i></span>-->
-              <input type="text" name="s" class="form-control" placeholder="<?php echo __('Search'); ?>">
-              <span class="input-group-btn">
-                <button type="submit" class="btn btn-default">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
-              </span>
-            </div>
-            </div>
-          </form>
-        </li>
-
-        <li class="visible-sm">
-          <a href="<?php echo home_url('/?s'); ?>">&nbsp;<i class="fa fa-search"></i>&nbsp;</a>
-        </li>
-
+        <li role="separator" class="nav-item dropdown-divider"></li>
       </ul>
 
-    </div><!-- /.navbar-collapse -->
-  </div>
+      <div class="d-none d-md-block" style="width: 1em;"></div>
+      <div class="d-block d-md-none" style="margin-bottom: .6em;"></div>
+
+      <form class="form-inline mb-0" role="search" action="<?php echo home_url('/'); ?>" style="margin-right: 0; margin-left: 0;">
+        <div class="form-group w-100">
+        <div class="input-group search-box">
+          <!--<span class="input-group-addon"><i class="fa fa-user"></i></span>-->
+          <input type="text" name="s" class="form-control" placeholder="<?php echo __('Search'); ?>">
+          <span class="input-group-append">
+            <button type="submit" class="btn btn-default">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
+          </span>
+        </div>
+        </div>
+      </form>
+
+    </div>
+  </nav>
 </div>

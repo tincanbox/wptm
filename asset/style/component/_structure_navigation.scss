@@ -1,0 +1,9 @@
+.structure-navigation {
+    li {
+        &:not(:last-child):after {
+            content: " ▹ ";
+            color: #aaa;
+            margin: 0 .4em;
+        }
+    }
+}

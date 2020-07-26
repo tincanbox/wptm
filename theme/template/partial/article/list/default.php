@@ -63,5 +63,5 @@ if($posts){
   ?></div><?php
 
 }else{
-  ?><p style="color: #777; padding: 1.4em; text-align: center; font-size: 1.4em;">該当する記事が見つかりませんでした。</p><?php
+  ?><p style="color: #777; text-align: center; padding: 2.4em 1em; ">該当するコンテンツがありません。</p><?php
 }

@@ -2,12 +2,6 @@
 <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
 <style>
 
-body {
-font-family: 'Ubuntu', 'Noto Sans Japanese';
-font-weight: 200;
-letter-spacing: .02em;
-}
-
 #container {
   background-color: <?php echo WPTM::option('theme_background_color'); ?>;
 }
@@ -39,20 +33,64 @@ body:not(.single) #container {
   <?php } ?>
 <?php } ?>
 
-<?php if($v = WPTM::option('theme_footer_background_color')){ ?>
-#footer {
-  background-color: <?php echo $v; ?>;
+<?php # Header
+if($v = WPTM::option('theme_header_background_color')){ ?>
+.wptm-header-background-color {
+  background-color: <?php echo $v; ?>
 }
 <?php } ?>
 
-<?php if($v = WPTM::option('theme_background_font_color_visibility')){ ?>
-.theme-font-color-background-escape {
+<?php # Header
+if($v = WPTM::option('theme_header_font_color')){ ?>
+.wptm-header-font-color {
+  color: <?php echo $v; ?>
+}
+.wptm-header-background-color-escape {
+  background-color: <?php echo $v; ?>
+}
+<?php } ?>
+<?php
+# Footer
+if($v = WPTM::option('theme_footer_background_color')){ ?>
+.wptm-footer-background-color {
+  background-color: <?php echo $v; ?>;
+}
+.wptm-footer-font-color, .wptm-theme-footer-font-color * {
+  color:  <?php echo WPTM::option('theme_footer_font_color'); ?>
+}
+<?php } ?>
+
+<?php
+# Background
+if($v = WPTM::option('theme_background_font_color_visibility')){ ?>
+.theme-font-color {
   color: <?php echo $v; ?>;
 }
-a.theme-font-color-background-escape:hover {
-  color: <?php echo $v; ?>;
+a.theme-font-color:hover {
+  opacity: .75;
   text-decoration: underline;
 }
 <?php } ?>
 
+.wptm-category-icon {
+  width: 1.1em;
+  height: 1.1em;
+  display: inline-block;
+  background-size: contain;
+  vertical-align: middle;
+  background-position: center;
+}
+<?php
+
+$conf = WPTM::option('category');
+
+if($conf){
+  foreach($conf as $slug => $c){ ?>
+.category-<?php echo $slug; ?> .category-font-color-escape { color: <?php echo $c['escape-color']; ?>; }
+.category-<?php echo $slug; ?> .category-font-color { color: <?php echo $c['theme-color']; ?>; }
+.category-<?php echo $slug; ?> .category-background-color { background-color: <?php echo $c['theme-color']; ?>; }
+    <?php
+  }
+}
+?>
 </style>

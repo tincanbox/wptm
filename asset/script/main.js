@@ -1,11 +1,8 @@
-$(function(){
-
-  $(window).on('load', init);
-
-  function init(){
-    $('a.gototop').on('click', function(){
-      $('body').animate({scrollTop: 0});
+export default {
+  init($) {
+    $(document).on("click", ".gototop", function () {
+      $("html,body").animate({ scrollTop: 0 });
     });
-  }
-
-});
+    return this;
+  },
+};

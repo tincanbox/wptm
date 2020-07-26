@@ -6,6 +6,8 @@ $customizer->UI->build()->panel('basis', array('title' => 'Basis'))
     ->control('checkbox', 'basis_maintenance')
     ->control('text', 'basis_maintenance_secret_key')
     ->control('text', 'basis_maintenance_secret_value')
+  ->section('share')
+    ->control('text', 'facebook_app_id')
   ;
 
 
@@ -21,8 +23,12 @@ $customizer->UI->build()->panel('appearance', array('title' => 'Appearance'))
     ->control('select', 'theme_background_image_size')
     ->control('text', 'theme_background_image_mask_opacity')
     ->control('text', 'theme_background_image_mask_colorhex')
+  ->section('header', array('title' => 'Header'))
+    ->control('color', 'theme_header_background_color')
+    ->control('color', 'theme_header_font_color')
   ->section('footer', array('title' => 'Footer'))
     ->control('color', 'theme_footer_background_color')
+    ->control('color', 'theme_footer_font_color')
   ;
 
 # Top
@@ -35,6 +41,10 @@ $customizer->UI->build()->panel('top')
 
 # Post
 $customizer->UI->build()->panel('post')
+  ->section('post_basis')
+    ->control('checkbox', 'post_show_time')
+    ->control('checkbox', 'post_show_category_list')
+    ->control('checkbox', 'post_allow_comment')
   ->section('list')
     ->control('text', 'post_badge_new_interval')
     ->control('image', 'post_article_list_noimage_url')
@@ -46,17 +56,20 @@ $customizer->UI->build()->panel('post')
 # Sidebanner
 $customizer->UI->build()->panel('sidebar', array('title' => 'Side Bar'))
   ->section('basis')
-  ->control('checkbox', 'sidebar_toggle')
-  ->control('text', 'sidebar_post_type')
-  ->control('text', 'sidebar_post_meta_key_url')
-  ->control('text', 'sidebar_post_meta_key_open_tab')
-  ->control('text', 'sidebar_custom_field_banner_url_v')
-  ->control('text', 'sidebar_custom_field_banner_url_h')
-  ->control('text', 'sidebar_head_category')
-  ->control('text', 'sidebar_menu_category')
-  ->control('text', 'sidebar_head_last_toggle_margin')
-  ->control('text', 'sidebar_head_last_increment')
-  ->control('text', 'sidebar_head_last_activated_time')
+    ->control('checkbox', 'sidebar_toggle')
+    ->control('select', 'sidebar_align')
+    ->control('text', 'sidebar_post_type')
+    ->control('text', 'sidebar_post_meta_key_url')
+    ->control('text', 'sidebar_post_meta_key_open_tab')
+    ->control('text', 'sidebar_custom_field_banner_url_v')
+    ->control('text', 'sidebar_custom_field_banner_url_h')
+  ->section('category', array('title' => 'Category'))
+    ->control('text', 'sidebar_head_category')
+    ->control('text', 'sidebar_menu_category')
+  ->section('auto_change', array('title' => 'Auto Change'))
+    ->control('text', 'sidebar_head_last_toggle_margin')
+    ->control('text', 'sidebar_head_last_increment')
+    ->control('text', 'sidebar_head_last_activated_time')
   ;
 
 $cats = get_categories();
@@ -90,10 +103,13 @@ if($b){
     $ps[] = $c;
     $c = get_category_by_slug($c);
     if($c){
-      $customizer->UI->build()->panel('categories', array('title' => 'Category: List'))
+      $customizer->UI->build()->panel('categories', array('title' => 'Category Theme'))
         ->section('Category: '.$c->slug)
-        ->control('text', 'category['.$c->slug.'][article_count]', array('label' => 'TopPage: Article counts'))
-        ->control('text', 'category['.$c->slug.'][display_priority]', array('label' => 'TopPage: Display Priority'))
+          ->control('color', 'category['.$c->slug.'][theme-color]', array('label' => 'Theme Color'), array('default' => '#eeeeee'))
+          ->control('color', 'category['.$c->slug.'][escape-color]', array('label' => 'Escape Color'), array('default' => '#3f3f3f'))
+          ->control('image', 'category['.$c->slug.'][icon]')
+          ->control('text', 'category['.$c->slug.'][article_count]', array('label' => 'TopPage: Article counts'))
+          ->control('text', 'category['.$c->slug.'][display_priority]', array('label' => 'TopPage: Display Priority'))
         ;
     }
   }

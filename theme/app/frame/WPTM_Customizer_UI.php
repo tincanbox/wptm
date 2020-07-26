@@ -69,8 +69,9 @@ class WPTM_Customizer_UI {
   }
 
 
-  function control($type, $name, $arg = array()){
-    $s = $this->setting($name);
+  function control($type, $name, $arg = array(), $setting = array()){
+
+    $s = $this->setting($name, $setting);
 
     if($s){
       $arg = array_merge(@$s['control'] ? $s['control'] : array(), $arg);

@@ -6,179 +6,37 @@ $category_color_blog: #27B355;
 
 * {
   transition: all .15s;
+  font-family: 'Lato', 'Noto Sans JP', "Montserrat","游ゴシック",YuGothic,"ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","メイリオ",Meiryo, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
-
-@mixin category_color($color){
-  #container {
-    background-color: lighten($color, 4%);
-  }
-  #footer {
-    background-color: darken($color, 12%);
-  }
-}
-
-@mixin article_list_group_caption_outer($c) {
-  color: $c;
-  line-height: 1.6em;
-  letter-spacing: .1em;
-}
-
 
 .section {
   background-color: #ffffff !important;
-  padding: .8em;
-  border-radius: .2em;
 }
 
-
-#header {
-
-  .category-news a {
-    font-size: 1.2em;
-    color: $category_color_news;
-  }
-
-  .category-information a {
-    font-size: 1.2em;
-    color: $category_color_information;
-  }
-
-  .category-blog a {
-    font-size: 1.2em;
-    color: $category_color_blog;
-  }
-
-}
-
-.article-list-group-caption-wrap {
-  overflow: hidden;
-  position: relative;
-  margin-top: 1.8em;
-  .article-list-group-caption {
-    margin: 0;
-  }
-  .link-read-more {
-    position: absolute;
-    right: 0;
-    bottom: .4em;
+.btn-default {
+  background-color: #ffffff;
+  &:hover {
+    background-color: #efefef;
   }
 }
 
-.article-list-group-caption {
-  margin-bottom: .8em;
-  @include article_list_group_caption_outer(#ffffff);
-}
-
-.link-read-more {
-  vertical-align: bottom;
-  text-align: right;
-}
-
-.category-news {
-  .article-list-group-caption {
-    @include article_list_group_caption_outer($category_color_news);
-  }
-  .link-read-more {
-    color: $category_color_news;
-  }
-}
-.category-information {
-  .article-list-group-caption {
-    @include article_list_group_caption_outer($category_color_information);
-  }
-  .link-read-more {
-    color: $category_color_information;
-  }
-}
-.category-blog {
-  .article-list-group-caption {
-    @include article_list_group_caption_outer($category_color_blog);
-  }
-  .link-read-more {
-    color: $category_color_blog;
-  }
-}
-
-
-
-body {
-  &.home {
-    .article-list-group {
-      @media (min-width: 768px) and (max-width: 992px){
-        .article:last-of-type:nth-child(2n-1) {
-          display: none;
-        }
-      }
-    }
-  }
-
-  &.single-post {
-    &.category-news, &.category-information, &.category-blog {
-      .post-content {
-        padding: 1em;
-        background-color: #ffffff;
-      }
-      .comment-list-area {
-        margin-top: 1.8em;
-        padding: 1em;
-        background: #ffffff;
-      }
-    }
-    &.category-news {
-      @include category_color($category_color_news);
-    }
-    &.category-information {
-      @include category_color($category_color_information);
-    }
-    &.category-blog {
-      @include category_color($category_color_blog);
-    }
-
-    .article {
-      &.category-news {
-        .article-list-column-caption {
-          background-color: darken($category_color_news, 8%);
-        }
-      }
-      &.category-information {
-        .article-list-column-caption {
-          background-color: darken($category_color_information, 8%);
-        }
-      }
-      &.category-blog {
-        .article-list-column-caption {
-          background-color: darken($category_color_blog, 8%);
-        }
-      }
-
-    }
-
+.search-box {
+  .btn-default {
+    border: 1px solid #ced4da;
   }
 }
 
 #header {
   background-color: #fff;
-  box-shadow: 0 0 4px rgba(0,0,0,.2);
-}
-
-#footer {
-  background-color: #bbb;
-  color: $font-color-reverse;
-
-  .caption {
-    font-size: 1.1em;
+  color: #555;
+  .navbar {
+    box-shadow: 0 0 4px rgba(0,0,0,.24);
   }
-
-  a {
-    color: #ffffff;
-  }
-
 }
 
 .article-list-group {
 
   .article-list-total-count {
-    margin-bottom: 1.4em;
     .count {
       font-size: 1.1em;
       font-weight: bolder;
@@ -186,12 +44,15 @@ body {
   }
 
   .article-list {
+
+    .badge-new {
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255, .4);
+      background-color: #ce6f3a;
+    }
+ 
     .article-list-column-caption {
       color: #333;
-      background-color: #ffffff;
-      a {
-        color: #555555;
-      }
       .upper {
         position: relative;
         .badge {
@@ -199,11 +60,7 @@ body {
           top: 0;
           right: 0;
         }
-        .badge-new {
-          background-color: #ce6f3a;
-          border: 1px solid #edd;
-        }
-      }
+     }
       .data.title{
         padding: .4em 0;
       }
@@ -213,11 +70,13 @@ body {
       .article-category-pill {
         font-size: .8em;
         background-color: #888;
-        border: 1px solid #777;
+        border: 1px solid rgba(255,255,255, .4);
         border-radius: .2em;
         color: #fff;
-        margin-right: .6em;
         display: inline-block;
+        &:not(:last-child){
+          margin-right: .6em;
+        }
         &:hover {
           background-color: #999;
         }
@@ -230,32 +89,6 @@ body {
     }
   }
 
-  .article {
-    &.category-news {
-      .article-list-column-caption {
-        color: #fff;
-        a { color: #ffffff; }
-        background-color: $category_color_news;
-      }
-    }
-
-    &.category-information {
-      .article-list-column-caption {
-        color: #fff;
-        a { color: #ffffff; }
-        background-color: $category_color_information;
-      }
-    }
-
-    &.category-blog {
-      .article-list-column-caption {
-        color: #fff;
-        a { color: #ffffff; }
-        background-color: $category_color_blog;
-      }
-    }
-
-  }
 }
 
 
@@ -336,11 +169,12 @@ body {
 }
 
 .gototop {
-  color: #555;
   padding: .4em .6em;
   margin-top: 2em;
   display: inline-block;
+  opacity: .75;
   &:hover {
+    opacity: 1;
     cursor: pointer;
     text-decoration: none;
   }

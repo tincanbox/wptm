@@ -1,121 +1,94 @@
 const path = require('path');
 const glob = require('glob');
+const fs = require('fs');
+const webpack = require('webpack');
 
-const html_webpack_plug = require('html-webpack-plugin');
-
-const C = (() => {
-  return require("./workspace.config.js");
-})();
-
-let exclude_reg_list = C.build.EXCLUDE.map((ex) => new RegExp(ex));
+const C = require("./workspace.config.js");
 
 let conf = {
 
   mode: 'development',
 
+  devtool: 'source-map',
+
   entry: (() => {
     let entries = {};
-    for(let k in C.build.ENTRY){
-      let pts = glob.sync(C.build.ENTRY[k] + "/*.{js,ts}");
-      for(let p of pts){
-        let pinf = path.parse(p);
-        entries[pinf.name] = p;
-      }
+    let pts = glob.sync("./" + C.ENTRY + "/*.{js,ts}");
+    for(let p of pts){
+      let pinf = path.parse(p);
+      entries[pinf.name] = p;
     }
-    console.log("Target Entries: ", entries);
     return entries;
   })(),
 
   output: {
-    path: path.resolve(__dirname, C.build.DESTINATION),
-    filename: "[name].js"
+    globalObject: "this",
+    path: path.resolve(__dirname, C.DEST),
+    filename: "[name].js",
+    publicPath: "."
+  },
+
+  optimization: {
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    },
   },
 
   resolve: {
-    modules: Object.keys(C.build.ENTRY).map((k) => {
-      let r = C.build.ENTRY[k];
-      return path.resolve(__dirname, r);
-    }),
+    modules: [path.join(__dirname, C.ENTRY), "node_modules"],
     extensions: [
-      '.ts', '.tsx', '.js'
-    ]
+      '.ts', '.tsx', '.js', '.vue'
+    ],
+    alias: {
+      // vue-template-compiler
+      vue$: 'vue/dist/vue.esm.js',
+      //asset: path.resolve(__dirname + "/" + C.ENTRY + "/asset")
+    },
   },
 
-  plugins: [
-    new (require('vue-loader/lib/plugin'))(),
-  ].concat((() => {
-    return C.build.PAGE.map((p) => {
-      return new html_webpack_plug({ template: p })
-    })
-  })()),
+  devServer: {
+    contentBase: path.join(__dirname, C.ENTRY),
+    compress: true,
+    inline: true,
+    hot: false,
+    https: false,
+    host: "localhost",
+    port: 3030
+  },
 
-  module: {
-    rules: [
-      //{
-      //  test: /\.s[ac]ss$/i,
-      //  use: [
-      //    // Creates `style` nodes from JS strings
-      //    'style-loader',
-      //    'css-loader',
-      //    // Compiles Sass to CSS
-      //    'sass-loader',
-      //  ],
-      //},
-      {
-        test: /\.htm(l?)$/i,
-        loader: 'html-loader',
-      },
-      {
-        test: /\.vue$/,
-        exclude: [].concat(exclude_reg_list),
-        use: [
-          { loader: 'vue-loader' },
-          { loader: 'vue-style-loader' }
-        ]
-      },
-      {
-        test: /\.ts(x?)$/,
-        exclude: [].concat(exclude_reg_list),
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true,
-              presets: [
-                ["@babel/env"]
-              ]
-            }
-          },
-          {
-            loader: 'ts-loader',
-            options: {
-              // If your project takes too long to build with type-checkings.
-              //transpileOnly: true,
-            }
-          }
-        ]
-      },
-      {
-        test: /\.js$/,
-        exclude: [].concat(exclude_reg_list),
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true,
-              presets: [
-                ["@babel/env"]
-              ]
-            }
-          },
-          {
-            loader: 'eslint-loader',
-          }
-        ]
-      },
-    ]
-
+  watchOptions: {
+    // Example watchOptions
+    aggregateTimeout: 300,
+    poll: 1000
   }
-}
+
+};
+
+conf = Object.assign(conf, require('./webpack.config.module.js')(webpack, conf), require('./webpack.config.local.js')(webpack, conf))
+
+// Asset List
+let srcm = new RegExp("^" + C.ENTRY.replace(/(^\/|\/$)/, "") + "/");
+let srcs = glob.sync(C.ENTRY + "/**/*.{html,htm,xml,yml,jpg,jpeg,png,gif,tiff,svg,woff,woff2,ttf,eot,mp3,mp4,m4a,wav,zip}")
+  .map((r) => { return r.replace(srcm, ""); });
+fs.writeFileSync(C.ENTRY + "/.asset.list.js", "// generated in webpack.config\nexport default " + JSON.stringify(srcs));
+console.log("[WORKSPACE]", "Listing up assets... ", srcs);
 
 module.exports = conf;

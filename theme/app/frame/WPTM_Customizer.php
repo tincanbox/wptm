@@ -19,7 +19,7 @@ class WPTM_Customizer extends WPTM_Factory {
   }
 
 
-  function setting($k = null){
+  function setting($k = null, $override = null){
     $default = array('default' => null);
 
     if(empty($this->_setting)){
@@ -30,8 +30,16 @@ class WPTM_Customizer extends WPTM_Factory {
     }
 
     if($k){
-      @$this->customizer && $this->customizer->add_setting($k, @$this->_setting[$k]);
-      return (array_key_exists($k, $this->_setting) ? $this->_setting[$k] : $default);
+      if(!@$this->_setting[$k]){
+        $this->_setting[$k] = array_merge($default);
+      }
+      if(is_array($override)){
+        $this->_setting[$k] = array_merge($this->_setting[$k], $override);
+      }
+      if(@$this->customizer){
+        $this->customizer->add_setting($k, $this->_setting[$k]);
+      }
+      return @$this->_setting[$k];
     }
 
     return $this->_setting;

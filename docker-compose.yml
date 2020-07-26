@@ -2,35 +2,46 @@ version: "3.7"
 services:
 
   wordpress:
-    image: wordpress:latest
     container_name: "wordpress"
     env_file: .env
-    #build:
-    #  context: .
-    #  dockerfile: ./build/Dockerfile.setup
+    build:
+      context: ./build/wordpress
+      args:
+        WP_INSTALL_DIR: ${WP_INSTALL_DIR}
+        WWWDATA_USERID: ${WWWDATA_USERID}
+    links:
+      - database:mysql
     volumes:
-      - ./volume/wordpress:/var/www/html
-      - ./volume/static:/var/www/html/static
-      - ./theme:/var/www/html/wp-content/themes/wptm
-      - ./build:/opt/build
+      - ./volume/static:${WP_INSTALL_DIR}/static
+      - ./volume/content:${WP_INSTALL_DIR}/wp-content
+      - ./theme:${WP_INSTALL_DIR}/wp-content/themes/wptm
       - ./config:/opt/config
-    restart: always
+    restart: unless-stopped
     depends_on:
-      - db
+      - database
     ports:
-      - 80:80
+      - "${HTTP_CLIENT_PORT}:80"
+      - "${HTTPS_CLIENT_PORT}:443"
     environment:
-      WORDPRESS_DB_HOST: db:3306
+      SERVER_LOCALE: ${SERVER_LOCALE}
+      SERVER_TIMEZONE: ${SERVER_TIMEZONE}
+      WP_INSTALL_DIR: ${WP_INSTALL_DIR}
+      WP_URL: ${WP_URL}
+      WP_TITLE: ${WP_TITLE}
+      WP_ADMIN_USER: ${WP_ADMIN_USER}
+      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
+      WP_PLUGIN_LIST: ${WP_PLUGIN_LIST}
+      WORDPRESS_DB_HOST: mysql:${DB_CLIENT_PORT}
       WORDPRESS_DB_NAME: ${DB_NAME}
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
-    command: /opt/build/entrypoint.sh
 
-  db:
+  database:
     image: mysql:5.7
-    container_name: "mysql57"
+    container_name: "mysql"
     env_file: .env
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./volume/database/mysql_data:/var/lib/mysql
     environment:
@@ -38,12 +49,13 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
+    command: --default-authentication-plugin=mysql_native_password
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: "phpmyadmin"
     restart: always
     depends_on:
-      - db
+      - database
     ports:
-      - 8888:80
+      - 8888:${PHPMYADMIN_CLIENT_PORT}

@@ -1,9 +1,12 @@
+@charset 'utf-8';
+
 @import './bootstrap';
 
 @import './component/layout';
 @import './component/article-list';
 @import './component/post-content';
 @import './component/button';
+@import './component/structure_navigation';
 
 @import './page/home';
 @import './page/article/single';

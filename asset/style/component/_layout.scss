@@ -1,15 +1,63 @@
 body, html {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
   position: relative;
+  max-width: 100%;
+  width: 100%;
 }
+
+#wpadminbar {
+  top: auto;
+  bottom: 0;
+}
+html { margin-top: 0px !important; }
+	* html body { margin-top: 0px !important; }
+	@media screen and ( max-width: 782px ) {
+		html { margin-top: 0px !important; }
+		* html body { margin-top: 0px !important; }
+	}
+
+body {
+  &.home {
+    .article-list-group {
+      @media (min-width: 768px) and (max-width: 992px){
+        .article:last-of-type:nth-child(2n-1) {
+          display: none;
+        }
+      } } } }
+
+.navbar-toggler { border: none; background: transparent !important;
+  &:focus { outline: none; background: transparent !important; }
+  &:hover>.icon-bar:nth-child(2) { width: 22px; transition: ease all .2s; }
+  &:active>.icon-bar:nth-child(2) { width: 22px; transition: ease all .2s; } 
+  .icon-bar {
+    transform: rotate(0deg) translate(0px, 0px);
+    transition: ease all .2s;
+    display: block; width: 22px; height: 2px; border-radius: 1px;
+  }
+  .icon-bar+.icon-bar { margin-top: 4px; } 
+  .icon-bar:nth-child(2) { width: 16px; transition: ease all .2s; } 
+  &:not(.collapsed) .icon-bar:nth-child(1) { transform: rotate(45deg) translate(5px, 4px); transition: ease all .2s; }
+  &:not(.collapsed) .icon-bar:nth-child(2) { opacity: 0; transition: ease all .2s; }
+  &:not(.collapsed) .icon-bar:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); transition: ease all .2s; }
+} 
 
 #container {
   position: relative;
   height: auto;
   min-height: 100%;
   overflow: hidden;
+}
+
+.kamisibai {
+  margin-top: 58px;
+  .jumbotron-slide-image {
+    padding-bottom: 75%; 
+    @media (min-width: 576px) {
+      padding-bottom: 40%; 
+    }
+  }
+}
+.kamisibai + #content {
+  margin-top: 1rem;
 }
 
 #header {
@@ -26,8 +74,15 @@ body, html {
   }
 }
 
+.section {
+  padding: .95em;
+  border-radius: .2em;
+}
+
 #content {
   margin: auto;
+  margin-top: 58px;
+  padding-top: 1rem;
   padding-bottom: 80px;
 }
 
@@ -36,9 +91,31 @@ body, html {
   background-color: #eee;
   bottom: 0;
   width: 100%;
+  .caption {
+    font-size: 1.1em;
+  }
+  .site-title {
+    display: inline-block;
+    font-size: 1.6em;
+    font-weight: bold;
+  }
+  .copyright {
+    font-size: .8em;
+    opacity: .75;
+  }
 }
 
 img {
   width: 100%;
   height: auto;
+}
+
+.button-group-sharing > * {
+  vertical-align: top !important;
+}
+
+.article-list-group {
+  .article-list-total-count {
+    margin-bottom: 1.4em;
+  }
 }

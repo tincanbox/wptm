@@ -6,7 +6,11 @@ if(post_password_required()){
   return;
 }
 
-#echo var_export(have_comments(), true);
+$allow = WPTM::option('post_allow_comment');
+
+if(!$allow){
+  return;
+}
 
 ?>
 
@@ -14,13 +18,9 @@ if(post_password_required()){
 
   <?php if(have_comments()): ?>
     <h3 class="comment-list-title">
-      <?php
-        $comments_number = get_comments_number();
-          printf(
-            'レビュー <i class="badge">%1$s</i>',
-            number_format_i18n( $comments_number )
-          );
-      ?>
+      <?php $comments_number = get_comments_number(); ?>
+      <span class="align-middle"><?php echo __('Review') ?></span>
+      <span class="badge badge-primary"><?php echo number_format_i18n( $comments_number );?></span>
     </h3>
 
     <?php the_comments_navigation(); ?>
@@ -60,7 +60,7 @@ if(post_password_required()){
               #.'<label for="author">' . __('Name') . '</label> '
               #.($req ? '<span class="required">*</span>' : '')
               .'<div class="input-group">'
-                .'<span class="input-group-addon"><i class="fa fa-user"></i></span>'
+                .'<span class="input-group-prepend"><span class="input-group-text"><i class="fa fa-user"></i></span></span>'
                 .'<input'
                   .' class="form-control"'
                   .' id="author"'
@@ -77,7 +77,7 @@ if(post_password_required()){
               #.'<label for="email">' . __('Email') . '</label> '
               #.($req ? '<span class="required">*</span>' : '')
               .'<div class="input-group">'
-                .'<span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>'
+                .'<span class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope-o"></i></span></span>'
                 .'<input'
                   .' class="form-control"'
                   .' id="email"'
@@ -94,7 +94,7 @@ if(post_password_required()){
             '<input class="form-control" id="url" name="url" type="text" value="' . esc_attr($commenter['comment_author_url']) .
             '" size="30" /></p>',
         ),
-        'class_submit' => 'button btn btn-default',
+        'class_submit' => 'button button-submit btn btn-primary',
         'title_reply' => '',
         'title_reply_to' => '',
         'title_reply_before' => '',

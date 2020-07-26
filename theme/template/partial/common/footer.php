@@ -1,8 +1,10 @@
-<div id="footer">
+<div id="footer" class="wptm-footer-background-color">
 
   <div class="container">
-    <div class="col-md-4">
-      <p class="caption">コンテンツ</p>
+  <div class="row mb-4">
+
+    <div class="col-md-4 wptm-footer-font-color">
+      <p class="caption"><?php echo __('Contents') ?></p>
       <ul class="">
       <?php
 
@@ -28,7 +30,13 @@
           foreach($g as $cat){
             $c = get_category_by_slug($cat['slug']);
             if($c){
-              ?><li class="category-<?php echo $c->slug; ?>"><a href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a></li><?php
+              ?>
+              <li class="category-<?php echo $c->slug; ?>">
+                <a
+                  class="link wptm-footer-font-color"
+                  href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
+              </li>
+              <?php
             }
           }
         }
@@ -38,34 +46,36 @@
       </ul>
     </div>
 
-    <div class="col-md-4">
-      <p class="caption">Section 001</p>
+    <div class="col-md-4 wptm-footer-font-color">
+      <p class="caption">Section 02</p>
       <ul>
-      <li><a class="link" href="" >ご利用ガイド</a></li>
-      <li><a class="link" href="" >会員登録</a></li>
+        <li><a class="link wptm-footer-font-color" href="" >Sample</a></li>
       </ul>
     </div>
 
-    <div class="col-md-4">
-      <p class="caption">サポート</p>
+    <div class="col-md-4 wptm-footer-font-color">
+      <p class="caption">Section 3</p>
       <ul>
-      <li><a class="link" href="">はじめての方へ</a></li>
-      <li><a class="link" href="">会社概要</a></li>
-      <li><a class="link" href="">特定商取引に関する表記</a></li>
-      <li><a class="link" href="">個人情報保護方針</a></li>
-      <li><a class="link" href="">お問い合わせ</a></li>
+        <li><a class="link wptm-footer-font-color" href="">Sample</a></li>
       </ul>
     </div>
 
-    <div style="clear: both; overflow: hidden; padding-top: 1.6em;">
+  </div>
+  <div class="row">
+
+    <div class="col-xs-12 col-md-6" style="clear: both; overflow: hidden;">
     <?php WPTM::render('template/partial/common/share/bootstrap_footer'); ?>
     </div>
 
-    <div style="text-align: right;">
-      <div>
-        <img src="<?php echo WPTM::option('logo_footer'); ?>" style="width: 180px;"/>
+    <div class="col-xs-12 col-md-6" style="text-align: right;">
+      <div class="mb-2">
+        <?php if($s = WPTM::option('logo_footer')){ ?>
+          <img src="<?php echo $s; ?>" style="width: 180px;"/>
+        <?php }else{ ?>
+          <span class="site-title wptm-footer-font-color"><?php echo get_bloginfo('title'); ?></span>
+        <?php } ?>
       </div>
-      <div class="">
+      <div class="wptm-footer-font-color copyright">
         &copy; 2020 YOURCOOLCOMPANY All rights reserved.
       </div>
     </div>
@@ -73,5 +83,4 @@
   </div>
 
 </div>
-
-
+</div>
