@@ -122,7 +122,13 @@ html {
 
 .section {
   padding: .95em;
-  border-radius: .2em; }
+  border-radius: .3em; }
+  .section .append {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; }
+  .section .prepend {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0; }
 
 #content {
   margin: auto;
@@ -148,6 +154,11 @@ html {
 img {
   width: 100%;
   height: auto; }
+
+.flex {
+  display: flex; }
+  .flex .center {
+    align-self: center; }
 
 .button-group-sharing > * {
   vertical-align: top !important; }

@@ -1,0 +1,3 @@
+[submodule "asset/style/vendor/tinkerer"]
+	path = asset/style/vendor/tinkerer
+	url = git@github.com:tincanbox/tinkerer.git

@@ -24,7 +24,7 @@ if($post_type){
   }
 
   ?>
-  <h4 style="margin-top: 1.8em;"><?php echo __(@$group_caption); ?></h4>
+  <h4 class="article-group-caption"><?php echo __(@$group_caption); ?></h4>
   <?php
 
   WPTM::render('template/partial/article/list/group_'.$template, array(

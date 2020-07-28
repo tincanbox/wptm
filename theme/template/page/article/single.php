@@ -7,33 +7,40 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post();
 
   ?>
 
-  <div class="post-content section">
+  <div class="section">
+    <h2 class="post-title mb-0"><?php the_title(); ?></h2>
+  </div>
 
-    <h2 class="post-title"><?php the_title(); ?></h2>
+  <?php if(has_post_thumbnail()): ?>
+    <div clas="row mt-3 mb-3">
+      <?php
+
+      $k = WPTM::option('post_meta_key_eyecatch_link');
+      $meta = $k ? get_post_meta($post->ID, $k) : array();
+      $val = @$meta[0] ? $meta[0] : null;
+
+      ?>
+      <div class="post-thumbnail"><?php
+        if($val){
+          ?><a href="<?php echo $val; ?>" target="_blank"><?php
+            the_post_thumbnail('full');
+          ?></a><?php
+        }else{
+          the_post_thumbnail('full');
+        }
+      ?>
+      </div>
+    </div>
+  <?php endif; ?>
+
+  <div class="post-content section mb-3">
+
     <?php if(WPTM::option('post_show_time')){ ?>
       <div class="post-time">
         <span class="date"><?php the_time('Y.m.d'); ?></span> <span class="time"><?php echo the_time('H:i'); ?></span>
       </div>
     <?php } ?>
     <div class="post-yield">
-      <?php if(has_post_thumbnail()): ?>
-        <?php
-
-        $k = WPTM::option('post_meta_key_eyecatch_link');
-        $meta = $k ? get_post_meta($post->ID, $k) : array();
-        $val = @$meta[0] ? $meta[0] : null;
-
-        ?>
-        <div class="post-thumbnail"><?php
-          if($val){
-            ?><a href="<?php echo $val; ?>" target="_blank"><?php
-              the_post_thumbnail('full');
-            ?></a><?php
-          }else{
-            the_post_thumbnail('full');
-          }
-        ?></div>
-      <?php endif; ?>
       <div class="post-content"><?php the_content(); ?></div>
     </div>
 
@@ -53,47 +60,52 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post();
           <a class="post-tag-link" href="<?php echo get_tag_link($c->term_id); ?>"><?php echo $c->name; ?></a>
         </span><?php
       }
-      ?></div><?php
+      ?>
+      </div>
+      <?php
     }
+  ?>
 
+  <?php
+  // Related categories
 
-    $is_comment_disabled = false;
-    $categories = get_the_category();
-    $query_category_in = array();
-    $disabled = WPTM::option('post_comment_disabled_category_list');
-    
-    $is_category_list_disabled = (!@WPTM::option('post_show_category_list')) || false;
+  $is_comment_disabled = false;
+  $categories = get_the_category();
+  $query_category_in = array();
+  $disabled = WPTM::option('post_comment_disabled_category_list');
+  
+  $is_category_list_disabled = (!@WPTM::option('post_show_category_list')) || false;
 
-    if($categories){
-      if(!$is_category_list_disabled){
-        ?><div class="post-category-area"><h4 class="caption"><?php echo _e('Categories'); ?></h4><?php
-      }
-      foreach($categories as $c){
-        $query_category_in[] = $c->cat_ID;
-        if($disabled){
-          $f = @$disabled[$c->slug];
-          if($f){
-            $is_comment_disabled = true;
-          }else{
-            if($f === false){
-              $is_comment_disabled = false;
-            }
+  if($categories){
+    if(!$is_category_list_disabled){
+      ?><div class="post-category-area"><h4 class="caption"><?php echo _e('Categories'); ?></h4><?php
+    }
+    foreach($categories as $c){
+      $query_category_in[] = $c->cat_ID;
+      if($disabled){
+        $f = @$disabled[$c->slug];
+        if($f){
+          $is_comment_disabled = true;
+        }else{
+          if($f === false){
+            $is_comment_disabled = false;
           }
         }
-        if(!$is_category_list_disabled){
-          ?>
-          <span class="slug-pill post-category category-<?php echo $c->slug; ?>">
-            <a class="post-category-link" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
-          </span>
-          <?php
-        }
       }
       if(!$is_category_list_disabled){
-        ?></div><?php
+        ?>
+        <span class="slug-pill post-category category-<?php echo $c->slug; ?>">
+          <a class="post-category-link" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
+        </span>
+        <?php
       }
     }
+    if(!$is_category_list_disabled){
+      ?></div><?php
+    }
+  }
 
-    ?>
+?>
 
   </div>
 
@@ -124,8 +136,9 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post();
 
   ?>
 
-  <div class="section">
+  <div class="section mb-3">
   <?php
+  // Related articles
 
   WPTM::render('template/partial/article/list/group_related', array(
     'show_group_caption' => true,
@@ -139,15 +152,23 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post();
   </div>
 
   <?php
+  // Comments
   $s = $post;
   global $post;
   $post = $s;
-  if(!$is_comment_disabled && (comments_open() || get_comments_number())){
+  if(WPTM::option('post_allow_comment') && !$is_comment_disabled && (comments_open() || get_comments_number())){
+    ?>
+    <div class="section mb-3">
+    <?php
     global $withcomments;
     $withcomments = 1;
     comments_template();
+    ?>
+    </div>
+    <?php
   }
 
+  // Finally closes all postdata.
   wp_reset_postdata();
 
 }

@@ -79,7 +79,15 @@ body {
 
 .section {
   padding: .95em;
-  border-radius: .2em;
+  border-radius: .3em;
+  .append {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .prepend {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 }
 
 #content {
@@ -111,6 +119,13 @@ body {
 img {
   width: 100%;
   height: auto;
+}
+
+.flex {
+  display: flex;
+  .center {
+    align-self: center;
+  }
 }
 
 .button-group-sharing > * {
