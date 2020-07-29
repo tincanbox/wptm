@@ -19,7 +19,7 @@
           foreach($g as $c){
             $slug = $c['slug'];
             ?>
-            <li class="nav-item <?php echo $c['prefix']; ?>-<?php echo $c['slug']; ?> animatable attractive">
+            <li class="nav-item <?php echo $c['prefix']; ?>-<?php echo $c['slug']; ?> animatable">
               <?php
 
               if(!@$c['is_active']){

@@ -21,7 +21,7 @@ if($post_type){
 
   if(@$group_caption){
     ?>
-    <h4 class="article-group-caption"><?php echo __($group_caption); ?></h4>
+    <h4 class="article-group-caption mb-2"><?php echo __($group_caption); ?></h4>
     <?php
   }
 

@@ -98,9 +98,12 @@ class WPTM_Filter extends WPTM_Factory {
 
 
   static function body_class($classes = array()){
-    if(in_array('single-post', $classes)){
+    global $wp_query;
+    $opt = array();
+    if($wp_query->is_single()){
+      $opt['post'] = @$wp_query->get_posts()[0];
     }
-    return array_merge($classes, self::generate_css_class());
+    return array_merge($classes, self::generate_css_class($opt));
   }
 
 }
