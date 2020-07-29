@@ -1,8 +1,5 @@
 <?php /* WPTM::render('template/partial/article/list/group_category', array(
   'list_type' => 'simple_row',
-  'query' => array(
-    'category_name' => 'notification',
-  )
 )); */ ?>
 
 <?php 
@@ -10,20 +7,21 @@
 $link_read_more_label = ($v = WPTM::option('post_article_list_read_more_label')) ? $v : 'More &raquo;';
 
 $priority = array();
-$cs = WPTM::option('category_for_article_manage');
 $cat_c = WPTM::option('category');
 
-if($cs){
-  foreach($cs as $c => $is_active){
+if($cat_c){
+  $stack = array();
+  foreach($cat_c as $slug => $p){
+    $is_active = !!@$p['is_active'];
     if($is_active){
-      $p = @$cat_c[$c];
       $k = (int)@$p['display_priority'];
-      while(isset($priority[$k])){
-        $k += 1;
-      }
-      $p['slug'] = $c;
-      $priority[$k] = $p;
+      if(array_key_exists($k, $stack)) $stack[$k] = array();
+      $p['slug'] = $slug;
+      $stack[$k][] = $p;
     }
+  }
+  foreach($stack as $pri => $list){
+    foreach($list as $p) $priority[] = $p;
   }
 }
 
@@ -37,7 +35,7 @@ foreach($priority as $p => $s){
       <div class="article-list-group-caption-wrap row mt-1 mb-4">
         <h3 class="article-list-group-caption theme-font-color-escape col-10 col-md-11 mb-0 rack-board">
           <?php if(@$s['icon']){ ?>
-            <i class="theme-category-icon mr-1" style="background-image: url(<?php echo $s['icon']; ?>);"></i>
+            <i class="theme-article-icon mr-1" style="background-image: url(<?php echo $s['icon']; ?>);"></i>
           <?php } ?>
           <span class="mr-3"><?php echo $c->name; ?></span>
           <a

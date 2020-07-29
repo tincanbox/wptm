@@ -1,5 +1,31 @@
 <?php
 
+function set_article_group($panel, $type, $name){
+  $kp = $type.'['.$name.']';
+  $panel
+    ->section(ucfirst($type).'['.$name.']')
+      ->control('checkbox', $kp.'[is_active]')
+      ->control('checkbox', $kp.'[show_in_menu]')
+      ->control('color', $kp.'[theme_background_color]')
+      ->control('number', $kp.'[theme_background_opacity]', array(
+        'description' => '0 ~ 255'
+      ))
+      ->control('color', $kp.'[theme_background_font_color_visibility]')
+      ->control('upload', $kp.'[theme_background_image]')
+      ->control('select', $kp.'[theme_background_image_size]',
+        array(
+          'choices' => array('cover' => 'cover', 'repeat' => 'repeat')
+        ), array(
+          'default' => 'cover'
+        ))
+      ->control('image', $kp.'[icon]')
+      ->control('text', $kp.'[article_count]', array('label' => 'TopPage: Article counts'))
+      ->control('checkbox', $kp.'[comment_disabled]', array('label' => 'Disable Comment'))
+      ->control('text', $kp.'[display_priority]', array('label' => 'TopPage: Display Priority'))
+      ->control('checkbox', $kp.'[search_excluded]', array('label' => 'Exclude from search'))
+     ;
+}
+
 # Brand logo.
 $customizer->UI->build()->panel('basis', array('title' => 'Basis'))
   ->section('maintenace', array('title' => 'Maintenance'))
@@ -39,9 +65,10 @@ $customizer->UI->build()->panel('top')
   ;
 
 # Post
-$customizer->UI->build()->panel('post')
-  ->section('post_basis')
+$customizer->UI->build()->panel('article')
+  ->section('article basis')
     ->control('checkbox', 'post_show_time')
+    ->control('checkbox', 'post_show_tag_list')
     ->control('checkbox', 'post_show_category_list')
     ->control('checkbox', 'post_allow_comment')
   ->section('list')
@@ -71,27 +98,20 @@ $customizer->UI->build()->panel('sidebar', array('title' => 'Side Bar'))
     ->control('text', 'sidebar_head_last_activated_time')
   ;
 
+# posttypes
+$ps = get_post_types(array( 'public'   => true, '_builtin' => false));
+array_unshift($ps, 'post');
+$panel = $customizer->UI->build()->panel('posttypes', array('title' => 'Post Type'));
+foreach($ps as $p){
+  set_article_group($panel, 'posttype', $p);
+}
+
+# categories
 $cats = get_categories();
 $t = array();
 $panel = $customizer->UI->build()->panel('category', array('title' => 'Category'));
 foreach($cats as $i => $c){
   $t[$c->slug] = $c->name;
-  $panel
-    ->section('comment disabled', array('title' => 'Comment: Disabled'))
-    ->control('checkbox', 'post_comment_disabled_category_list['.$c->slug.']', array('label' => $c->name));
-
-  $panel
-    ->section('search exclude', array('title' => 'Category: Excludes From Search'))
-    ->control('checkbox', 'category_list_search_excluded['.$c->slug.']', array('label' => $c->name));
-
-  $panel
-    ->section('article category', array('title' => 'Category: For Articles'))
-    ->control('checkbox', 'category_for_article_manage['.$c->slug.']', array('label' => $c->name));
-
-  $panel
-    ->section('menu content categories', array('title' => 'Category: Visible in the Menu'))
-    ->control('checkbox', 'category_for_global_menu['.$c->slug.']', array('label' => $c->name));
-
 }
 
 $b = WPTM::option('category_for_article_manage');
@@ -102,24 +122,8 @@ if($b){
     $ps[] = $c;
     $c = get_category_by_slug($c);
     if($c){
-      $customizer->UI->build()->panel('categories', array('title' => 'Category Theme'))
-        ->section('Category: '.$c->slug)
-          ->control('color', 'category['.$c->slug.'][theme_background_color]')
-          ->control('number', 'category['.$c->slug.'][theme_background_opacity]', array(
-            'description' => '0 ~ 255'
-          ))
-          ->control('color', 'category['.$c->slug.'][theme_background_font_color_visibility]')
-          ->control('upload', 'category['.$c->slug.'][theme_background_image]')
-          ->control('select', 'category['.$c->slug.'][theme_background_image_size]',
-            array(
-              'choices' => array('cover' => 'cover', 'repeat' => 'repeat')
-            ), array(
-              'default' => 'cover'
-            ))
-          ->control('image', 'category['.$c->slug.'][icon]')
-          ->control('text', 'category['.$c->slug.'][article_count]', array('label' => 'TopPage: Article counts'))
-          ->control('text', 'category['.$c->slug.'][display_priority]', array('label' => 'TopPage: Display Priority'))
-        ;
+      $p = $customizer->UI->build()->panel('categories', array('title' => 'Category'));
+      set_article_group($p, 'category', $c->slug);
     }
   }
 }

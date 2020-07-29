@@ -1,4 +1,4 @@
-<div id="footer" class="theme-footer-background-color">
+<div id="footer" class="theme-footer-background-color invisible-onload">
 
   <div class="container">
   <div class="row mb-4">

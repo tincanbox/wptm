@@ -13,24 +13,37 @@
 
 if(get_search_query()){
 
-  $exclude = WPTM::option('category_list_search_excluded');
   $cat_ids = array();
-  if($exclude){
-    foreach($exclude as $sl => $b){
-      if($b){
-        $c = get_category_by_slug($sl);
-        if($c){
-          $cat_ids[] = $c->cat_ID;
-        }
+  $include_posttype_list = array();
+
+  $conf = WPTM::option('category');
+  foreach($conf as $sl => $c){
+    if($c && @$c['search_excluded']){
+      $c = get_category_by_slug($sl);
+      if($c){
+        $cat_ids[] = $c->cat_ID;
+      }
+    }
+  }
+
+  $conf = WPTM::option('posttype');
+  foreach($conf as $sl => $c){
+    if($c && !@$c['search_excluded']){
+      if($c){
+        $include_posttype_list[] = $sl;
       }
     }
   }
 
   WPTM::render('template/page/article/list', array(
+    'main_query' => $main_query,
     'show_total_count' => true,
     'archive_type' => 'default',
     'list_type' => 'with_picture',
-    'query' => array_merge($main_query->query, array('category__not_in' => $cat_ids))
+    'query' => array_merge($main_query->query, array(
+      'post_type' => $include_posttype_list,
+      'category__not_in' => $cat_ids
+    ))
   ));
 
 }

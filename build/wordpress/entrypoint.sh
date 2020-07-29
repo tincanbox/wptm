@@ -9,8 +9,8 @@ echo "======== WPTM ENTRYPOINT ========"
 
 # Add your configurations here if you need.
 echo "moving configurations..."
-#yes | cp -f /opt/config/.htaccess .htaccess 2>/dev/null || :
-#yes | cp -f /opt/config/uploads.ini /usr/local/etc/php/conf.d/uploads.ini 2>/dev/null || :
+yes | cp -f /opt/config/.htaccess .htaccess 2>/dev/null || :
+yes | cp -f /opt/config/uploads.ini /usr/local/etc/php/conf.d/uploads.ini 2>/dev/null || :
 #yes | cp -f /usr/local/etc/php/php.ini-production /usr/local/etc/php/conf.d/php.ini 2>/dev/null || :
 
 a2enmod rewrite

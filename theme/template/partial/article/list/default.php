@@ -2,6 +2,16 @@
 
 global $wp_query;
 
+$conf = WPTM::option('posttype');
+$include_posttype_list = array();
+foreach($conf as $sl => $c){
+  if($c && @$c['is_active']){
+    if($c){
+      $include_posttype_list[] = $sl;
+    }
+  }
+}
+
 $wp_query = new WP_Query(array_merge(array(
   #'posts_per_page'   => 10,
   #'offset'           => 0,
@@ -13,7 +23,7 @@ $wp_query = new WP_Query(array_merge(array(
   #'exclude'          => '',
   #'meta_key'         => '',
   #'meta_value'       => '',
-  'post_type'        => 'post',
+  'post_type'        => $include_posttype_list,
   #'post_mime_type'   => '',
   #'post_parent'      => '',
   #'author'     => '',
@@ -25,6 +35,16 @@ $posts = $wp_query->get_posts();
 
 
 if($posts){
+
+  $conf = array();
+  foreach(array(
+    'post_article_list_noimage_url',
+    'post_show_time',
+    'category_for_article_manage',
+    'post_badge_new_interval'
+  ) as $cn){
+    $conf["opt_" . $cn] = @WPTM::option($cn);
+  }
 
   $cls = '';
 
@@ -50,13 +70,13 @@ if($posts){
     setup_postdata($GLOBALS['post'] =& $post);
 
     if(!@$list_type || $list_type === 'default'){
-      WPTM::render('template/partial/article/list/column/default', array(
+      WPTM::render('template/partial/article/list/column/default', array_merge($conf, array(
         'post' => $post
-      ));
+      )));
     }else{
-      WPTM::render('template/partial/article/list/column/'.$list_type, array(
+      WPTM::render('template/partial/article/list/column/'.$list_type, array_merge($conf, array(
         'post' => $post
-      ));
+      )));
     }
 
     wp_reset_postdata();

@@ -10,6 +10,14 @@ html {
   background-color: #ffffff !important;
 }
 
+.invisible-onload {
+  transition: all .4s;
+  opacity: 0;
+  &.loaded {
+    opacity: 1;
+  }
+}
+
 .btn-default {
   background-color: #ffffff;
   &:hover {

@@ -6,7 +6,6 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-
 # ---- file or dir
 RewriteBase /
 RewriteCond %{REQUEST_URI} !^$

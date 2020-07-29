@@ -16,9 +16,7 @@ services:
       - ./volume/static:${WP_INSTALL_DIR}/static
       - ./volume/content:${WP_INSTALL_DIR}/wp-content
       - ./theme:${WP_INSTALL_DIR}/wp-content/themes/wptm
-      - ./config/ssl:/opt/config/ssl
-      - ${PWD}/config/.htaccess:${WP_INSTALL_DIR}/.htaccess
-      - ${PWD}/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./config:/opt/config
     restart: unless-stopped
     depends_on:
       - database

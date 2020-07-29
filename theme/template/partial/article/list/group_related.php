@@ -3,7 +3,7 @@
 $post_type = null;
 $categories = array();
 
-if(@$post){
+if($post){
   $post_type = get_post_type_object(get_post_type($post));
   $categories = get_the_category($post->ID);
   $categories = $categories ? $categories : array();
@@ -11,23 +11,22 @@ if(@$post){
 
 if($post_type){
 
-  if($post_type->name != 'post'){
-    $template = 'post_type';
-    $group_caption = $post_type->labels->name;
-  }else{
-    $template = 'default';
-  }
+  $template = 'post_type';
+  $group_caption = $post_type->labels->name;
 
   $cats = array();
   foreach($categories as $cat){
     $cats[] = $cat->slug;
   }
 
-  ?>
-  <h4 class="article-group-caption"><?php echo __(@$group_caption); ?></h4>
-  <?php
+  if(@$group_caption){
+    ?>
+    <h4 class="article-group-caption"><?php echo __($group_caption); ?></h4>
+    <?php
+  }
 
   WPTM::render('template/partial/article/list/group_'.$template, array(
+    'main_query' => @$main_query,
     'list_type' => @$list_type,
     'group_caption' => @$group_caption,
     'show_total_count' => @$show_total_count,

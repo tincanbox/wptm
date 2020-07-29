@@ -6,7 +6,7 @@ if(has_post_thumbnail()){
 }
 
 if(!$image_uri){
-  $image_uri = WPTM::option('post_article_list_noimage_url');
+  $image_uri = array($opt_post_article_list_noimage_url ?: get_bloginfo('template_directory')."/static/image/noimage.png");
 }
 
 ?>
@@ -15,27 +15,27 @@ if(!$image_uri){
     <a
       class="feature-image <?php echo !@$image_uri ? 'no-image' : ''; ?>"
       href="<?php the_permalink(); ?>"
-      style="<?php echo @$image_uri ? "background-image:url('".$image_uri[0]."');'" : ''; ?>"></a>
+      style="<?php echo @$image_uri ? "background-image:url('".$image_uri[0]."');" : ''; ?>"></a>
     <div
-      class="article-list-column-caption category-background-color category-font-color-escape">
+      class="article-list-column-caption article-background-color article-font-color-escape">
       <div class="upper">
-        <?php if(WPTM::option('post_show_time')){ ?>
-          <div class="data date"><?php the_time('Y.m.d'); ?></div>
+        <?php if($opt_post_show_time){ ?>
+          <div class="article-font-color-escape data date"><?php the_date(); ?> <?php the_time(); ?></div>
         <?php } ?>
         <?php
         $now = time();
         $time = get_the_time('U');
-        if($now - $time < 60 * 60 * 24 * (int)WPTM::option('post_badge_new_interval')){
+        if($now - $time < 60 * 60 * 24 * ((int)$opt_post_badge_new_interval)){
           ?><div class="badge badge-new" style="">New</div><?php
         }
         ?>
       </div>
-      <div class="data title category-font-color-escape"><a class="category-font-color-escape" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
-      <div class="data category category-font-color-escape" style="text-align: right;">
+      <div class="data title article-font-color-escape"><a class="article-font-color-escape" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
+      <div class="data category article-font-color-escape" style="text-align: right;">
       <?php
 
         $cats = get_the_category($post->ID);
-        $arts = WPTM::option('category_for_article_manage');
+        $arts = $opt_category_for_article_manage;
         $valid = array();
         foreach($arts as $slug => $b){
           if($b){

@@ -1,14 +1,14 @@
 <div class="article-list-group <?php echo @$group_name; ?>">
-
-<?php
+  <?php
 
   if(@$show_group_caption && @$group_caption){
     ?><div class="article-list-group-caption-wrap">
-      <h3 class="article-list-group-caption col-sm-12 col-md-8"><?php echo $group_caption; ?></h3>
+      <h3 class="article-list-group-caption theme-font-color-escape mb-3"><?php echo $group_caption; ?></h3>
     </div><?php
   }
 
   WPTM::render('template/partial/article/list/default', array(
+    'main_query' => $main_query,
     'list_type' => @$list_type,
     'show_total_count' => @$show_total_count,
     'query' => array_merge(array(
@@ -22,7 +22,7 @@
       #'exclude'          => '',
       #'meta_key'         => '',
       #'meta_value'       => '',
-      'post_type'        => 'post',
+      #'post_type'        => 'post',
       #'post_mime_type'   => '',
       #'post_parent'      => '',
       #'author'     => '',

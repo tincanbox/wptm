@@ -127,6 +127,46 @@ class WPTM {
     return $r;
   }
 
+  static function show_404(){
+    WPTM::instance()->frame->view->clear();
+    global $wp_query;
+    $wp_query->set_404();
+    status_header(404);
+    $v = WPTM::template('/404');
+    echo $v;
+    exit;
+  }
+
+  static function get_article_group_config(){
+    $d = array();
+    foreach(array('category', 'posttype') as $type){
+      $conf = WPTM::option($type);
+      if(!$conf) continue;
+
+      $prefix = $type;
+      switch($type){
+        case 'posttype':
+          //$prefix = "post-type-archive";
+        break;
+      }
+
+      foreach($conf as $slug => $c){
+        if($c && @$c['show_in_menu']){
+          $p = (int)@$c['display_priority'];
+          if(!@$d[$p]){
+            $d[$p] = array();
+          }
+          $d[$p][] = array_merge(array(
+            'prefix' => $prefix,
+            'slug' => $slug,
+            'type' => $type
+          ), $c);
+        }
+      }
+    }
+    ksort($d);
+    return $d;
+  }
 
 
 

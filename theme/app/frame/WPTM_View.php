@@ -2,7 +2,6 @@
 
 class WPTM_View extends WPTM_Factory {
 
-
   public $variables = array();
 
   public $_wp_global = array();
@@ -58,40 +57,61 @@ class WPTM_View extends WPTM_Factory {
     }
   }
 
+  function clear(){
+    while(ob_get_level() > 0) ob_end_clean();
+  }
 
   function render($name, array $var = array(), $output = true, $inherit = false) {
-
-    if(empty($this->_wp_global)){
-      $this->snapshot();
-    }
-
-    if(is_array($name)){
-      $set = array();
-      foreach($name as $fname){
-        $set[$fname] = $this->render($fname, $var, $output);
+    $buff = "";
+    $oblv = ob_get_level();
+    try {
+      if(empty($this->_wp_global)){
+        $this->snapshot();
       }
-      return $set;
-    }else{
-      $this->variables = $this->inherit($var);
-      $f = $this->core->config('path.base').DIRECTORY_SEPARATOR.$name.'.php';
-      ob_start();
-      if(file_exists($f)){
-        ($inherit)
-          ? extract($this->variables)
-          : extract($var);
-        include($f);
+
+      if(is_array($name)){
+        $set = array();
+        foreach($name as $fname){
+          $set[$fname] = $this->render($fname, $var, $output);
+        }
+        return $set;
       }else{
-        echo __CLASS__.'::render > File not found. '.var_export($name, true);
-      }
-      $buff = ob_get_clean();
+        $this->variables = $this->inherit($var);
+        $f = $this->core->config('path.base').DIRECTORY_SEPARATOR.$name.'.php';
 
-      $template = $this->core->frame->vendor->connect('mustache');
-      if($template){
-        $buff = $template->render($buff, $inherit ? $this->variables : $var);
+        ob_start();
+
+        if(file_exists($f)){
+          ($inherit)
+            ? extract($this->variables)
+            : extract($var);
+          include($f);
+        }else{
+          echo __CLASS__.'::render > File not found. '.var_export($name, true);
+        }
+        $buff = ob_get_clean();
+        while(ob_get_level() > $oblv) ob_end_clean();
+
+        $template = $this->core->frame->vendor->connect('mustache');
+        if($template){
+          $buff = $template->render($buff, $inherit ? $this->variables : $var);
+        }
+
+        if($output){
+          if($oblv == 0){
+            print_r($buff);
+          }else{
+            print_r($buff);
+          }
+        }else{
+          return $buff;
+        }
       }
-      ($output) && print_r($buff);
-      return $buff;
+    }catch(\Error $e){
+      while(ob_get_level() > $oblv) ob_end_clean();
+      $buff = "";
     }
+
   }
 
 

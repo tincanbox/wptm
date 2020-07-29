@@ -1,13 +1,38 @@
 .structure-navigation {
     padding-bottom: .95rem;
     li {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        &:not(:last-child):after {
-            content: " ▷ ";
-            color: #aaa;
-            font-size: .8em;
-            margin: 0 .8em;
+
+        ol {
+            padding-left: .2rem;
+            li:last-child {
+                &:after {
+                    content: "";
+                }
+            }
+        }
+
+        &:not(.group) {
+            &:after {
+                content: " ▷ ";
+                color: #aaa;
+                font-size: .8rem;
+                position: relative;
+                top: .02rem;
+            }
+            &:not(:last-of-type):after {
+                margin: 0 .6rem;
+            }
+            &:last-of-type:after {
+                content: "";
+            }
+        }
+        &.para:after {
+            content: " & "
+        }
+        &.group:after {
+            content: "";
         }
     }
     * { vertical-align: middle; }

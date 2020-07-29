@@ -16,13 +16,15 @@ if( WPTM::option('basis_maintenance') == 1){
 ?><html style="margin-top:0 !important;">
   <head>
   <?php wp_head(); ?>
-  <?php WPTM::render('template/partial/common/head'); ?>
+  <?php WPTM::render('template/partial/common/head', array(
+    'main_query' => $wp_query
+  )); ?>
   </head>
   <body <?php body_class(); ?>>
     <div id="container">
       <?php WPTM::render('template/partial/common/header'); ?>
-      <?php WPTM::render('template/partial/common/jumbotron'); ?>
-      <div id="content" <?php body_class(); ?>>
+      <div id="content" <?php body_class("invisible-onload"); ?>>
+        <?php WPTM::render('template/partial/common/jumbotron'); ?>
         <div id="inner" class="container">
           <div class="row align-middle">
             <?php

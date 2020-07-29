@@ -5,7 +5,8 @@ if(@$query){
   $query['posts_per_page'] = $default_posts_per_page;
 }
 
-WPTM::render('template/partial/article/list/group_'.(@$archive_type ? $archive_type : 'category'), array(
+WPTM::render('template/partial/article/list/group_'.(@$archive_type ? $archive_type : 'default'), array(
+  'main_query' => $main_query,
   'list_type' => 'with_picture',
   'show_total_count' => @$show_total_count,
   'show_group_caption' => true,

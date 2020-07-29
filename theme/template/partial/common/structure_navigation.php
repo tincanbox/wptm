@@ -6,27 +6,27 @@ $categories = array();
 
 ?><div>
 
-<ol class="structure-navigation breadcrumb section spacing">
+<ol class="structure-navigation section spacing">
 
   <li><a class="link touchable" href="<?php bloginfo('url'); ?>">HOME</a></li>
   <?php
 
-  if($main_query->is_single()){
-    $post = $main_query->get_posts();
-    if($post){
-      $post = $post[0];
-      $pt_s = get_post_type($post);
+  $post = $main_query->get_posts();
+  if($post){
+    $post = $post[0];
+    $pt_s = get_post_type($post);
+    if($main_query->is_single()){
       $categories = get_the_category($post->ID);
-      $title = null;
+    }
+    $title = null;
 
-      if($pt_s != 'post' && $pt_s != 'page'){
-        $post_type = get_post_type_object($pt_s);
-        ?><li>
-          <a
-            class="link touchable"
-            href="<?php echo get_post_type_archive_link($post_type->name); ?>"><?php echo $post_type->labels->name; ?></a></li>
-        <?php
-      }
+    if($pt_s != 'post' && $pt_s != 'page'){
+      $post_type = get_post_type_object($pt_s);
+      ?><li>
+        <a
+          class="link touchable"
+          href="<?php echo get_post_type_archive_link($post_type->name); ?>"><?php echo $post_type->labels->name; ?></a></li>
+      <?php
     }
   }
 
@@ -36,6 +36,7 @@ $categories = array();
 
   if($main_query->is_archive()){
     $q = $main_query->query;
+
     if(@$q['cat']){
       $ca = get_the_category_by_id($q['cat']);
       $category = get_category_by_slug($ca);
@@ -80,19 +81,36 @@ $categories = array();
   if(@$categories){
     foreach($categories as $c){
       if(!$c) continue;
+      if(count($categories) > 1){
+        ?>
+        <li class="para group">
+        <ol>
+        <span class="group">[</span>
+        <?php
+      }
       $ps = WPTM::get_category_parents($c->cat_ID);
       if($ps){
         foreach($ps as $p){
-          ?><li>
+          ?><li class="">
             <a class="link touchable" href="<?php echo get_category_link($p->cat_ID); ?>"><?php echo __($p->name); ?></a>
           </li>
           <?php
         }
       }
-      ?><li>
+      ?>
+      <li>
         <a class="link touchable" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo __($c->name); ?></a>
       </li>
       <?php
+
+      if(count($categories) > 1){
+        ?>
+        <span class="group">]</span>
+        </ol>
+        </li>
+        <?php
+      }
+
     }
 
   }
@@ -118,7 +136,7 @@ if($main_query->is_archive() && @$category){
     if(count($cs)){
       ?>
       <div class="section">
-        <div style="margin-bottom: .4em;">関連カテゴリー</div>
+        <div style="margin-bottom: .4em;"><?php echo __('Related Categories'); ?></div>
         <ul class="related-categories"><?php
         foreach($cs as $cb){
           ?><li><a class="link touchable" href="<?php echo get_category_link($cb->cat_ID); ?>"><?php echo $cb->name; ?></a></li><?php

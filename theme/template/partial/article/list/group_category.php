@@ -19,6 +19,7 @@ foreach($cats as $cat){
   }
 
   WPTM::render('template/partial/article/list/group_default', array(
+    'main_query' => @$main_query,
     'group_name' => $group_name,
     'group_caption' => $group_caption,
     'show_total_count' => @$show_total_count,
@@ -35,7 +36,7 @@ foreach($cats as $cat){
       #'exclude'          => '',
       #'meta_key'         => '',
       #'meta_value'       => '',
-      'post_type'        => 'post',
+      #'post_type'        => 'post',
       #'post_mime_type'   => '',
       #'post_parent'      => '',
       #'author'     => '',

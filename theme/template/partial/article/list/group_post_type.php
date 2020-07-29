@@ -7,6 +7,12 @@ $post_type = (@$query['post_type']
 $group_name = 'post-type-'.$post_type;
 $group_caption = $post_type;
 
+$conf = WPTM::option('posttype');
+
+if(!@$conf[$post_type] || !$conf[$post_type]['is_active']){
+  WPTM::show_404();
+}
+
 # Fetch dummy post to generate $group_caption.
 if($post_type){
   $q = new WP_Query('post_type='.$post_type.'&posts_per_page=1');
@@ -25,6 +31,7 @@ if($post_type){
 }
 
 WPTM::render('template/partial/article/list/group_default', array(
+  'main_query' => @$main_query,
   'grouop_name' => $group_name,
   'group_caption' => $group_caption,
   'show_total_count' => @$show_total_count,

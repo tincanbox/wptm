@@ -13,77 +13,52 @@
       <ul class="navbar-nav ml-auto">
         <?php
 
-        $allslug = array();
+        $article_group = WPTM::get_article_group_config();
 
-        $cats = WPTM::option('category_for_article_manage');
-        $conf = WPTM::option('category');
-
-        if($cats){
-          $d = array();
-          foreach($cats as $slug => $b){
-            if($b && isset($conf[$slug])){
-              $c = $conf[$slug];
-              $p = (int)$c['display_priority'];
-              if(!@$d[$p]){
-                $d[$p] = array();
-              }
-              $d[$p][$slug] = array_merge(array('slug' => $slug), $c);
-            }
-          }
-
-          ksort($d);
-
-          foreach($d as $priority => $g){
-            foreach($g as $cat){
-              $c = get_category_by_slug($cat['slug']);
-              if($c){
-                ?><li class="nav-item category-<?php echo $c->slug; ?> animatable attractive">
-                 <a class="nav-link d-flex" href="<?php echo get_category_link($c->cat_ID); ?>">
-                    <?php if(@$cat['icon']){ ?>
-                      <span class="theme-category-icon center mr-1" style="background-image: url(<?php echo $cat['icon']; ?>);"></span>
-                    <?php } ?>
-                    <span class="text category-font-color center"><?php echo $c->name; ?></span>
-                  </a>
-                </li><?php
-
-                $allslug[] = $cat['slug'];
-              }
-            }
-          }
-
-        }
-        ?>
-        <?php
-        $ms = WPTM::option('category_for_global_menu');
-        if(@count($ms)){
-
-          $cats = array();
-          foreach($ms as $slug => $b){
-            if($b && !in_array($slug, $allslug)){
-              $cats[] = $slug;
-            }
-          }
-
-          if($cats){
+        foreach($article_group as $priority => $g){
+          foreach($g as $c){
+            $slug = $c['slug'];
             ?>
-            <li role="separator" class="nav-item dropdown-divider"></li>
-            <?php
+            <li class="nav-item <?php echo $c['prefix']; ?>-<?php echo $c['slug']; ?> animatable attractive">
+              <?php
 
-            foreach($cats as $c){
-              $c = get_category_by_slug($c);
-              if($c){
-                ?><li class="nav-item category-<?php echo $c->slug; ?> animatable attractive">
-                  <a class="nav-link" href="<?php echo get_category_link($c->cat_ID); ?>">
-                    <span class="text theme-header-font-color"><?php echo $c->name; ?></span></a>
-                </li><?php
+              if(!@$c['is_active']){
+                continue;
               }
-            }
 
+              $url = false; $name = false;
+              switch($c['type']){
+                case 'category':
+                  $cat = get_category_by_slug($slug);
+                  $url = get_category_link($cat->cat_ID);
+                  $name = $cat->name;
+                break;
+                case 'posttype':
+                  $url = get_post_type_archive_link($slug);
+                  $name = ucfirst($slug);
+                break;
+              }
+              if(!$url) continue;
+              if(!$name) continue;
+
+              ?>
+              <a class="nav-link d-flex" href="<?php echo $url; ?>">
+                <?php if(@$c['icon']){ ?>
+                  <span
+                    class="theme-article-icon center mr-1"
+                    style="background-image: url(<?php echo $c['icon']; ?>);"></span>
+                <?php } ?>
+                <span class="text article-font-color center"><?php echo $name; ?></span>
+              </a>
+            </li>
+            <?php
           }
-          ?>
-        <?php } ?>
+        }
+
+        ?>
 
         <li role="separator" class="nav-item dropdown-divider"></li>
+
         <?php 
         $m = wp_get_nav_menu_items("default");
         ?>

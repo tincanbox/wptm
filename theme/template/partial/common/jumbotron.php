@@ -1,9 +1,6 @@
 <?php
 
-global $template;
-$current_template_name = basename($template);
-
-if($current_template_name == "home.php"){
+if(is_home()){
 
 ?>
 <div class="kamisibai">

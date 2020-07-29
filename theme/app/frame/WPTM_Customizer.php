@@ -4,6 +4,7 @@ class WPTM_Customizer extends WPTM_Factory {
 
 
   private $_setting = array();
+  private $_option_cache = array();
 
 
   function register($wp_customize){
@@ -37,7 +38,10 @@ class WPTM_Customizer extends WPTM_Factory {
         $this->_setting[$k] = array_merge($this->_setting[$k], $override);
       }
       if(@$this->customizer){
-        $this->customizer->add_setting($k, $this->_setting[$k]);
+        if(!@$this->_setting[$k]['__initialized'] || $override){
+          $this->customizer->add_setting($k, $this->_setting[$k]);
+          $this->_setting[$k]['__initialized'] = true;
+        }
       }
       return @$this->_setting[$k];
     }
@@ -52,7 +56,11 @@ class WPTM_Customizer extends WPTM_Factory {
     if($value){
       return set_theme_mod($pn, $value);
     }else{
-      return get_theme_mod($pn, $c ? @$c['default'] : null);
+      $v = get_theme_mod($pn, $c ? @$c['default'] : null);
+      if(!@$this->_option_cache[$name]){
+        $this->_option_cache[$name] = $v;
+      }
+      return $v;
     }
   }
 

@@ -125,10 +125,18 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   init: function init($) {
-    $(document).on("click", ".gototop", function () {
+    $("body").on("click", ".gototop", function () {
       $("html,body").animate({
         scrollTop: 0
       });
+    });
+    setTimeout(function () {
+      $(".invisible-onload").addClass("loaded");
+    }, 1400);
+    window.onbeforeunload = null;
+    $(window).on("beforeunload", function () {
+      event.preventDefault();
+      $(".invisible-onload").removeClass("loaded");
     });
     return this;
   }
