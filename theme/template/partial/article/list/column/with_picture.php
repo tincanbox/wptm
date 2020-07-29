@@ -11,7 +11,7 @@ if(!$image_uri){
 
 ?>
 <article class="article list-type-with-picture <?php echo implode(' ', get_post_class()); ?> col-xs-12 col-sm-6 col-md-4">
-  <div class="entry" title="<?php the_title(); ?>">
+  <div class="entry animatable" title="<?php the_title(); ?>">
     <a
       class="feature-image <?php echo !@$image_uri ? 'no-image' : ''; ?>"
       href="<?php the_permalink(); ?>"

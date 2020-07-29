@@ -1,9 +1,9 @@
-<div id="footer" class="wptm-footer-background-color">
+<div id="footer" class="theme-footer-background-color">
 
   <div class="container">
   <div class="row mb-4">
 
-    <div class="col-md-4 wptm-footer-font-color">
+    <div class="col-md-4 theme-footer-font-color">
       <p class="caption"><?php echo __('Contents') ?></p>
       <ul class="">
       <?php
@@ -33,7 +33,7 @@
               ?>
               <li class="category-<?php echo $c->slug; ?>">
                 <a
-                  class="link wptm-footer-font-color"
+                  class="link theme-footer-font-color"
                   href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
               </li>
               <?php
@@ -46,17 +46,17 @@
       </ul>
     </div>
 
-    <div class="col-md-4 wptm-footer-font-color">
+    <div class="col-md-4 theme-footer-font-color">
       <p class="caption">Section 02</p>
       <ul>
-        <li><a class="link wptm-footer-font-color" href="" >Sample</a></li>
+        <li><a class="link theme-footer-font-color" href="" >Sample</a></li>
       </ul>
     </div>
 
-    <div class="col-md-4 wptm-footer-font-color">
+    <div class="col-md-4 theme-footer-font-color">
       <p class="caption">Section 3</p>
       <ul>
-        <li><a class="link wptm-footer-font-color" href="">Sample</a></li>
+        <li><a class="link theme-footer-font-color" href="">Sample</a></li>
       </ul>
     </div>
 
@@ -72,10 +72,10 @@
         <?php if($s = WPTM::option('logo_footer')){ ?>
           <img src="<?php echo $s; ?>" style="width: 180px;"/>
         <?php }else{ ?>
-          <span class="site-title wptm-footer-font-color"><?php echo get_bloginfo('title'); ?></span>
+          <span class="site-title theme-footer-font-color"><?php echo get_bloginfo('title'); ?></span>
         <?php } ?>
       </div>
-      <div class="wptm-footer-font-color copyright">
+      <div class="theme-footer-font-color copyright">
         &copy; 2020 YOURCOOLCOMPANY All rights reserved.
       </div>
     </div>

@@ -2,6 +2,7 @@ body, html {
   position: relative;
   max-width: 100%;
   width: 100%;
+  cursor: default;
 }
 
 #wpadminbar {
@@ -51,7 +52,7 @@ body {
 }
 
 .kamisibai {
-  margin-top: 58px;
+  margin-top: 3.5rem;
   .jumbotron-slide-image {
     padding-bottom: 75%; 
     @media (min-width: 576px) {
@@ -60,39 +61,60 @@ body {
   }
 }
 .kamisibai + #content {
-  margin-top: 1rem;
+  margin-top: 0;
+  padding-top: 1rem;
 }
 
 #header {
   &+.container {
     margin-top: 62px;
   }
+  .navbar {
+    min-height: 3.5rem;
+    //padding-top: 0;
+    //padding-bottom: 0;
+  }
+  .nav-link {
+    //padding-top: 1rem;
+    //padding-bottom: 1rem;
+  }
   .navbar-brand {
-    padding-top: 6px;
-    padding-bottom: 6px;
     img {
       max-height: 40px;
       width: auto;
     }
   }
+  .navbar-collapse.show {
+    padding-bottom: 1rem;
+    .nav-link {
+      //padding-top: .4rem;
+      //padding-bottom: .4rem;
+    }
+  }
 }
 
 .section {
-  padding: .95em;
+  padding: .95rem .95rem 0;
   border-radius: .3em;
-  .append {
+  &.append {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
-  .prepend {
+  &.prepend {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
+  &.spacing {
+    margin-bottom: 1rem;
+  }
+  &.closing {
+    padding-bottom: .95rem;
+  }
 }
-
 #content {
+  position: relative;
   margin: auto;
-  margin-top: 58px;
+  margin-top: 3.5rem;
   padding-top: 1rem;
   padding-bottom: 80px;
 }
@@ -121,10 +143,12 @@ img {
   height: auto;
 }
 
-.flex {
-  display: flex;
+.d-flex {
   .center {
     align-self: center;
+  }
+  .align-right {
+    margin-left: auto;
   }
 }
 

@@ -18,11 +18,10 @@ $customizer->UI->build()->panel('appearance', array('title' => 'Appearance'))
     ->control('upload', 'logo_footer')
   ->section('background', array('title' => 'Background'))
     ->control('color', 'theme_background_color')
+    ->control('number', 'theme_background_opacity')
     ->control('color', 'theme_background_font_color_visibility')
     ->control('upload', 'theme_background_image')
     ->control('select', 'theme_background_image_size')
-    ->control('text', 'theme_background_image_mask_opacity')
-    ->control('text', 'theme_background_image_mask_colorhex')
   ->section('header', array('title' => 'Header'))
     ->control('color', 'theme_header_background_color')
     ->control('color', 'theme_header_font_color')
@@ -105,8 +104,18 @@ if($b){
     if($c){
       $customizer->UI->build()->panel('categories', array('title' => 'Category Theme'))
         ->section('Category: '.$c->slug)
-          ->control('color', 'category['.$c->slug.'][theme-color]', array('label' => 'Theme Color'), array('default' => '#eeeeee'))
-          ->control('color', 'category['.$c->slug.'][escape-color]', array('label' => 'Escape Color'), array('default' => '#3f3f3f'))
+          ->control('color', 'category['.$c->slug.'][theme_background_color]')
+          ->control('number', 'category['.$c->slug.'][theme_background_opacity]', array(
+            'description' => '0 ~ 255'
+          ))
+          ->control('color', 'category['.$c->slug.'][theme_background_font_color_visibility]')
+          ->control('upload', 'category['.$c->slug.'][theme_background_image]')
+          ->control('select', 'category['.$c->slug.'][theme_background_image_size]',
+            array(
+              'choices' => array('cover' => 'cover', 'repeat' => 'repeat')
+            ), array(
+              'default' => 'cover'
+            ))
           ->control('image', 'category['.$c->slug.'][icon]')
           ->control('text', 'category['.$c->slug.'][article_count]', array('label' => 'TopPage: Article counts'))
           ->control('text', 'category['.$c->slug.'][display_priority]', array('label' => 'TopPage: Display Priority'))

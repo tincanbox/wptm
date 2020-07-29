@@ -34,18 +34,21 @@ foreach($priority as $p => $s){
   <?php $c = get_category_by_slug($s['slug']); ?>
   <?php if($c){ ?>
     <div class="category-<?php echo $c->slug; ?> mb-5">
-      <div class="article-list-group-caption-wrap row">
-        <h3 class="article-list-group-caption theme-font-color col-sm-12 col-md-10 flex">
+      <div class="article-list-group-caption-wrap row mt-1 mb-4">
+        <h3 class="article-list-group-caption theme-font-color-escape col-10 col-md-11 mb-0 rack-board">
           <?php if(@$s['icon']){ ?>
-            <span class="wptm-category-icon align-middle" style="background-image: url(<?php echo $s['icon']; ?>);"></span>
+            <i class="theme-category-icon mr-1" style="background-image: url(<?php echo $s['icon']; ?>);"></i>
           <?php } ?>
-          <span class="align-middle"><?php echo $c->name; ?></span>
+          <span class="mr-3"><?php echo $c->name; ?></span>
+          <a
+            class="theme-font-color-escape animatable attractive d-inline-block"
+            href="<?php echo get_category_link($c->cat_ID); ?>">
+            <div class="theme-font-color-escape" style="width:1em; height:1em; transform:rotate(90deg);">
+              <svg id="svg" viewBox="0 0 512 512"><use xlink:href="#chevron-up"></use></svg>
+            </div>
+          </a>
+
         </h3>
-        <a
-          href="<?php echo get_category_link($c->cat_ID); ?>"
-          class="theme-font-color col-sm-12 col-md-2 text-right ml-auto center">
-          <img src="<?php echo get_bloginfo('template_directory'); ?>/static/image/arrow-circle-right.png">
-        </a>
       </div>
       <?php WPTM::render('template/partial/article/list/group_category', array(
         'list_type' => 'with_picture',
@@ -57,7 +60,7 @@ foreach($priority as $p => $s){
       <div class="text-right">
         <a
           href="<?php echo get_category_link($c->cat_ID); ?>"
-          class="theme-font-color"
+          class="theme-font-color-escape"
           style="margin-bottom: 4.2em;"><?php echo __($link_read_more_label); ?> <?php echo $c->name; ?></a>
       </div>
     </div>

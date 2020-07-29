@@ -1,12 +1,38 @@
 <link href='//fonts.googleapis.com/earlyaccess/notosansjapanese.css' rel='stylesheet' type='text/css'>
-<style>
 
-#container {
-  background-color: <?php echo WPTM::option('theme_background_color'); ?>;
+<style>
+html,body {
+  font-family: 'Lato', 'Noto Sans JP', "Montserrat","游ゴシック",YuGothic,"ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","メイリオ",Meiryo, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  background-color: transparent;
 }
 
+#container::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -1000; }
+
+<?php if($v = @WPTM::option('theme_background_color')){ ?>
+  #container::before {
+    background-color: <?php echo $v ?><?php
+    if($v = @WPTM::option('theme_background_opacity')){
+      echo str_pad(dechex(intval($v)), 2, "0", STR_PAD_LEFT);
+    }
+    ?>; }
+<?php } ?>
+<?php
+# Background
+if($v = WPTM::option('theme_background_font_color_visibility')){ ?>
+.theme-font-color-escape, .theme-font-color-escape #svg,
+.theme-font-color-escape:hover, .theme-font-color-escape #svg:hover {
+  color: <?php echo $v; ?>;
+  fill: <?php echo $v; ?>;
+}
+<?php } ?>
+
 <?php if($v = WPTM::option('theme_background_image')){ ?>
-body:not(.single) #container {
+#container {
   background-image: url('<?php echo $v; ?>');
   background-position: center;
   background-attachment: fixed;
@@ -17,61 +43,46 @@ body:not(.single) #container {
     <?php } ?>
   <?php } ?>
 }
-
-  <?php if($v = WPTM::option('theme_background_image_mask_opacity')){ ?>
-  body:not(.single) #content {
-    position: relative;
-  }
-  body:not(.single) #content::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background-color: rgba(<?php echo WPTM::option('theme_background_image_mask_colorhex'); ?>, .<?php echo $v; ?>);
-  }
-  <?php } ?>
 <?php } ?>
+
 
 <?php # Header
 if($v = WPTM::option('theme_header_background_color')){ ?>
-.wptm-header-background-color {
+.theme-header-background-color {
+  background-color: <?php echo $v; ?>
+}
+<?php } ?>
+<?php
+if($v = WPTM::option('theme_header_font_color')){ ?>
+.theme-header-font-color,
+.theme-header-font-color:hover {
+  color: <?php echo $v; ?>
+}
+.theme-header-background-color-escape {
   background-color: <?php echo $v; ?>
 }
 <?php } ?>
 
-<?php # Header
-if($v = WPTM::option('theme_header_font_color')){ ?>
-.wptm-header-font-color {
-  color: <?php echo $v; ?>
-}
-.wptm-header-background-color-escape {
-  background-color: <?php echo $v; ?>
-}
-<?php } ?>
+
 <?php
 # Footer
 if($v = WPTM::option('theme_footer_background_color')){ ?>
-.wptm-footer-background-color {
+.theme-footer-background-color {
   background-color: <?php echo $v; ?>;
-}
-.wptm-footer-font-color, .wptm-theme-footer-font-color * {
-  color:  <?php echo WPTM::option('theme_footer_font_color'); ?>
 }
 <?php } ?>
 
 <?php
-# Background
-if($v = WPTM::option('theme_background_font_color_visibility')){ ?>
-.theme-font-color {
-  color: <?php echo $v; ?>;
-}
-a.theme-font-color:hover {
-  opacity: .75;
-  text-decoration: underline;
+# Footer font
+if($v = WPTM::option('theme_footer_font_color')){ ?>
+.theme-footer-font-color, .theme-footer-font-color *,
+.theme-footer-font-color:hover, .theme-footer-font-color *:hover
+{
+  color:  <?php echo $v; ?>
 }
 <?php } ?>
 
-.wptm-category-icon {
+.theme-category-icon {
   width: 1.1em;
   height: 1.1em;
   display: inline-block;
@@ -84,12 +95,53 @@ a.theme-font-color:hover {
 $conf = WPTM::option('category');
 
 if($conf){
-  foreach($conf as $slug => $c){ ?>
-.category-<?php echo $slug; ?> .category-font-color-escape { color: <?php echo $c['escape-color']; ?>; }
-.category-<?php echo $slug; ?> .category-font-color { color: <?php echo $c['theme-color']; ?>; }
-.category-<?php echo $slug; ?> .category-background-color { background-color: <?php echo $c['theme-color']; ?>; }
-    <?php
-  }
+  foreach($conf as $slug => $c):
+    ?>
+    #content.category-<?php echo $slug; ?>::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      z-index: -999; }
+
+    <?php if($v = @$c['theme_background_color']): ?>
+      body.single #content.category-<?php echo $slug; ?>::before {
+        background-color: <?php echo $v ?><?php
+        if($v = @$c['theme_background_opacity']){
+          echo str_pad(dechex(intval($v)), 2, "0", STR_PAD_LEFT);
+        }
+        ?>; }
+      *:not(body).category-<?php echo $slug; ?> .category-font-color,
+      *:not(body).category-<?php echo $slug; ?> .category-font-color:hover {
+        color: <?php echo $c['theme_background_color']; ?>;
+        fill: <?php echo $c['theme_background_color']; ?>;}
+      *:not(body).category-<?php echo $slug; ?> .category-background-color {
+        background-color: <?php echo $c['theme_background_color']; ?>;}
+    <?php endif; ?>
+
+    <?php if($v = @$c['theme_background_image']){ ?>
+    body.single #content.category-<?php echo $slug; ?> {
+      background-image: url('<?php echo $v; ?>');
+      background-position: center;
+      background-attachment: fixed;
+      <?php if($v = @$c['theme_background_image_size']){ ?>
+        background-size: <?php echo $v; ?>;
+        <?php if($v == 'cover'){ ?>
+        background-repeat: no-repeat;
+        <?php } ?>
+      <?php } ?>
+    }
+    <?php } ?>
+
+    <?php if($v = @$c['theme_background_font_color_visibility']): ?>
+      *:not(body).category-<?php echo $slug; ?> .category-font-color-escape,
+      *:not(body).category-<?php echo $slug; ?> .category-font-color-escape:hover {
+        color: <?php echo $v; ?>;
+        fill: <?php echo $v; ?>;}
+    <?php endif; ?>
+
+  <?php endforeach; ?>
+  <?php
 }
 ?>
 </style>

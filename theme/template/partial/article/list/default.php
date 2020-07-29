@@ -35,7 +35,9 @@ if($posts){
   if(@$show_total_count){
     ?>
     <div class="article-list-total-count theme-font-color-background-escape">
-      検索結果: <span class="count"><?php echo number_format($wp_query->found_posts); ?></span><span>件</span>
+      <span><?php echo __('Search Result'); ?> : </span>
+      <span class="count"><?php echo number_format($wp_query->found_posts); ?></span>
+      <span></span>
     </div>
     <?php
   }

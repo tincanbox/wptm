@@ -1,13 +1,13 @@
 <div id="header">
   <!-- Fixed navbar -->
-  <nav class="navbar navbar-expand-md fixed-top wptm-header-background-color">
-    <a class="navbar-brand wptm-header-font-color" href="/"><?php echo get_bloginfo('title'); ?></a>
+  <nav class="navbar navbar-expand-md fixed-top theme-header-background-color">
+    <a class="navbar-brand theme-header-font-color animatable attractive" href="/"><?php echo get_bloginfo('title'); ?></a>
     <button class="navbar-toggler collapsed" type="button"
       data-toggle="collapse" data-target="#navbarCollapse"
       aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" >
-      <span class="icon-bar top-bar wptm-header-background-color-escape"></span>
-      <span class="icon-bar middle-bar wptm-header-background-color-escape"></span>
-      <span class="icon-bar bottom-bar wptm-header-background-color-escape"></span>	
+      <span class="icon-bar top-bar theme-header-background-color-escape"></span>
+      <span class="icon-bar middle-bar theme-header-background-color-escape"></span>
+      <span class="icon-bar bottom-bar theme-header-background-color-escape"></span>	
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav ml-auto">
@@ -37,12 +37,12 @@
             foreach($g as $cat){
               $c = get_category_by_slug($cat['slug']);
               if($c){
-                ?><li class="nav-item category-<?php echo $c->slug; ?>">
-                 <a class="nav-link" href="<?php echo get_category_link($c->cat_ID); ?>">
+                ?><li class="nav-item category-<?php echo $c->slug; ?> animatable attractive">
+                 <a class="nav-link d-flex" href="<?php echo get_category_link($c->cat_ID); ?>">
                     <?php if(@$cat['icon']){ ?>
-                      <span class="wptm-category-icon" style="background-image: url(<?php echo $cat['icon']; ?>);"></span>
+                      <span class="theme-category-icon center mr-1" style="background-image: url(<?php echo $cat['icon']; ?>);"></span>
                     <?php } ?>
-                    <span class="text category-font-color"><?php echo $c->name; ?></span>
+                    <span class="text category-font-color center"><?php echo $c->name; ?></span>
                   </a>
                 </li><?php
 
@@ -72,9 +72,9 @@
             foreach($cats as $c){
               $c = get_category_by_slug($c);
               if($c){
-                ?><li class="nav-item category-<?php echo $c->slug; ?>">
+                ?><li class="nav-item category-<?php echo $c->slug; ?> animatable attractive">
                   <a class="nav-link" href="<?php echo get_category_link($c->cat_ID); ?>">
-                    <span class="text wptm-header-font-color"><?php echo $c->name; ?></span></a>
+                    <span class="text theme-header-font-color"><?php echo $c->name; ?></span></a>
                 </li><?php
               }
             }

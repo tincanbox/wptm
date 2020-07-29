@@ -1,6 +1,5 @@
 
 .article-list-group {
-  margin: 1em 0;
 }
 
 .article-list {
@@ -8,17 +7,13 @@
   &.list-type-with_picture {
 
     .article {
-      margin-bottom: 1.6em;
-
+      margin-bottom: 1rem;
       .feature-image {
         display: block;
         padding-bottom: 66%;
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
-        &:hover {
-          opacity: .75;
-        }
       }
 
       .entry {
@@ -27,8 +22,8 @@
         .no-image {
         }
         &:hover {
-          transform: scale(1.08);
-          box-shadow: 0 6px 8px rgba(0,0,0, .22);
+          transform: scale(1.04);
+          box-shadow: 0px 5px 4px rgba(0,0,0, .22);
         }
         a {
           text-decoration: none;

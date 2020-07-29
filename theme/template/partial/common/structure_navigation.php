@@ -6,9 +6,9 @@ $categories = array();
 
 ?><div>
 
-<ol class="structure-navigation breadcrumb section">
+<ol class="structure-navigation breadcrumb section spacing">
 
-  <li class=""><a class="" href="<?php bloginfo('url'); ?>">HOME</a></li>
+  <li><a class="link touchable" href="<?php bloginfo('url'); ?>">HOME</a></li>
   <?php
 
   if($main_query->is_single()){
@@ -21,7 +21,10 @@ $categories = array();
 
       if($pt_s != 'post' && $pt_s != 'page'){
         $post_type = get_post_type_object($pt_s);
-        ?><li><a href="<?php echo get_post_type_archive_link($post_type->name); ?>"><?php echo $post_type->labels->name; ?></a></li>
+        ?><li>
+          <a
+            class="link touchable"
+            href="<?php echo get_post_type_archive_link($post_type->name); ?>"><?php echo $post_type->labels->name; ?></a></li>
         <?php
       }
     }
@@ -70,7 +73,7 @@ $categories = array();
 
     if(@$q['tag']){
       $t = $q['tag'];
-      $title = $t;
+      $title = "#" . $t;
     }
   }
 
@@ -81,13 +84,13 @@ $categories = array();
       if($ps){
         foreach($ps as $p){
           ?><li>
-            <a href="<?php echo get_category_link($p->cat_ID); ?>"><?php echo __($p->name); ?></a>
+            <a class="link touchable" href="<?php echo get_category_link($p->cat_ID); ?>"><?php echo __($p->name); ?></a>
           </li>
           <?php
         }
       }
       ?><li>
-        <a href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo __($c->name); ?></a>
+        <a class="link touchable" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo __($c->name); ?></a>
       </li>
       <?php
     }
@@ -118,7 +121,7 @@ if($main_query->is_archive() && @$category){
         <div style="margin-bottom: .4em;">関連カテゴリー</div>
         <ul class="related-categories"><?php
         foreach($cs as $cb){
-          ?><li><a href="<?php echo get_category_link($cb->cat_ID); ?>"><?php echo $cb->name; ?></a></li><?php
+          ?><li><a class="link touchable" href="<?php echo get_category_link($cb->cat_ID); ?>"><?php echo $cb->name; ?></a></li><?php
         }
         ?>
         </ul>

@@ -7,12 +7,12 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post();
 
   ?>
 
-  <div class="section">
-    <h2 class="post-title mb-0"><?php the_title(); ?></h2>
+  <div class="post-title section append closing">
+    <h2 class="mb-0"><?php the_title(); ?></h2>
   </div>
 
   <?php if(has_post_thumbnail()): ?>
-    <div clas="row mt-3 mb-3">
+    <div class="post-image">
       <?php
 
       $k = WPTM::option('post_meta_key_eyecatch_link');
@@ -33,7 +33,7 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post();
     </div>
   <?php endif; ?>
 
-  <div class="post-content section mb-3">
+  <div class="post-content section prepend closing spacing">
 
     <?php if(WPTM::option('post_show_time')){ ?>
       <div class="post-time">
@@ -142,7 +142,7 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post();
 
   WPTM::render('template/partial/article/list/group_related', array(
     'show_group_caption' => true,
-    'group_caption' => '関連コンテンツ',
+    'group_caption' => __('Related Contents'),
     'list_type' => 'with_picture',
     'post' => $post,
     'query' => $q
