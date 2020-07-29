@@ -1,6 +1,6 @@
-<div id="header">
+<div id="header" class="fixed-top">
   <!-- Fixed navbar -->
-  <nav class="navbar navbar-expand-md fixed-top theme-header-background-color">
+  <nav class="navbar navbar-expand-md theme-header-background-color">
     <a class="navbar-brand theme-header-font-color animatable attractive" href="/"><?php echo get_bloginfo('title'); ?></a>
     <button class="navbar-toggler collapsed" type="button"
       data-toggle="collapse" data-target="#navbarCollapse"
@@ -84,6 +84,9 @@
         <?php } ?>
 
         <li role="separator" class="nav-item dropdown-divider"></li>
+        <?php 
+        $m = wp_get_nav_menu_items("default");
+        ?>
       </ul>
 
       <div class="d-none d-md-block" style="width: 1em;"></div>

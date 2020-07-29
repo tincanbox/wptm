@@ -65,5 +65,5 @@ if($posts){
   ?></div><?php
 
 }else{
-  ?><p style="color: #777; text-align: center; padding: 2.4em 1em; ">該当するコンテンツがありません。</p><?php
+  ?><p class="section closing" style="color: #777; text-align: center; padding: 2.4em 1em; "><?php echo __("No query results."); ?></p><?php
 }

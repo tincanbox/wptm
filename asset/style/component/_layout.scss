@@ -9,6 +9,7 @@ body, html {
   top: auto;
   bottom: 0;
 }
+
 html { margin-top: 0px !important; }
 	* html body { margin-top: 0px !important; }
 	@media screen and ( max-width: 782px ) {
@@ -28,43 +29,61 @@ body {
   }
 }
 
-.navbar-toggler { border: none; background: transparent !important;
-  &:focus { outline: none; background: transparent !important; }
-  &:hover>.icon-bar:nth-child(2) { width: 22px; transition: ease all .2s; }
-  &:active>.icon-bar:nth-child(2) { width: 22px; transition: ease all .2s; } 
-  .icon-bar {
-    transform: rotate(0deg) translate(0px, 0px);
-    transition: ease all .2s;
-    display: block; width: 22px; height: 2px; border-radius: 1px;
-  }
-  .icon-bar+.icon-bar { margin-top: 4px; } 
-  .icon-bar:nth-child(2) { width: 16px; transition: ease all .2s; } 
-  &:not(.collapsed) .icon-bar:nth-child(1) { transform: rotate(45deg) translate(5px, 4px); transition: ease all .2s; }
-  &:not(.collapsed) .icon-bar:nth-child(2) { opacity: 0; transition: ease all .2s; }
-  &:not(.collapsed) .icon-bar:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); transition: ease all .2s; }
-} 
-
-#container {
-  position: relative;
+//-------------------------------------------------- common
+img {
+  width: 100%;
   height: auto;
-  min-height: 100%;
-  overflow: hidden;
 }
 
-.kamisibai {
-  margin-top: 3.5rem;
-  .jumbotron-slide-image {
-    padding-bottom: 75%; 
-    @media (min-width: 576px) {
-      padding-bottom: 40%; 
-    }
+.d-flex {
+  .center {
+    align-self: center;
+  }
+  .align-right {
+    margin-left: auto;
   }
 }
-.kamisibai + #content {
-  margin-top: 0;
-  padding-top: 1rem;
+
+.section {
+  padding: .95rem .95rem 0;
+  border-radius: .3em;
+  &.append {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &.prepend {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  &.spacing {
+    margin-bottom: 1rem;
+  }
+  &.closing {
+    padding-bottom: .95rem;
+  }
 }
 
+
+//-------------------------------------------------- base layout
+#container {
+  display:flex; 
+  flex-direction:column; 
+  position: relative;
+  min-height: 100vh;
+  height: auto;
+  overflow-x: hidden;
+}
+#content {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  position: relative;
+  margin-top: 3.5rem;
+  padding-top: 1rem;
+  padding-bottom: 80px;
+}
+#inner {
+}
 #header {
   &+.container {
     margin-top: 62px;
@@ -93,36 +112,11 @@ body {
   }
 }
 
-.section {
-  padding: .95rem .95rem 0;
-  border-radius: .3em;
-  &.append {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  &.prepend {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-  &.spacing {
-    margin-bottom: 1rem;
-  }
-  &.closing {
-    padding-bottom: .95rem;
-  }
-}
-#content {
-  position: relative;
-  margin: auto;
-  margin-top: 3.5rem;
-  padding-top: 1rem;
-  padding-bottom: 80px;
-}
 
 #footer {
+  margin-top:auto; 
   padding: 2em 1em;
   background-color: #eee;
-  bottom: 0;
   width: 100%;
   .caption {
     font-size: 1.1em;
@@ -138,19 +132,37 @@ body {
   }
 }
 
-img {
-  width: 100%;
-  height: auto;
+//-------------------------------------------------- component
+.navbar-toggler { border: none; background: transparent !important;
+  &:focus { outline: none; background: transparent !important; }
+  &:hover>.icon-bar:nth-child(2) { width: 22px; transition: ease all .2s; }
+  &:active>.icon-bar:nth-child(2) { width: 22px; transition: ease all .2s; } 
+  .icon-bar {
+    transform: rotate(0deg) translate(0px, 0px);
+    transition: ease all .2s;
+    display: block; width: 22px; height: 2px; border-radius: 1px;
+  }
+  .icon-bar+.icon-bar { margin-top: 4px; } 
+  .icon-bar:nth-child(2) { width: 16px; transition: ease all .2s; } 
+  &:not(.collapsed) .icon-bar:nth-child(1) { transform: rotate(45deg) translate(5px, 4px); transition: ease all .2s; }
+  &:not(.collapsed) .icon-bar:nth-child(2) { opacity: 0; transition: ease all .2s; }
+  &:not(.collapsed) .icon-bar:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); transition: ease all .2s; }
+} 
+
+.kamisibai {
+  margin-top: 3.5rem;
+  .jumbotron-slide-image {
+    padding-bottom: 75%; 
+    @media (min-width: 576px) {
+      padding-bottom: 40%; 
+    }
+  }
+}
+.kamisibai + #content {
+  margin-top: 0;
+  padding-top: 1rem;
 }
 
-.d-flex {
-  .center {
-    align-self: center;
-  }
-  .align-right {
-    margin-left: auto;
-  }
-}
 
 .button-group-sharing > * {
   vertical-align: top !important;

@@ -1,10 +1,9 @@
 <style>
 .error-404-area {
   text-align: center;
-  padding: 8em 0;
+  padding: 2em 0;
 }
 .error-404-area * {
-  color: #ccc;
 }
 .error-404-area > span {
   font-weight: bold;
@@ -15,8 +14,8 @@
 }
 </style>
 <div class="error-404-area"style="">
-  <span>404</span>
+  <span class="theme-font-color-escape">404</span>
   <div style="text-align: center;">
-    <a style="" href="<?php bloginfo('/'); ?>"><?php echo __('Home'); ?> &raquo; </a>
+    <a class="theme-font-color-escape" href="<?php bloginfo('url'); ?>"><?php echo __('Home'); ?> &raquo; </a>
   </div>
 </div>

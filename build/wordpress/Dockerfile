@@ -27,6 +27,10 @@ EXPOSE 443
 # Changes User-ID before docker-entrypoint.sh
 RUN usermod -u ${WWWDATA_USERID} www-data
 
+
+ARG ENTRY_UPDATED=${ENTRY_UPDATED}
+RUN echo """${ENTRY_UPDATED}"
+
 # DONT include filename for overwriting.
 COPY ./entrypoint.sh /opt/
 RUN chmod +x /opt/entrypoint.sh

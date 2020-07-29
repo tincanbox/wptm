@@ -23,8 +23,8 @@ if( WPTM::option('basis_maintenance') == 1){
       <?php WPTM::render('template/partial/common/header'); ?>
       <?php WPTM::render('template/partial/common/jumbotron'); ?>
       <div id="content" <?php body_class(); ?>>
-        <div class="container">
-          <div class="row">
+        <div id="inner" class="container">
+          <div class="row align-middle">
             <?php
             $show_sidebar = ( WPTM::option('sidebar_toggle') == 1);
             $col_main = 12;

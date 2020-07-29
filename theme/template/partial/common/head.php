@@ -55,6 +55,8 @@ if($post){
 <script src="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/bootstrap/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/static/vendor/font-awesome/css/font-awesome.min.css'; ?>">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+
 <?php WPTM::render('template/partial/common/share/prepare_facebook'); ?>
 <?php WPTM::render('template/partial/common/share/prepare_twitter'); ?>
 <?php WPTM::render('template/partial/common/share/prepare_line'); ?>

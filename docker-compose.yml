@@ -9,13 +9,16 @@ services:
       args:
         WP_INSTALL_DIR: ${WP_INSTALL_DIR}
         WWWDATA_USERID: ${WWWDATA_USERID}
+        ENTRY_UPDATED: 0
     links:
       - database:mysql
     volumes:
       - ./volume/static:${WP_INSTALL_DIR}/static
       - ./volume/content:${WP_INSTALL_DIR}/wp-content
       - ./theme:${WP_INSTALL_DIR}/wp-content/themes/wptm
-      - ./config:/opt/config
+      - ./config/ssl:/opt/config/ssl
+      - ${PWD}/config/.htaccess:${WP_INSTALL_DIR}/.htaccess
+      - ${PWD}/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     restart: unless-stopped
     depends_on:
       - database
