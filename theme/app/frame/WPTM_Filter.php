@@ -70,9 +70,9 @@ class WPTM_Filter extends WPTM_Factory {
           $classes[] = 'tag-'.$t->slug;
         }
       }
-      $posttype = get_post_type();
-      if($posttype){
-        $classes[] = 'posttype-'.$posttype;
+      $post_type = get_post_type();
+      if($post_type){
+        $classes[] = 'post_type-'.$post_type;
       }
     }else{
       $q = $qq->query;
@@ -81,8 +81,7 @@ class WPTM_Filter extends WPTM_Factory {
         $classes[] = $c->slug;
       }
       if(@$q['post_type']){
-        var_dump($q['post_type']);
-        $classes[] = 'posttype-'.$q['post_type'];
+        $classes[] = 'post_type-'.$q['post_type'];
       }
     }
     return $classes;

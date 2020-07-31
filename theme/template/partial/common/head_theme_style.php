@@ -1,5 +1,13 @@
 <link href='//fonts.googleapis.com/earlyaccess/notosansjapanese.css' rel='stylesheet' type='text/css'>
 
+<?php
+
+$theme_style = "";
+
+$style_group = "article";
+$article_group = WPTM::get_article_group_config(array('ordered' => true));
+
+?>
 <style>
 html,body {
   font-family: 'Lato', 'Noto Sans JP', "Montserrat","游ゴシック",YuGothic,"ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","メイリオ",Meiryo, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
@@ -49,7 +57,7 @@ if($v = WPTM::option('theme_background_font_color_visibility')){ ?>
 <?php # Header
 if($v = WPTM::option('theme_header_background_color')){ ?>
 .theme-header-background-color {
-  background-color: <?php echo $v; ?>
+  background-color: <?php echo $v; ?>;
 }
 <?php } ?>
 <?php
@@ -59,10 +67,9 @@ if($v = WPTM::option('theme_header_font_color')){ ?>
   color: <?php echo $v; ?>
 }
 .theme-header-background-color-escape {
-  background-color: <?php echo $v; ?>
+  background-color: <?php echo $v; ?>;
 }
 <?php } ?>
-
 
 <?php
 # Footer
@@ -82,13 +89,6 @@ if($v = WPTM::option('theme_footer_font_color')){ ?>
 }
 <?php } ?>
 
-<?php
-
-$style_group = "article";
-$article_group = WPTM::get_article_group_config();
-
-?>
-
 .theme-<?php echo $style_group; ?>-icon {
   width: 1.1em;
   height: 1.1em;
@@ -99,10 +99,11 @@ $article_group = WPTM::get_article_group_config();
 }
 
 <?php
+// Reversing cuz latter CSS means higher priority.
 foreach(array_reverse($article_group) as $p => $l){
   foreach($l as $c){
 
-  $prefix = $c['prefix'];
+  $prefix = $c['type'];
   $slug = $c['slug'];
   ?>
   #content.<?php echo $prefix; ?>-<?php echo $slug; ?>::before {
@@ -125,7 +126,7 @@ foreach(array_reverse($article_group) as $p => $l){
       fill: <?php echo $c['theme_background_color']; ?>;}
     *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-background-color {
       background-color: <?php echo $c['theme_background_color']; ?>;}
-  <?php endif; ?>
+ <?php endif; ?>
 
   <?php if($v = @$c['theme_background_image']){ ?>
   body.single #content.<?php echo $prefix; ?>-<?php echo $slug; ?> {
@@ -146,6 +147,10 @@ foreach(array_reverse($article_group) as $p => $l){
     *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-font-color-escape:hover {
       color: <?php echo $v; ?>;
       fill: <?php echo $v; ?>;}
+    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-background-color-escape,
+    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-background-color-escape:hover {
+      background-color: <?php echo $v; ?>;
+    }
   <?php endif; ?>
 
 <?php

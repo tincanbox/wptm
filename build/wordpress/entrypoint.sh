@@ -9,30 +9,38 @@ echo "======== WPTM ENTRYPOINT ========"
 
 # Add your configurations here if you need.
 echo "moving configurations..."
-yes | cp -f /opt/config/.htaccess .htaccess 2>/dev/null || :
-yes | cp -f /opt/config/uploads.ini /usr/local/etc/php/conf.d/uploads.ini 2>/dev/null || :
+yes | cp -f /opt/config/apache/.htaccess .htaccess 2>/dev/null || :
+yes | cp -f /opt/config/php/wordpress.ini /usr/local/etc/php/conf.d/wordpress.ini 2>/dev/null || :
 #yes | cp -f /usr/local/etc/php/php.ini-production /usr/local/etc/php/conf.d/php.ini 2>/dev/null || :
-
-a2enmod rewrite
 
 # Copies cert files.
 if [ -e "/opt/config/ssl/$SSL_CERT_FILE" ] && [ -e "/opt/config/ssl/$SSL_CERT_KEY_FILE" ] ; then
     echo "setting up SSL..."
+
+    # Prepares ssl config file from default one.
     yes | cp -f /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/wordpress-ssl.conf || :
+
+    # Replaces SSL file name.
     sed -i -r "s|^(\s+SSLCertificateFile\s+)(.*)$|\1/etc/ssl/private/$SSL_CERT_FILE|g" \
-        /etc/apache2/sites-available/wordpress-ssl.conf || :
+       /etc/apache2/sites-available/wordpress-ssl.conf || :
     sed -i -r "s|^(\s+SSLCertificateKeyFile\s+)(.*)$|\1/etc/ssl/private/$SSL_CERT_KEY_FILE|g" \
-        /etc/apache2/sites-available/wordpress-ssl.conf || :
+       /etc/apache2/sites-available/wordpress-ssl.conf || :
+
+    # Moves volumed SSL cert and key defined in .env file.
+    # Put your cert-key pair in ./config/ssl dir.
     yes | cp -f "/opt/config/ssl/$SSL_CERT_FILE" "/etc/ssl/private/$SSL_CERT_FILE" || :
     yes | cp -f "/opt/config/ssl/$SSL_CERT_KEY_FILE" "/etc/ssl/private/$SSL_CERT_KEY_FILE" || :
     chmod 0644 "/etc/ssl/private/$SSL_CERT_FILE" || :
     chmod 0644 "/etc/ssl/private/$SSL_CERT_KEY_FILE" || :
-    a2enmod ssl
+
+    # Finally, activates generated config.
     a2ensite wordpress-ssl
 else
     echo "setting up without SSL..."
 fi
 
+# if `.initialized` file is touched,
+# skips all initiation flow.
 if [ ! -e .initialized ]; then
     # Changes stateful directory permissions
     echo "changing www-data permissions..."
@@ -41,7 +49,7 @@ if [ ! -e .initialized ]; then
     chmod -R g+w "${WP_INSTALL_DIR}/wp-content"
 
     # All core configurations are initiated by docker's wordpress image.
-    # Just installing the econfigurated wordpress.
+    # Just installing the configurated wordpress.
     echo "Installing wordpress..."
     sudo -u www-data wp core install \
         --path=${WP_INSTALL_DIR} \
@@ -58,7 +66,10 @@ if [ ! -e .initialized ]; then
 
     sudo -u www-data wp theme activate \
         --path=${WP_INSTALL_DIR} \
-        wptm
+        ${WP_DEFAULT_THEME}
+
+    sudo -u www-data wp menu "WPTM-DEFAULT" \
+        --path=${WP_INSTALL_DIR} \
 
 fi
 

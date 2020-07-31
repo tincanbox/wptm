@@ -9,9 +9,9 @@ foreach($tags as $e){
   $group_name = 'tag-'.$e;
 
   if($e){
-    $tag = get_tags(array('slug' => $e));
+    $tag = get_term_by('name', $e, 'post_tag');
     if($tag){
-      $group_caption = sprintf(__("Tag: %s"), $tag[0]->slug);
+      $group_caption = sprintf(__("Tag: %s"), $tag->slug);
     }
   }
 

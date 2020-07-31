@@ -5,7 +5,8 @@ function set_article_group($panel, $type, $name){
   $panel
     ->section(ucfirst($type).'['.$name.']')
       ->control('checkbox', $kp.'[is_active]')
-      ->control('checkbox', $kp.'[show_in_menu]')
+      ->control('checkbox', $kp.'[show_in_home]')
+      ->control('text', $kp.'[display_priority]', array('label' => 'Display Priority'))
       ->control('color', $kp.'[theme_background_color]')
       ->control('number', $kp.'[theme_background_opacity]', array(
         'description' => '0 ~ 255'
@@ -21,7 +22,6 @@ function set_article_group($panel, $type, $name){
       ->control('image', $kp.'[icon]')
       ->control('text', $kp.'[article_count]', array('label' => 'TopPage: Article counts'))
       ->control('checkbox', $kp.'[comment_disabled]', array('label' => 'Disable Comment'))
-      ->control('text', $kp.'[display_priority]', array('label' => 'TopPage: Display Priority'))
       ->control('checkbox', $kp.'[search_excluded]', array('label' => 'Exclude from search'))
      ;
 }
@@ -64,21 +64,6 @@ $customizer->UI->build()->panel('top')
   ->control('text', 'jumbotron_url_post_meta_key')
   ;
 
-# Post
-$customizer->UI->build()->panel('article')
-  ->section('article basis')
-    ->control('checkbox', 'post_show_time')
-    ->control('checkbox', 'post_show_tag_list')
-    ->control('checkbox', 'post_show_category_list')
-    ->control('checkbox', 'post_allow_comment')
-  ->section('list')
-    ->control('text', 'post_badge_new_interval')
-    ->control('image', 'post_article_list_noimage_url')
-    ->control('text', 'post_article_list_read_more_label')
-  ->section('meta')
-    ->control('text', 'post_meta_key_eyecatch_link')
-  ;
-
 # Sidebanner
 $customizer->UI->build()->panel('sidebar', array('title' => 'Side Bar'))
   ->section('basis')
@@ -98,32 +83,40 @@ $customizer->UI->build()->panel('sidebar', array('title' => 'Side Bar'))
     ->control('text', 'sidebar_head_last_activated_time')
   ;
 
+# Article
+$customizer->UI->build()->panel('article')
+  ->section('article basis')
+    ->control('checkbox', 'post_show_time')
+    ->control('checkbox', 'post_show_tag_list')
+    ->control('checkbox', 'post_show_category_list')
+    ->control('checkbox', 'post_allow_comment')
+  ->section('list')
+    ->control('text', 'post_badge_new_interval')
+    ->control('image', 'post_article_list_noimage_url')
+    ->control('text', 'post_article_list_read_more_label')
+  ->section('meta')
+    ->control('text', 'post_meta_key_eyecatch_link')
+  ;
+
+
 # posttypes
 $ps = get_post_types(array( 'public'   => true, '_builtin' => false));
 array_unshift($ps, 'post');
-$panel = $customizer->UI->build()->panel('posttypes', array('title' => 'Post Type'));
+$panel = $customizer->UI->build()->panel('article_post_type', array('title' => 'Article: Post Type'));
 foreach($ps as $p){
-  set_article_group($panel, 'posttype', $p);
+  set_article_group($panel, 'post_type', $p);
 }
 
 # categories
 $cats = get_categories();
-$t = array();
-$panel = $customizer->UI->build()->panel('category', array('title' => 'Category'));
-foreach($cats as $i => $c){
-  $t[$c->slug] = $c->name;
+$panel = $customizer->UI->build()->panel('article_category', array('title' => 'Article: Category'));
+foreach($cats as $c){
+  set_article_group($panel, 'category', $c->slug);
 }
 
-$b = WPTM::option('category_for_article_manage');
-if($b){
-  $ps = array();
-  foreach($b as $c => $f){
-    if(!$f) continue;
-    $ps[] = $c;
-    $c = get_category_by_slug($c);
-    if($c){
-      $p = $customizer->UI->build()->panel('categories', array('title' => 'Category'));
-      set_article_group($p, 'category', $c->slug);
-    }
-  }
+# tags
+$tags = get_tags();
+$panel = $customizer->UI->build()->panel('article_tag', array('title' => 'Article: Tag'));
+foreach ($tags as $t) {
+  set_article_group($panel, 'tag', $t->slug);
 }

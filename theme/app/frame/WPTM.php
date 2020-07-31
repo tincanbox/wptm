@@ -6,16 +6,17 @@ class WPTM {
 
 
   # Configuration holder.
-  private $config = array();
-  private $cache = array(
-    'config' => array()
+  private $__config = array();
+  private $__cache = array(
+    'config' => array(),
+    'article_group' => array()
   );
 
   static private $instance_storage = array();
 
 
   function __construct($conf = array()){
-    $this->config = array_merge_recursive(array(
+    $this->__config = array_merge_recursive(array(
       'name'      => 'WPTM',
       'namespace' => ''
     ), $conf);
@@ -67,6 +68,9 @@ class WPTM {
     add_action('init', array($instance, 'prepare_post_type'));
     add_action('init', array($instance, 'prepare_route'));
 
+    add_action('init', array($instance, 'init'));
+
+
     return $instance;
   }
 
@@ -114,7 +118,7 @@ class WPTM {
     $c = get_category($cat_ID);
     $r = array();
     if($c){
-      $p_ID = $c->category_parent;
+      $p_ID = @$c->category_parent;
       if($p_ID){
         $p = get_category($p_ID);
         if($p){
@@ -137,37 +141,10 @@ class WPTM {
     exit;
   }
 
-  static function get_article_group_config(){
-    $d = array();
-    foreach(array('category', 'posttype') as $type){
-      $conf = WPTM::option($type);
-      if(!$conf) continue;
-
-      $prefix = $type;
-      switch($type){
-        case 'posttype':
-          //$prefix = "post-type-archive";
-        break;
-      }
-
-      foreach($conf as $slug => $c){
-        if($c && @$c['show_in_menu']){
-          $p = (int)@$c['display_priority'];
-          if(!@$d[$p]){
-            $d[$p] = array();
-          }
-          $d[$p][] = array_merge(array(
-            'prefix' => $prefix,
-            'slug' => $slug,
-            'type' => $type
-          ), $c);
-        }
-      }
-    }
-    ksort($d);
-    return $d;
+  function init(){
+    $this->setup_article_group();
+    add_action('pre_get_posts', array($this, 'generate_search_condition'), 1);
   }
-
 
 
   #
@@ -178,11 +155,12 @@ class WPTM {
       trigger_error('$key must be a string.');
     }
 
-    if(array_key_exists($key, $this->cache['config'])){
-      return $this->cache['config'][$key];
+    $cache = $this->_cache('config');
+    if($cache && array_key_exists($key, $cache)){
+      return $cache[$key];
     }
 
-    $surr = $this->config;
+    $surr = $this->__config;
 
     foreach(explode('.', $key) as $n){
       if(array_key_exists($n, $surr)){
@@ -190,7 +168,7 @@ class WPTM {
         if(is_array($v)){
           $surr = $v;
         }else{
-          $this->cache['config'][$key] = $v;
+          $this->__cache['config'][$key] = $v;
           return $v;
         }
       }else{
@@ -199,6 +177,22 @@ class WPTM {
     }
 
     return $surr;
+  }
+
+  function _cache($k, $v = null){
+    if(isset($v)){
+      $this->__cache[$k] = $v;
+      return $v;
+    }
+    if(is_admin()){
+      return null;
+    }
+    if(is_customize_preview()){
+      return null;
+    }
+    if(array_key_exists($k, $this->__cache)){
+      return $this->__cache[$k];
+    }
   }
 
 
@@ -260,7 +254,7 @@ class WPTM {
       $r = include_once($c);
       $n = str_replace('.php', '', basename($c));
       if(is_array($r)){
-        $this->config[$n] = $r;
+        $this->__config[$n] = $r;
       }
     }
   }
@@ -423,6 +417,165 @@ class WPTM {
     $q = $qv ? array_merge($q, $qv) : $q;
     return $q;
   }
+
+  function setup_article_group(){
+    if($v = $this->_cache('article_group')){
+      return $v; 
+    }
+    foreach(array('category', 'post_type', 'tag') as $type){
+      $conf = WPTM::option($type);
+      if(!$conf) continue;
+
+      foreach($conf as $slug => $c){
+        $content = array_merge(array(
+          'slug' => $slug,
+          'type' => $type
+        ), $c);
+        $o = null;
+        switch($type){
+          case "post_type":
+            $o = get_post_type_object($slug);
+            $content['link'] = get_post_type_archive_link($slug);
+            $content['name'] = $o->labels->name;
+          break;
+          case "category":
+            $o = get_category_by_slug($slug);
+            $content['link'] = get_term_link($o);
+            $content['name'] = $o->name;
+          break;
+          case "tag":
+            $o = get_term_by('name', $slug, 'post_tag');
+            $content['link'] = get_term_link($o);
+            $content['name'] = $o->name;
+          break;
+        }
+        $content['object'] = $o;
+        $d[] = $content;
+      }
+    }
+
+    $this->_cache('article_group', $d);
+
+    return $d;
+  }
+
+  static function get_article_group_config($opt = array()){
+    $d = array();
+    $opt_ordered = !!@$opt['ordered'];
+    $opt_grouped = !!@$opt['grouped'];
+
+    foreach(static::instance()->setup_article_group() as $ag){
+      $type = $ag['type'];
+      if($opt_ordered){
+        $pri = (int)@$ag['display_priority'];
+        $pri = $pri > 0 ? $pri : 999;
+        if(@!$d[$pri]) $d[$pri] = array();
+        if($opt_grouped){
+          $d[$pri][$ag['type']][] = $ag;
+        }else{
+          $d[$pri][] = $ag;
+        }
+      }else{
+        if($opt_grouped){
+          if(@!$d[$type]) $d[$type] = array();
+          $d[$type][$ag['slug']] = $ag;
+        }else{
+          $d[] = $ag;
+        }
+      }
+    }
+
+    ksort($d);
+    return $d;
+  }
+
+  function generate_search_condition($query)
+  {
+    if(is_admin()){
+      return $query;
+    }
+
+    if(
+         $query->is_home() || $query->is_page()
+      || $query->is_single() || $query->is_archive() || $query->is_post_type_archive()
+      || $query->is_date() || $query->is_year() || $query->is_month()
+      || $query->is_category() || $query->is_tag() || $query->is_tax()
+      || $query->is_author()
+      || $query->is_search()
+      || $query->is_feed()
+      || $query->is_404()
+    ){
+
+    }else{
+      return $query;
+    }
+
+    if($query->is_main_query()){
+      // do something ??
+    }
+
+    $qq = $query->query;
+    // Base conds
+    $exclude_cond = array();
+    $include_cond = array();
+
+    // builds string-based query.
+    if(@$qq['s']){
+      $qs = explode(" ", $qq['s']);
+      $rm = array();
+      while ($l = array_pop($qs)) {
+        $cond = explode(":", $l);
+        if (count($cond) > 1) {
+          $query[$cond[0]] = $cond[1];
+        } else {
+          $rm[] = $l;
+        }
+      }
+      $qq['s'] = (count($rm)) ? join(" ", $rm) : "";
+    }
+    $conf = static::get_article_group_config(array('grouped' => true));
+
+    // exclude: category
+    $ls = array();
+    foreach ($conf['category'] as $sl => $c) {
+      $disable = false;
+      if(!@$c['is_active']) $disable = true;
+      if($query->is_search() && @$c['search_excluded']) $disable = true;
+      if($disable) $ls[] = $c['object']->term_id;
+    }
+    $exclude_cond['category__not_in'] = $ls;
+
+    // exclude: tag
+    $ls = array();
+    foreach ($conf['tag'] as $sl => $c) {
+      $disable = false;
+      if(!@$c['is_active']) $disable = true;
+      if($query->is_search() && @$c['search_excluded']) $disable = true;
+      if($disable) $ls[] = $c['object']->term_id;
+    }
+    $exclude_cond['tag__not_in'] = $ls;
+
+    // include: post_type
+    $ls = array();
+    foreach ($conf['post_type'] as $c) {
+      if(@!$c['is_active']) continue;
+      if($query->is_search() && @$c['search_excluded']) continue;
+      if(@$exclude_cond['post_type'] && in_array($c['slug'], $exclude_cond['post_type'])) continue;
+      if($query->is_post_type_archive()){
+        continue;
+      }
+      $ls[] = $c['slug'];
+    }
+    $include_cond['post_type'] = $ls;
+
+    $result = array_merge_recursive($qq, $include_cond, $exclude_cond);
+    foreach($result as $k => $v){
+      $query->set($k, $v);
+    }
+
+    return $query;
+  }
+
 
 
 }

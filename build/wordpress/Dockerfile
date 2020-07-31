@@ -18,16 +18,20 @@ RUN chmod +x /tmp/wp-cli.phar
 RUN mv /tmp/wp-cli.phar /usr/local/bin/wp
 
 #----------
-# Apache 
+# Server
 #----------
 EXPOSE 80
 EXPOSE 443
+
+RUN a2enmod headers
+RUN a2enmod rewrite
+RUN a2enmod ssl
 
 # SSL
 # Changes User-ID before docker-entrypoint.sh
 RUN usermod -u ${WWWDATA_USERID} www-data
 
-
+#------------------------------------------------
 ARG ENTRY_UPDATED=${ENTRY_UPDATED}
 RUN echo """${ENTRY_UPDATED}"
 

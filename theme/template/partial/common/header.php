@@ -1,4 +1,10 @@
-<div id="header" class="fixed-top">
+<?php
+
+$menu_item_list = wp_get_nav_menu_items("WPTM-DEFAULT");
+
+$config = WPTM::get_article_group_config(array('grouped' => true));
+
+?><div id="header" class="fixed-top">
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md theme-header-background-color">
     <a class="navbar-brand theme-header-font-color animatable attractive" href="/"><?php echo get_bloginfo('title'); ?></a>
@@ -13,55 +19,74 @@
       <ul class="navbar-nav ml-auto">
         <?php
 
-        $article_group = WPTM::get_article_group_config();
+        foreach($menu_item_list as $menu ){
+          $info = array(
+            'is_active' => true,
+            'title' => $menu->title,
+            'type' => $menu->type,
+            'url' => $menu->url,
+            'slug' => null
+          );
+          $info['title'] = $menu->title;
+          $override = array();
 
-        foreach($article_group as $priority => $g){
-          foreach($g as $c){
-            $slug = $c['slug'];
-            ?>
-            <li class="nav-item <?php echo $c['prefix']; ?>-<?php echo $c['slug']; ?> animatable">
-              <?php
-
-              if(!@$c['is_active']){
-                continue;
-              }
-
-              $url = false; $name = false;
-              switch($c['type']){
-                case 'category':
-                  $cat = get_category_by_slug($slug);
-                  $url = get_category_link($cat->cat_ID);
-                  $name = $cat->name;
-                break;
-                case 'posttype':
-                  $url = get_post_type_archive_link($slug);
-                  $name = ucfirst($slug);
+          switch($menu->type){
+            case "taxonomy":
+              $term = get_term_by("id", $menu->object_id, $menu->object);
+              if(!$term) continue 2;
+              switch($menu->object){
+                case "category":
+                case "tag":
+                if($c = @$config[$menu->object][$term->slug]){
+                  $override = $c;
+                }
                 break;
               }
-              if(!$url) continue;
-              if(!$name) continue;
-
-              ?>
-              <a class="nav-link d-flex" href="<?php echo $url; ?>">
-                <?php if(@$c['icon']){ ?>
-                  <span
-                    class="theme-article-icon center mr-1"
-                    style="background-image: url(<?php echo $c['icon']; ?>);"></span>
-                <?php } ?>
-                <span class="text article-font-color center"><?php echo $name; ?></span>
-              </a>
-            </li>
-            <?php
+              $override['slug'] = $term->slug;
+              $override['type'] = $menu->object;
+            break;
+            case "post_type":
+              if($c = @$config['post_type'][$menu->object]){
+                $override = $c;
+              }
+              $override['slug'] = $menu->object;
+            break;
+            default:
+              $override['slug'] = $menu->object;
+            break;
           }
+
+          if(count($override)){
+            $info = array_merge($info, $override);
+          }
+
+          ?>
+          <li class="nav-item <?php
+            echo $info['type']; ?>-<?php echo $info['slug'];
+            ?> animatable">
+            <?php
+
+            if(!@$info['is_active']){
+              continue;
+            }
+
+            ?>
+            <a class="nav-link d-flex theme-header-font-color" href="<?php echo $info['url']; ?>">
+              <?php if(@$info['icon']){ ?>
+                <span
+                  class="theme-article-icon center mr-1"
+                  style="background-image: url(<?php echo $info['icon']; ?>);"></span>
+              <?php } ?>
+              <span class="text article-font-color center"><?php echo $info['title']; ?></span>
+            </a>
+          </li>
+          <?php
         }
 
         ?>
 
         <li role="separator" class="nav-item dropdown-divider"></li>
 
-        <?php 
-        $m = wp_get_nav_menu_items("default");
-        ?>
       </ul>
 
       <div class="d-none d-md-block" style="width: 1em;"></div>

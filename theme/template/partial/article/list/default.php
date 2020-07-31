@@ -1,16 +1,7 @@
 <?php
 
+// keep for pagi.
 global $wp_query;
-
-$conf = WPTM::option('posttype');
-$include_posttype_list = array();
-foreach($conf as $sl => $c){
-  if($c && @$c['is_active']){
-    if($c){
-      $include_posttype_list[] = $sl;
-    }
-  }
-}
 
 $wp_query = new WP_Query(array_merge(array(
   #'posts_per_page'   => 10,
@@ -23,7 +14,7 @@ $wp_query = new WP_Query(array_merge(array(
   #'exclude'          => '',
   #'meta_key'         => '',
   #'meta_value'       => '',
-  'post_type'        => $include_posttype_list,
+  #'post_type'        => '',
   #'post_mime_type'   => '',
   #'post_parent'      => '',
   #'author'     => '',

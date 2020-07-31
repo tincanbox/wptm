@@ -1,8 +1,32 @@
+$component: 'article-list';
 
 .article-list-group {
 }
 
+.article-category-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  border-radius: 3px;
+  padding-top: .1rem;
+  margin-bottom: .25rem;
+  &:not(:last-child) {
+    margin-right: 0.25rem;
+  }
+  a {
+    padding: 0.2rem 0.4rem;
+    cursor: pointer;
+  }
+}
+
+
 .article-list {
+
+  .#{$component}-total-count {
+    .count {
+      font-size: 1.1em;
+      font-weight: bolder;
+    }
+  }
 
   &.list-type-with_picture {
 
@@ -33,6 +57,21 @@
       .article-list-column-caption {
         display: block;
         padding: .6em;
+        .upper {
+          position: relative;
+          .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+          }
+        }
+        .data.title {
+          padding: 0.4em 0;
+        }
+        .data.category {
+          min-height: 18px;
+        }
+
       }
 
       .data {

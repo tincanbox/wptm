@@ -1,4 +1,3 @@
-
 // Basis ----------------------------
 // DO NOT apply transition to svg related elements.
 // Most of browsers fail to draw colors in `use` tag.
@@ -11,7 +10,7 @@ html {
 }
 
 .invisible-onload {
-  transition: all .4s;
+  transition: all 0.4s;
   opacity: 0;
   &.loaded {
     opacity: 1;
@@ -33,11 +32,11 @@ html {
 
 .rack-board {
   display: flex;
-  &>* {
+  & > * {
     align-self: center;
   }
-  &> span {
-    padding-top: .01em;
+  & > span {
+    padding-top: 0.01em;
   }
 }
 
@@ -45,7 +44,7 @@ html {
   .navbar-brand {
   }
   .navbar {
-    box-shadow: 0 0 4px rgba(0,0,0,.24);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.24);
   }
 }
 
@@ -57,12 +56,12 @@ html {
 }
 
 .animatable {
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
 .touchable {
-  transition: all .25s;
-  opacity: .75;
+  transition: all 0.25s;
+  opacity: 0.75;
   &:hover {
     opacity: 1;
   }
@@ -73,7 +72,7 @@ html {
 
 .attractive {
   &:hover {
-    transform:scale(1.14);
+    transform: scale(1.14);
   }
 }
 
@@ -82,94 +81,45 @@ html {
   background-repeat: no-repeat;
   background-size: cover;
 }
-@each $r in 0,90,180,270 {
+@each $r in 0, 90, 180, 270 {
   .arrow-#{$r}deg {
     transform: rotate(#{$r}deg);
   }
 }
 
-
-
-
 .article-list-group {
-
-  .article-list-total-count {
-    .count {
-      font-size: 1.1em;
-      font-weight: bolder;
-    }
-  }
-
-  .article-list {
-
+ .article-list {
     .badge-new {
       color: #ffffff;
-      border: 1px solid rgba(255,255,255, .4);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       background-color: #ce6f3a;
     }
- 
-    .article-list-column-caption {
-      color: #333;
-      .upper {
-        position: relative;
-        .badge {
-          position: absolute;
-          top: 0;
-          right: 0;
-        }
-     }
-      .data.title{
-        padding: .4em 0;
-      }
-      .data.category {
-        min-height: 18px;
-      }
-      .article-category-pill {
-        font-size: .8em;
-        background-color: #888;
-        border: 1px solid rgba(255,255,255, .4);
-        border-radius: .2em;
-        color: #fff;
-        display: inline-block;
-        &:not(:last-child){
-          margin-right: .6em;
-        }
-        &:hover {
-          background-color: #999;
-        }
-        a {
-          padding: .2em .4em;
-          cursor: pointer;
-          color: #ffffff;
-        }
-      }
-    }
   }
-
+  .article-list-column-caption {
+    color: #333;
+  }
 }
-
 
 .comment-list-area {
   margin-bottom: 1.8em;
 }
 
 .comment-list {
-
   padding: 0;
 
-  &>.comment {
+  & > .comment {
     border-bottom: 1px solid #efefef;
   }
-
   .children {
     border-top: 1px dashed #dfdfdf;
   }
 
   list-style: none;
-  ol {list-style: none;}
+  ol {
+    list-style: none;
+  }
 
   .comment-body {
-
     padding-top: 1em;
     padding-bottom: 1em;
 
@@ -179,7 +129,7 @@ html {
         max-width: 60px;
         float: left;
         margin-right: 1.2em;
-        border-radius: .3em;
+        border-radius: 0.3em;
       }
       .fn {
         font-size: 1.1em;
@@ -192,41 +142,40 @@ html {
     .comment-meta {
       a {
         color: #aaa;
-        font-size: .9em;
+        font-size: 0.9em;
       }
     }
 
-    &>p {
+    & > p {
       clear: both;
       padding-top: 1.4em;
     }
   }
-
 }
 
 .comment-form-comment {
   textarea {
     width: 100%;
-    border-radius: .3em;
+    border-radius: 0.3em;
     border: 1px solid #ddd;
-    padding: .4em .6em;
+    padding: 0.4em 0.6em;
   }
 }
 
 .related-categories {
   list-style: none;
-  padding: .4em;
+  padding: 0.4em;
   margin-bottom: 0;
   li {
     a {
-      padding: .4em .6em;
+      padding: 0.4em 0.6em;
       border: 1px solid #ccc;
     }
   }
 }
 
 .gototop {
-  padding: .4em .6em;
+  padding: 0.4em 0.6em;
   margin-top: 2em;
   display: inline-block;
   &:hover {
