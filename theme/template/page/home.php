@@ -49,7 +49,7 @@ foreach($article_group as $pri => $step){
         <div class="text-right">
           <a
             href="<?php echo $c['link']; ?>"
-            class="theme-font-color-escape"
+            class="theme-font-color-escape d-block mt-2"
             style="margin-bottom: 4.2em;"><?php echo __($link_read_more_label); ?> <?php echo $c['name']; ?></a>
         </div>
       </div>

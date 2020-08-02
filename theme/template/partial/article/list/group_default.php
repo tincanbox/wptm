@@ -23,6 +23,11 @@ if(@$target_article_group){
         $query['tag__in'][] = $c['object']->term_id;
       break;
     }
+    if(@$c['list_type']){
+      $list_type = $c['list_type'];
+    }else{
+      $list_type = 'with_picture';
+    }
   }
 }
 

@@ -1,5 +1,7 @@
 <?php
 
+setup_postdata($post);
+
 $image_uri = null;
 if (has_post_thumbnail()) {
   $image_uri = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'single-post-thumbnail');
@@ -29,24 +31,24 @@ if (!$image_uri) {
       <div class="data title article-font-color-escape">
         <a class="article-font-color-escape" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
       </div>
-      <div class="article-font-color-escape inline-block-wrapper data category" style="text-align: right;">
+      <div class="article-category-pill-box article-font-color-escape inline-block-wrapper data category">
         <?php
 
         $cats = get_the_category($post->ID);
-        $arts = $opt_category_for_article_manage;
+        $cnfs = WPTM::option('category');
         $valid = array();
-        foreach ($arts as $slug => $b) {
-          if ($b) {
+        foreach ($cnfs as $slug => $b) {
+          if(@$b['is_active']){
             $valid[] = $slug;
           }
         }
         foreach ($cats as $c) {
           if (in_array($c->slug, $valid) || true) {
-        ?>
+            ?>
             <div class="article-category-pill article-background-color-escape">
               <a class="article-font-color" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
             </div>
-        <?php
+            <?php
           }
         }
         ?>

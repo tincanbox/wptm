@@ -76,10 +76,10 @@ if ($main_query->is_archive()) {
 ?><div>
 
 <ol class="structure-navigation section spacing">
-  <li><a class="link touchable" href="<?php bloginfo('url'); ?>">home</a></li>
+  <li><a class="link touchable" href="<?php bloginfo('url'); ?>">Home</a></li>
   <?php
 
-  if($post_type){
+  if($post_type && $post_type->name != 'post'){
     ?>
     <li>
       <a
@@ -99,18 +99,18 @@ if ($main_query->is_archive()) {
         <span class="group">[</span>
         <?php
       }
-      $ps = wptm::get_category_parents($c->cat_id);
+      $ps = wptm::get_category_parents($c->cat_ID);
       if($ps){
         foreach($ps as $p){
           ?><li class="">
-            <a class="link touchable" href="<?php echo get_category_link($p->cat_id); ?>"><?php echo __($p->name); ?></a>
+            <a class="link touchable" href="<?php echo get_category_link($p->cat_ID); ?>"><?php echo __($p->name); ?></a>
           </li>
           <?php
         }
       }
       ?>
       <li>
-        <a class="link touchable" href="<?php echo get_category_link($c->cat_id); ?>"><?php echo __($c->name); ?></a>
+        <a class="link touchable" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo __($c->name); ?></a>
       </li>
       <?php
 
@@ -136,11 +136,11 @@ if ($main_query->is_archive()) {
 <?php
 if($main_query->is_archive() && @$category){
   $p = $category;
-  if($b = get_categories('child_of='.$p->cat_id)){
+  if($b = get_categories('child_of='.$p->cat_ID)){
     $cs = array();
     foreach($b as $cb){
       if($category){
-        if($category->cat_id == $cb->cat_id) continue;
+        if($category->cat_ID == $cb->cat_ID) continue;
       }
       $cs[] = $cb;
     }
@@ -150,7 +150,7 @@ if($main_query->is_archive() && @$category){
         <div style="margin-bottom: .4em;"><?php echo __('related categories'); ?></div>
         <ul class="related-categories"><?php
         foreach($cs as $cb){
-          ?><li><a class="link touchable" href="<?php echo get_category_link($cb->cat_id); ?>"><?php echo $cb->name; ?></a></li><?php
+          ?><li><a class="link touchable" href="<?php echo get_category_link($cb->cat_ID); ?>"><?php echo $cb->name; ?></a></li><?php
         }
         ?>
         </ul>

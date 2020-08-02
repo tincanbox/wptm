@@ -236,22 +236,43 @@ img {
   .article-list.list-type-with_picture .article .data.date {
     font-size: .8em; }
   .article-list.list-type-with_picture .article .data.title {
-    font-size: 1.1em;
     margin: .2em 0;
-    word-break: no-break; }
+    word-break: break-word; }
     .article-list.list-type-with_picture .article .data.title a {
-      width: 100%;
-      text-overflow: ellipsis;
       display: inline-block;
-      overflow: hidden; }
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      box-sizing: content-box;
+      width: 100%;
+      overflow: hidden;
+      font-size: 1.1rem;
+      height: 3.5rem;
+      text-overflow: ellipsis; }
       .article-list.list-type-with_picture .article .data.title a:hover {
         text-decoration: underline; }
+
+.article-list.list-type-with_picture .article-category-pill-box {
+  text-align: right; }
 
 .article-list.list-type-simple_row {
   margin: 0;
   margin-top: 1.2em; }
+  .article-list.list-type-simple_row .article-list-group-content-box {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch; }
+    .article-list.list-type-simple_row .article-list-group-content-box .article-category-pill-box {
+      text-align: right;
+      margin-top: auto; }
   .article-list.list-type-simple_row .article-list-group-caption {
     display: none; }
+  .article-list.list-type-simple_row .feature-image {
+    display: block;
+    padding-bottom: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover; }
   .article-list.list-type-simple_row .article {
     margin-bottom: 0;
     border-bottom-width: 0; }
@@ -1379,6 +1400,11 @@ img {
 
 html {
   background: #efefef; }
+
+a {
+  color: #3f3f3f; }
+  a:hover {
+    color: #555555; }
 
 .section {
   background-color: #ffffff !important; }

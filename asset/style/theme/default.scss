@@ -5,6 +5,13 @@ html {
   background: #efefef;
 }
 
+a {
+  color: #3f3f3f;
+  &:hover {
+    color: #555555;
+  }
+}
+
 .section {
   background-color: #ffffff !important;
 }

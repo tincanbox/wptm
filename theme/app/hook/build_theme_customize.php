@@ -20,6 +20,16 @@ function set_article_group($panel, $type, $name){
           'default' => 'cover'
         ))
       ->control('image', $kp.'[icon]')
+      ->control('number', $kp.'[article_count]', array('label' => 'TopPage: Article counts'), array('default' => 3))
+      ->control('select', $kp.'[list_type]',
+          array(
+            'label' => 'List Type',
+            'choices' => array('default' => 'default', 'with_picture' => 'with_picture', 'simple_row' => 'simple_row')
+          ),
+          array(
+            'default' => 'with_picture'
+          )
+        )
       ->control('text', $kp.'[article_count]', array('label' => 'TopPage: Article counts'))
       ->control('checkbox', $kp.'[comment_disabled]', array('label' => 'Disable Comment'))
       ->control('checkbox', $kp.'[search_excluded]', array('label' => 'Exclude from search'))

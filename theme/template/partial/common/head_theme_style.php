@@ -97,7 +97,6 @@ if($v = WPTM::option('theme_footer_font_color')){ ?>
   vertical-align: middle;
   background-position: center;
 }
-
 <?php
 // Reversing cuz latter CSS means higher priority.
 foreach(array_reverse($article_group) as $p => $l){
@@ -106,30 +105,36 @@ foreach(array_reverse($article_group) as $p => $l){
   $prefix = $c['type'];
   $slug = $c['slug'];
   ?>
-  #content.<?php echo $prefix; ?>-<?php echo $slug; ?>::before {
+  body.<?php echo $prefix; ?>-<?php echo $slug; ?> #content:before {
     content: '';
     display: block;
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
-    z-index: -999; }
+    z-index: -999;
+  }
 
-  <?php if($v = @$c['theme_background_color']): ?>
-    body.single #content.<?php echo $prefix; ?>-<?php echo $slug; ?>::before {
+  <?php if($v = @$c['theme_background_color']){ ?>
+    body.single.<?php echo $prefix; ?>-<?php echo $slug; ?> #content:before {
       background-color: <?php echo $v ?><?php
       if($v = @$c['theme_background_opacity']){
         echo str_pad(dechex(intval($v)), 2, "0", STR_PAD_LEFT);
       }
-      ?>; }
+      ?>;
+    }
     *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-font-color,
-    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-font-color:hover {
+    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-font-color:hover
+    {
       color: <?php echo $c['theme_background_color']; ?>;
-      fill: <?php echo $c['theme_background_color']; ?>;}
-    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-background-color {
-      background-color: <?php echo $c['theme_background_color']; ?>;}
- <?php endif; ?>
+      fill: <?php echo $c['theme_background_color']; ?>;
+    }
+    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-background-color
+    {
+      background-color: <?php echo $c['theme_background_color']; ?>;
+    }
+  <?php } ?>
 
   <?php if($v = @$c['theme_background_image']){ ?>
-  body.single #content.<?php echo $prefix; ?>-<?php echo $slug; ?> {
+  body.single.<?php echo $prefix; ?>-<?php echo $slug; ?> #content {
     background-image: url('<?php echo $v; ?>');
     background-position: center;
     background-attachment: fixed;
@@ -144,11 +149,14 @@ foreach(array_reverse($article_group) as $p => $l){
 
   <?php if($v = @$c['theme_background_font_color_visibility']): ?>
     *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-font-color-escape,
-    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-font-color-escape:hover {
+    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-font-color-escape:hover
+    {
       color: <?php echo $v; ?>;
-      fill: <?php echo $v; ?>;}
+      fill: <?php echo $v; ?>;
+    }
     *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-background-color-escape,
-    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-background-color-escape:hover {
+    *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-background-color-escape:hover
+    {
       background-color: <?php echo $v; ?>;
     }
   <?php endif; ?>

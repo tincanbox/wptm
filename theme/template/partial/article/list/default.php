@@ -31,7 +31,6 @@ if($posts){
   foreach(array(
     'post_article_list_noimage_url',
     'post_show_time',
-    'category_for_article_manage',
     'post_badge_new_interval'
   ) as $cn){
     $conf["opt_" . $cn] = @WPTM::option($cn);

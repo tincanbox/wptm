@@ -52,6 +52,9 @@ class WPTM_Filter extends WPTM_Factory {
     $qq = $wp_query;
     $classes = array();
     if(@$opt['post']){
+      global $post;
+      $post = $opt['post'];
+      setup_postdata($post);
       $cats = get_the_category();
       if(is_array($cats)){
         foreach($cats as $c){
@@ -78,7 +81,12 @@ class WPTM_Filter extends WPTM_Factory {
       $q = $qq->query;
       if(@$q['cat']){
         $c = get_the_category_by_id($q['cat']);
-        $classes[] = $c->slug;
+        $classes[] = "category-".$c->slug;
+      }
+      if(@$q['category_name']){
+        foreach(explode("/", $q['category_name']) as $c){
+          $classes[] = "category-".$c;
+        }
       }
       if(@$q['post_type']){
         $classes[] = 'post_type-'.$q['post_type'];
