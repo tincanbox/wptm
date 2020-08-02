@@ -423,6 +423,7 @@ class WPTM {
     if($v = $this->_cache('article_group')){
       return $v; 
     }
+    $d = array();
     foreach(array('category', 'post_type', 'tag') as $type){
       $conf = WPTM::option($type);
       if(!$conf) continue;
