@@ -66,10 +66,12 @@ if [ ! -e .initialized ]; then
 
     sudo -u www-data wp theme activate \
         --path=${WP_INSTALL_DIR} \
-        ${WP_DEFAULT_THEME}
+        ${WP_DEFAULT_THEME} \
+        || true
 
-    sudo -u www-data wp menu "WPTM-DEFAULT" \
+    sudo -u www-data wp menu create "WPTM-DEFAULT" \
         --path=${WP_INSTALL_DIR} \
+        || true
 
 fi
 
