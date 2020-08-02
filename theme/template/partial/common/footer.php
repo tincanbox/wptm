@@ -1,4 +1,9 @@
-<div id="footer" class="theme-footer-background-color invisible-onload">
+<?php
+
+$menu_item_list = wp_get_nav_menu_items("WPTM-DEFAULT");
+$config = WPTM::get_article_group_config(array('grouped' => true));
+
+?><div id="footer" class="theme-footer-background-color invisible-onload">
 
   <div class="container">
   <div class="row mb-4">
@@ -8,38 +13,63 @@
       <ul class="">
       <?php
 
-      $cats = WPTM::option('category_for_article_manage');
-      $conf = WPTM::option('category');
+      foreach($menu_item_list as $menu ){
+        $info = array(
+          'is_active' => true,
+          'title' => $menu->title,
+          'type' => $menu->type,
+          'url' => $menu->url,
+          'slug' => null
+        );
+        $info['title'] = $menu->title;
+        $override = array();
 
-      if($cats){
-        $d = array();
-        foreach($cats as $slug => $b){
-          if($b && isset($conf[$slug])){
-            $c = $conf[$slug];
-            $p = (int)$c['display_priority'];
-            if(!@$d[$p]){
-              $d[$p] = array();
+        switch($menu->type){
+          case "taxonomy":
+            $term = get_term_by("id", $menu->object_id, $menu->object);
+            if(!$term) continue 2;
+            switch($menu->object){
+              case "category":
+              case "tag":
+              if($c = @$config[$menu->object][$term->slug]){
+                $override = $c;
+              }
+              break;
             }
-            $d[$p][] = array_merge(array('slug' => $slug), $c);
-          }
+            $override['slug'] = $term->slug;
+            $override['type'] = $menu->object;
+          break;
+          case "post_type":
+            if($c = @$config['post_type'][$menu->object]){
+              $override = $c;
+            }
+            $override['slug'] = $menu->object;
+          break;
+          default:
+            $override['slug'] = $menu->object;
+          break;
         }
 
-        ksort($d);
-
-        foreach($d as $priority => $g){
-          foreach($g as $cat){
-            $c = get_category_by_slug($cat['slug']);
-            if($c){
-              ?>
-              <li class="category-<?php echo $c->slug; ?>">
-                <a
-                  class="link theme-footer-font-color"
-                  href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
-              </li>
-              <?php
-            }
-          }
+        if(count($override)){
+          $info = array_merge($info, $override);
         }
+
+        ?>
+        <li class="nav-item <?php
+          echo $info['type']; ?>-<?php echo $info['slug'];
+          ?> animatable">
+          <?php
+
+          if(!@$info['is_active']){
+            continue;
+          }
+
+          ?>
+          <a class="link theme-footer-font-color" href="<?php echo $info['url']; ?>">
+            <span class="text center"><?php echo $info['title']; ?></span>
+          </a>
+        </li>
+        <?php
       }
 
       ?>
