@@ -39,9 +39,8 @@ if(@$target_article_group){
     'list_type' => @$list_type,
     'show_total_count' => @$show_total_count,
     'query' => array_merge(array(
-      'posts_per_page'   => 6,
       'suppress_filters' => true
-    ), @$query ? $query : array())
+    ), $query)
   ));
 
 ?>

@@ -2,8 +2,6 @@
 
 $query = @$query ?: array();
 
-$categories = array();
-
 if(@$group_caption){
   ?>
   <h4 class="article-group-caption mb-2"><?php echo $group_caption; ?></h4>

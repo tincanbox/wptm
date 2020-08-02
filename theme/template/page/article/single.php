@@ -3,7 +3,20 @@
 
 $mq = $main_query;
 
-while($mq->have_posts()){ $mq->the_post(); $post = get_post();
+while($mq->have_posts()){
+  global $post;
+  $mq->the_post();
+  $post = get_post();
+
+  $query_related = array(
+    'post__not_in' => array($post->ID),
+    'tax_query' => array(
+      'relation' => 'or'
+    )
+  );
+  $tax_query = array(
+    'relation' => 'or'
+  );
 
   ?>
 
@@ -92,6 +105,7 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post();
       if(!@$cnfc){
         continue;
       }
+
       $query_category_in[] = $c->cat_ID;
       if(@$cnfc['is_active']){
         ?>
@@ -106,48 +120,46 @@ while($mq->have_posts()){ $mq->the_post(); $post = get_post();
     }
   }
 
+  if($post->post_type){
+    $query_related['post_type'] = $post->post_type;
+  }
+
 ?>
 
   </div>
 
   <?php
 
-  $q = array(
-    'posts_per_page' => 3,
-    'post__not_in' => array($post->ID),
-  );
-
-  $q['tax_query'] = array('relation' => 'OR');
-
   if($query_category_in){
-    $q['tax_query'][] = array(
+    $tax_query[] = array(
       'taxonomy' => 'category',
       'field'    => 'term_id',
-      'terms'    => $query_category_in
+      'terms'    => $query_category_in,
     );
+    //$query_related['category__in'] = $query_category_in;
   }
 
   if($query_tag_in){
-    $q['tax_query'][] = array(
-      'taxonomy' => 'tag',
-      'field'    => 'term_id',
-      'terms'    => $query_tag_in
+    $tax_query[] = array(
+     'taxonomy' => 'tag',
+     'field'    => 'term_id',
+     'terms'    => $query_tag_in,
     );
   }
+
+  $query_related['tax_query'][] = $tax_query;
 
   ?>
 
   <div class="section mb-3">
   <?php
   // Related articles
-
   WPTM::render('template/partial/article/list/group_related', array(
     'main_query' => $main_query,
     'show_group_caption' => true,
     'group_caption' => __('Related Contents'),
     'list_type' => 'with_picture',
-    'post' => $post,
-    'query' => $q
+    'query' => $query_related
   ));
 
   ?>

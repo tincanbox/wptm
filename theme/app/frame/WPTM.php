@@ -13,6 +13,7 @@ class WPTM {
   );
 
   static private $instance_storage = array();
+  static public $post_type_builtin_target = array('post', 'page');
 
 
   function __construct($conf = array()){
@@ -495,6 +496,10 @@ class WPTM {
       return $query;
     }
 
+    if(@$query->is_generate_search_condition_done){
+      return $query;
+    }
+
     if(
          $query->is_home() || $query->is_page()
       || $query->is_single() || $query->is_archive() || $query->is_post_type_archive()
@@ -516,6 +521,7 @@ class WPTM {
 
     $qq = $query->query;
     // Base conds
+    $search = array();
     $exclude_cond = array();
     $include_cond = array();
 
@@ -526,12 +532,12 @@ class WPTM {
       while ($l = array_pop($qs)) {
         $cond = explode(":", $l);
         if (count($cond) > 1) {
-          $query[$cond[0]] = $cond[1];
+          $search[$cond[0]] = $cond[1];
         } else {
           $rm[] = $l;
         }
       }
-      $qq['s'] = (count($rm)) ? join(" ", $rm) : "";
+      $search['s'] = (count($rm)) ? join(" ", $rm) : "";
     }
     $conf = static::get_article_group_config(array('grouped' => true));
 
@@ -555,23 +561,45 @@ class WPTM {
     }
     $exclude_cond['tag__not_in'] = $ls;
 
-    // include: post_type
-    $ls = array();
-    foreach ($conf['post_type'] as $c) {
-      if(@!$c['is_active']) continue;
-      if($query->is_search() && @$c['search_excluded']) continue;
-      if(@$exclude_cond['post_type'] && in_array($c['slug'], $exclude_cond['post_type'])) continue;
-      if($query->is_post_type_archive()){
-        continue;
-      }
-      $ls[] = $c['slug'];
-    }
-    $include_cond['post_type'] = $ls;
+    // exclude: post_type
 
-    $result = array_merge_recursive($qq, $include_cond, $exclude_cond);
+    $has_no_pt_needle = true;
+    if(empty(@$qq['post_type'])){
+      $include_cond['post_type'] = self::$post_type_builtin_target;
+    }else{
+      $has_no_pt_needle = false;
+      $include_cond['post_type'] = is_array($qq['post_type']) ? $qq['post_type'] : array($qq['post_type']);
+    }
+    foreach ($conf['post_type'] as $c) {
+      $disable = false;
+      $disable =
+           (@!$c['is_active'])
+        || ($query->is_search() && @$c['search_excluded'])
+        || (@$exclude_cond['post_type'] && in_array($c['slug'], $exclude_cond['post_type']))
+      ;
+      if($disable){
+        if(($key = array_search($c['slug'], $include_cond['post_type'])) !== false){
+          unset($include_cond['post_type'][$key]);
+        }
+      }else{
+        // pushing confs
+        if($has_no_pt_needle){
+          $include_cond['post_type'][] = $c['slug'];
+        }
+      }
+    }
+    if(empty($include_cond['post_type'])){
+      $include_cond['post_type'] = array("INVALID_POST_TYPE");
+    }
+    $include_cond['post_type'] = array_unique($include_cond['post_type']);
+
+    $result = array_merge_recursive($search, $include_cond, $exclude_cond);
     foreach($result as $k => $v){
       $query->set($k, $v);
     }
+
+    // triggered twice....?
+    $query->is_generate_search_condition_done = true;
 
     return $query;
   }

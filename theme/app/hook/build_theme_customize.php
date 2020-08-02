@@ -111,7 +111,7 @@ $customizer->UI->build()->panel('article')
 
 # posttypes
 $ps = get_post_types(array( 'public'   => true, '_builtin' => false));
-array_unshift($ps, 'post');
+$ps = array_merge(WPTM::$post_type_builtin_target, $ps);
 $panel = $customizer->UI->build()->panel('article_post_type', array('title' => 'Article: Post Type'));
 foreach($ps as $p){
   set_article_group($panel, 'post_type', $p);

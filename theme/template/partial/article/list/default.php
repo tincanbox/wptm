@@ -4,7 +4,7 @@
 global $wp_query;
 
 $wp_query = new WP_Query(array_merge(array(
-  #'posts_per_page'   => 10,
+  'posts_per_page'   => 12,
   #'offset'           => 0,
   #'category'         => '',
   #'category_name'    => '',

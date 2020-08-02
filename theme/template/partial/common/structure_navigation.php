@@ -79,7 +79,7 @@ if ($main_query->is_archive()) {
   <li><a class="link touchable" href="<?php bloginfo('url'); ?>">Home</a></li>
   <?php
 
-  if($post_type && $post_type->name != 'post'){
+  if($post_type && !in_array($post_type->name, WPTM::$post_type_builtin_target)){
     ?>
     <li>
       <a
