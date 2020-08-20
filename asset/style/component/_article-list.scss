@@ -32,12 +32,29 @@ $component: 'article-list';
 
     .article {
       margin-bottom: 1rem;
+      .entry{
+        background-color: #fff;
+      }
       .feature-image {
         display: block;
+        position: relative;
         padding-bottom: 66%;
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
+      }
+
+      &.deprecated {
+        .feature-image{
+          &:after {
+              content: '';
+              display: block;
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+          }
+        }
       }
 
       .entry {

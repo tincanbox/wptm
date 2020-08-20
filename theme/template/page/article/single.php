@@ -1,3 +1,4 @@
+<div class="container">
 <div class="page-article-single">
 <?php
 
@@ -107,7 +108,7 @@ while($mq->have_posts()){
       }
 
       $query_category_in[] = $c->cat_ID;
-      if(@$cnfc['is_active']){
+      if(@$cnfc['is_active'] && @$cnfc['use_as_deprecated']){
         ?>
         <span class="slug-pill post-category category-<?php echo $c->slug; ?>">
           <a class="post-category-link link" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
@@ -136,7 +137,6 @@ while($mq->have_posts()){
       'field'    => 'term_id',
       'terms'    => $query_category_in,
     );
-    //$query_related['category__in'] = $query_category_in;
   }
 
   if($query_tag_in){
@@ -151,19 +151,20 @@ while($mq->have_posts()){
 
   ?>
 
-  <div class="section mb-3">
-  <?php
-  // Related articles
-  WPTM::render('template/partial/article/list/group_related', array(
-    'main_query' => $main_query,
-    'show_group_caption' => true,
-    'group_caption' => __('Related Contents'),
-    'list_type' => 'with_picture',
-    'query' => $query_related
-  ));
-
-  ?>
-  </div>
+  <?php if(@$show_related_article){ ?>
+    <div class="section mb-3">
+    <?php
+    // Related articles
+    WPTM::render('template/partial/article/list/group_related', array(
+      'main_query' => $main_query,
+      'show_group_caption' => true,
+      'group_caption' => __('Related Contents'),
+      'list_type' => 'with_picture',
+      'query' => $query_related
+    ));
+    ?>
+    </div>
+  <?php } ?>
 
   <?php
   // Comments
@@ -192,4 +193,5 @@ while($mq->have_posts()){
 
 ?>
 
+</div>
 </div>

@@ -1,8 +1,3 @@
-<style>
-.fb-share-button {
-  vertical-align: bottom;
-}
-</style>
 <div
   class="fb-share-button"
   data-id="<?php echo @$post ? $post->ID : ""; ?>"

@@ -6,6 +6,10 @@ if (has_post_thumbnail()) {
 if (!$image_uri) {
   $image_uri = array(@$opt_post_article_list_noimage_url ?: get_bloginfo('template_directory') . "/static/image/noimage.png");
 }
+
+$cats = get_the_category();
+$catc = WPTM::generate_visible_category_list($cats);
+
 ?>
 <div class="list-group-item theme-font-color col-12 pl-0 pt-2 pr-2 pb-2 <?php echo implode(' ', get_post_class()); ?>">
     <div class="list-group-item-text">
@@ -35,25 +39,14 @@ if (!$image_uri) {
           </div>
           <div class="article-category-pill-box">
             <?php
-
-            $cats = get_the_category();
-            $cnfs = WPTM::option('category');
-            $valid = array();
-            foreach ($cnfs as $slug => $b) {
-              if (@$b['is_active']) {
-                $valid[] = $slug;
-              }
-            }
-            foreach ($cats as $c) {
-              if (in_array($c->slug, $valid) || true) {
+            foreach ($catc['visible_category_list'] as $c) {
               ?>
-                <div class="article-category-pill">
-                  <a
-                    class=""
-                    href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
-                </div>
+              <div class="article-category-pill">
+                <a
+                  class=""
+                  href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
+              </div>
               <?php
-              }
             }
             ?>
           </div>

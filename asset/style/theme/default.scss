@@ -169,6 +169,22 @@ a {
   }
 }
 
+.icon-type-sns {
+  display: inline-block;
+  height: 1.8rem;
+  width: 1.8rem;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-right: .4rem;
+  &:hover {
+    text-decoration: none;
+  }
+  &.icon-sns-twitter { background-image: url(/wp-content/themes/wptm/static/image/sns-twitter.png); }
+  &.icon-sns-instagram { background-image: url(/wp-content/themes/wptm/static/image/sns-instagram.png); }
+  &.icon-sns-facebook { background-image: url(/wp-content/themes/wptm/static/image/sns-facebook.png); }
+}
+
 .related-categories {
   list-style: none;
   padding: 0.4em;

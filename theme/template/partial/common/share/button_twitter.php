@@ -1,8 +1,3 @@
-<style>
-.twitter-share-button {
-  vertical-align: bottom;
-}
-</style>
 <a
   class="twitter-share-button"
   href="https://twitter.com/share"

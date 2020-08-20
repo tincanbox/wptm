@@ -47,13 +47,15 @@ if($post){
 }
 
 ?>
+<link rel="icon" href="/wp-content/themes/wptm/static/image/icon.png">
+
 <meta name="keyword" content="<?php echo implode(',', $keywords); ?>">
 <meta name="description" content="<?php echo get_bloginfo('description'); echo $description; ?>">
 
 <script src="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/jquery/jquery-1.12.3.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/static/vendor/bootstrap/css/bootstrap.min.css'; ?>">
 <script src="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/bootstrap/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/static/vendor/font-awesome/css/font-awesome.min.css'; ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/static/vendor/font-awesome/css/all.min.css'; ?>">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
 
@@ -62,6 +64,6 @@ if($post){
 <?php WPTM::render('template/partial/common/share/prepare_line'); ?>
 
 
-<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/bootstrap.css'; ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/bootstrap.css?nc=<?php echo time() ;?>'; ?>">
 
 <?php WPTM::render('template/partial/common/head_theme_style'); ?>

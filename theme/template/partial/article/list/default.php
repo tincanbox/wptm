@@ -4,7 +4,6 @@
 global $wp_query;
 
 $wp_query = new WP_Query(array_merge(array(
-  'posts_per_page'   => 12,
   #'offset'           => 0,
   #'category'         => '',
   #'category_name'    => '',
@@ -24,6 +23,19 @@ $wp_query = new WP_Query(array_merge(array(
 
 $posts = $wp_query->get_posts();
 
+if(!$posts){
+  if(@$query['post_type']){
+    $wp_query = new WP_Query(array(
+      'post_limit'       => 3,
+      'posts_per_page'   => 3,
+      'orderby'          => 'rand',
+      'order'            => 'DESC',
+      'post__not_in'     => @$query['post__not_in'],
+      'post_type'        => $query['post_type'],
+    ));
+    $posts = $wp_query->get_posts();
+  }
+}
 
 if($posts){
 

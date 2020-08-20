@@ -73,17 +73,17 @@ if ($main_query->is_archive()) {
 }
 
 
-?><div>
+?><div class="structure-navigation">
 
-<ol class="structure-navigation section spacing">
-  <li><a class="link touchable" href="<?php bloginfo('url'); ?>">Home</a></li>
+<ol class="theme-breadcrumb-background-color theme-breadcrumb-font-color">
+  <li><a class="link touchable theme-breadcrumb-font-color" href="<?php bloginfo('url'); ?>">Home</a></li>
   <?php
 
   if($post_type && !in_array($post_type->name, WPTM::$post_type_builtin_target)){
     ?>
     <li>
       <a
-        class="link touchable"
+        class="link touchable theme-breadcrumb-font-color"
         href="<?php echo get_post_type_archive_link($post_type->name); ?>"><?php echo $post_type->labels->name; ?></a>
     </li>
     <?php
@@ -103,14 +103,18 @@ if ($main_query->is_archive()) {
       if($ps){
         foreach($ps as $p){
           ?><li class="">
-            <a class="link touchable" href="<?php echo get_category_link($p->cat_ID); ?>"><?php echo __($p->name); ?></a>
+            <a
+              class="link touchable theme-breadcrumb-font-color"
+              href="<?php echo get_category_link($p->cat_ID); ?>"><?php echo __($p->name); ?></a>
           </li>
           <?php
         }
       }
       ?>
       <li>
-        <a class="link touchable" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo __($c->name); ?></a>
+        <a
+          class="link touchable theme-breadcrumb-font-color"
+          href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo __($c->name); ?></a>
       </li>
       <?php
 
@@ -131,7 +135,7 @@ if ($main_query->is_archive()) {
   }
 
 ?>
-</ul>
+</ol>
 
 <?php
 if($main_query->is_archive() && @$category){
@@ -146,11 +150,12 @@ if($main_query->is_archive() && @$category){
     }
     if(count($cs)){
       ?>
-      <div class="section">
-        <div style="margin-bottom: .4em;"><?php echo __('related categories'); ?></div>
-        <ul class="related-categories"><?php
+      <div class="mb-3 ml-3">
+        <div class="related-categories"><?php
         foreach($cs as $cb){
-          ?><li><a class="link touchable" href="<?php echo get_category_link($cb->cat_ID); ?>"><?php echo $cb->name; ?></a></li><?php
+          ?><a
+            class="badge badge-primary touchable mr-2"
+            href="<?php echo get_category_link($cb->cat_ID); ?>"><?php echo $cb->name; ?></a><?php
         }
         ?>
         </ul>

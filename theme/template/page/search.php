@@ -1,3 +1,4 @@
+<div class="container">
 <form role="search" method="get" class="search-form" action="<?php echo esc_url(home_url('/')); ?>">
   <div class="input-group search-box">
     <input type="search" class="form-control" placeholder="<?php echo __('Search'); ?>" value="<?php echo get_search_query(); ?>" name="s" />
@@ -24,3 +25,4 @@ if(@$main_query->query){
 }
 
 ?>
+</div>

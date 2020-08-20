@@ -7,7 +7,7 @@ $og = array(
   'url' => get_bloginfo('url'),
   'title' => get_bloginfo('name'),
   'description' => get_bloginfo('description'),
-  'image' => WPTM::option('logo')
+  'image' => WPTM::option('og_logo')
 );
 
 $q = @$this->variables['main_query'];

@@ -7,8 +7,23 @@ $config = WPTM::get_article_group_config(array('grouped' => true));
 ?><div id="header" class="fixed-top">
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md theme-header-background-color">
-    <a class="navbar-brand theme-header-font-color animatable attractive" href="/"><?php echo get_bloginfo('title'); ?></a>
+    <a
+      class="navbar-brand theme-header-font-color animatable attractive"
+      href="/"
+      style="top: 0; background: #fff; left: 0; border-bottom-right-radius: .8rem;">
+      <?php if($v = WPTM::option('logo'))){ ?>
+        <img src="<?php echo $v; ?>" style="max-height:64px;">
+      <?php }else{ ?>
+        <span><?php bloginfo('sitename'); ?></span>
+      <?php } ?>
+    </a>
+    <div class="nabvar-nav nav-left ml-2">
+      <a target="_blank" class="nav-item nav-type-sns nav-sns-instagram" href="https://www.instagram.com/joyland.pet/">&nbsp;</a>
+      <a target="_blank" class="nav-item nav-type-sns nav-sns-facebook" href="https://www.facebook.com/%E3%83%9A%E3%83%83%E3%83%88%E3%82%B7%E3%83%A7%E3%83%83%E3%83%97joyland-120001406450991">&nbsp;</a>
+      <a target="_blank" class="nav-item nav-type-sns nav-sns-twitter" href="https://twitter.com/joyland9">&nbsp;</a>
+    </div>
     <button class="navbar-toggler collapsed" type="button"
+      style="margin-left:auto;"
       data-toggle="collapse" data-target="#navbarCollapse"
       aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" >
       <span class="icon-bar top-bar theme-header-background-color-escape"></span>
@@ -17,7 +32,7 @@ $config = WPTM::get_article_group_config(array('grouped' => true));
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav ml-auto">
-        <?php
+      <?php
 
         foreach($menu_item_list as $menu ){
           $info = array(
@@ -94,13 +109,18 @@ $config = WPTM::get_article_group_config(array('grouped' => true));
 
       <form class="form-inline mb-0" role="search" action="<?php echo home_url('/'); ?>" style="margin-right: 0; margin-left: 0;">
         <div class="form-group w-100">
-        <div class="input-group search-box">
-          <!--<span class="input-group-addon"><i class="fa fa-user"></i></span>-->
-          <input type="text" name="s" class="form-control" placeholder="<?php echo __('Search'); ?>">
-          <span class="input-group-append">
+          <div class=" d-block d-md-none d-lg-block">
+            <div class="input-group search-box">
+              <!--<span class="input-group-addon"><i class="fa fa-user"></i></span>-->
+              <input type="text" name="s" class="form-control" placeholder="<?php echo __('Search'); ?>">
+              <span class="input-group-append">
+                <button type="submit" class="btn btn-default">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
+              </span>
+            </div>
+          </div>
+          <div class="d-none d-md-block d-lg-none">
             <button type="submit" class="btn btn-default">&nbsp;<i class="fa fa-search"></i>&nbsp;</button>
-          </span>
-        </div>
+          </div>
         </div>
       </form>
 

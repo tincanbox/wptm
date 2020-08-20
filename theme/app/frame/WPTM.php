@@ -142,6 +142,40 @@ class WPTM {
     exit;
   }
 
+  static function generate_visible_category_list(array $cats){
+    $ret = array(
+      "valid_category_list" => array(),
+      "visible_category_list" => array(),
+      "deprecated_category_list" => array(),
+    );
+    $cnfs = WPTM::option('category');
+    foreach ($cnfs as $slug => $b) {
+      if(@$b['is_active']){
+        $ret['valid_category_list'][] = $slug;
+      }
+    }
+    foreach ($cats as $c) {
+      $slug = "";
+      if(is_object($c)){
+        $slug = $c->slug;
+      }else if(is_string($c)){
+        $slug = $c;
+      }
+      if(@$cnfs[$slug]['use_as_deprecated']){
+        $ret['deprecated_category_list'][] = $slug;
+        continue;
+      }
+      if ((in_array($slug, $ret['valid_category_list']) || true)) {
+        $ret['visible_category_list'][] = $c;
+      }
+    }
+    return $ret;
+  }
+
+
+
+
+
   function init(){
     $this->setup_article_group();
     add_action('pre_get_posts', array($this, 'generate_search_condition'), 1);
@@ -610,7 +644,6 @@ class WPTM {
 
     return $query;
   }
-
 
 
 }

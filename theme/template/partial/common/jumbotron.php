@@ -12,16 +12,10 @@ if(is_home()){
 
 $posts = get_posts(array_merge(array(
   'posts_per_page'   => 8,
-  #'offset'           => 0,
-  #'category'         => '',
   'category_name'    => WPTM::option('jumbotron_category'),
   'orderby'          => 'date',
   'order'            => 'DESC',
-  #'include'          => '',
-  #'exclude'          => '',
-  #'meta_key'         => '',
-  #'meta_value'       => '',
-  'post_type'        => WPTM::option('jumbotron_post_type'),
+  'post_type'        => array(WPTM::option('jumbotron_post_type')),
   #'post_mime_type'   => '',
   #'post_parent'      => '',
   #'author'     => '',

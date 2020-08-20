@@ -1,7 +1,13 @@
-<?php /* WPTM::render('template/partial/article/list/group_category', array(
-  'list_type' => 'simple_row',
-)); */ ?>
+<?php
 
+// Shows HOME static page.
+$post = get_page_by_path('home');
+if($post){
+  echo apply_filters('the_content', get_post_field('post_content', $post_id));
+}
+
+?>
+<div class="container">
 <?php 
 
 $link_read_more_label = ($v = WPTM::option('post_article_list_read_more_label')) ? $v : 'More &raquo;';
@@ -10,6 +16,31 @@ $priority = array();
 $cat_c = WPTM::option('category');
 
 $article_group = WPTM::get_article_group_config(array('ordered' => true));
+
+?>
+<div class="mb-5">
+  <?php
+
+  WPTM::render('template/partial/article/list/group_default', array(
+    'list_type' => 'with_picture',
+    'query' => array(
+      'post_type' => 'dog',
+      'posts_per_page' => (int)@$s['article_count'] ?: 6
+    )
+  ));
+
+  ?>
+  <div class="mt-3 mb-5">
+    <a
+      href="<?php echo get_post_type_archive_link('dog'); ?>"
+      style="margin: auto; display: block; text-align: center; width: 66%; min-width: 320px; color: #fff; background: #99ccf7; padding: 1rem; margin-top: 1.5rem; border-radius: .6rem; font-size: 1.2rem;" >もっと見る</a>
+  </div>
+</div>
+
+<div class="mb-5">&nbsp;</div>
+
+
+<?php
 
 foreach($article_group as $pri => $step){
 
@@ -59,3 +90,4 @@ foreach($article_group as $pri => $step){
 }
 
 ?>
+</div>

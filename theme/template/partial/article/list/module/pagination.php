@@ -4,35 +4,46 @@ global $wp_rewrite;
 global $wp_query;
 global $paged;
 
-$paginate_base = get_pagenum_link( 1 );
-if ( strpos( $paginate_base, '?' ) || ! $wp_rewrite->using_permalinks() ) {
-  $paginate_format = '';
-  $paginate_base = add_query_arg( 'paged', '%#%' );
-} else {
-  $paginate_format = ( substr( $paginate_base, -1 ,1 ) == '/' ? '' : '/' ) .
-    user_trailingslashit( 'page/%#%/', 'paged' );
-  $paginate_base .= '%_%';
+
+if ( null === $wp_query ) {
+  global $wp_query;
 }
 
-$paginate_links = paginate_links( array(
-  'base'      => $paginate_base,
-  'format'    => $paginate_format,
-  'total'     => $wp_query->max_num_pages,
-  'mid_size'  => 5,
-  'current'   => ( $paged ? $paged : 1 ),
-  'prev_text' => '&lt;',
-  'next_text' => '&gt;',
-  'type'      => 'array',
-) );
+$add_args = [];
 
-if ( !$paginate_links ) {
-  return;
+//add query (GET) parameters to generated page URLs
+/*if (isset($_GET[ 'sort' ])) {
+  $add_args[ 'sort' ] = (string)$_GET[ 'sort' ];
+}*/
+
+$pages = paginate_links( array_merge( [
+      'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+      'format'       => '?paged=%#%',
+      'current'      => max( 1, get_query_var( 'paged' ) ),
+      'total'        => $wp_query->max_num_pages,
+      'type'         => 'array',
+      'show_all'     => false,
+      'end_size'     => 3,
+      'mid_size'     => 1,
+      'prev_next'    => true,
+      'prev_text'    => __( '« Prev' ),
+      'next_text'    => __( 'Next »' ),
+      'add_args'     => $add_args,
+      'add_fragment' => ''
+  ], array() )
+);
+
+if ( is_array( $pages ) ) {
+  //$current_page = ( get_query_var( 'paged' ) == 0 ) ? 1 : get_query_var( 'paged' );
+  $pagination = '<div class="pagination"><ul class="pagination" style="margin:auto;">';
+
+  foreach ( $pages as $page ) {
+      $pagination .= '<li class="page-item' .
+        (strpos($page, 'current') !== false ? ' active' : '')
+        . '"> ' . str_replace('page-numbers', 'page-link', $page) . '</li>';
+  }
+
+  $pagination .= '</ul></div>';
+
+  echo $pagination;
 }
-?>
-<nav class="pagination-wrapper">
-  <ul class="pagination">
-    <?php foreach ( $paginate_links as $link ) : ?>
-    <li><?php echo $link; ?></li>
-    <?php endforeach; ?>
-  </ul>
-</nav>

@@ -1,10 +1,7 @@
-body, html {
-  position: relative;
-  max-width: 100%;
-  width: 100%;
-  cursor: default;
+html, body {
+  min-width: 100%;
+  min-height: 100%;
 }
-
 #wpadminbar {
   top: auto;
   bottom: 0;
@@ -29,6 +26,10 @@ body {
   }
 }
 
+#yield > .container {
+  margin-top: 1.5rem;
+}
+
 //-------------------------------------------------- common
 img {
   width: 100%;
@@ -47,6 +48,8 @@ img {
 .section {
   padding: .95rem .95rem 0;
   border-radius: .3em;
+  position:relative;
+  overflow:hidden;
   &.append {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -67,20 +70,28 @@ img {
   font-size: 0 !important;
 }
 
+.bg-container {
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.content-fill {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  & > * { position: relative; }
+}
 
 //-------------------------------------------------- base layout
 #container {
-  display:flex; 
-  flex-direction:column; 
-  position: relative;
-  min-height: 100vh;
-  height: auto;
   overflow-x: hidden;
+  width: 100vw;
 }
 #content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
   align-items: center;
   position: relative;
   padding-bottom: 80px;
@@ -92,6 +103,11 @@ img {
 #header {
   &+.container {
     margin-top: 3.5rem;
+  }
+  i {
+    align-self: center;
+    color: #2ebbf3;
+    margin-right: .25rem;
   }
   .navbar {
     min-height: 3.5rem;
@@ -119,6 +135,7 @@ img {
 
 
 #footer {
+  position: relative;
   margin-top:auto; 
   padding: 2em 1em;
   background-color: #eee;
@@ -171,7 +188,7 @@ img {
 
 
 .button-group-sharing > * {
-  vertical-align: top !important;
+  vertical-align: bottom !important;
 }
 
 .article-list-group {

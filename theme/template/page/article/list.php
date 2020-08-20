@@ -1,9 +1,7 @@
+<div class="container">
 <?php
 
-if(@$query){
-  $default_posts_per_page = get_option( 'posts_per_page' );
-  $query['posts_per_page'] = $default_posts_per_page;
-}
+global $wp_query;
 
 WPTM::render('template/partial/article/list/group_'.(@$archive_type ? $archive_type : 'default'), array(
   'main_query' => $main_query,
@@ -14,3 +12,6 @@ WPTM::render('template/partial/article/list/group_'.(@$archive_type ? $archive_t
 ));
 
 WPTM::render('template/partial/article/list/module/pagination');
+
+?>
+</div>

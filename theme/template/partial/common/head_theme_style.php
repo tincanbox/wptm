@@ -10,19 +10,20 @@ $article_group = WPTM::get_article_group_config(array('ordered' => true));
 ?>
 <style>
 html,body {
-  font-family: 'Lato', 'Noto Sans JP', "Montserrat","游ゴシック",YuGothic,"ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","メイリオ",Meiryo, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: 'Lato', 'Noto Sans JP', "Montserrat","Hiragino Maru Gothic ProN","メイリオ",Meiryo,"游ゴシック",YuGothic, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   background-color: transparent;
 }
 
-#container::before {
+#container::after {
   content: '';
+  z-index: -99;
   display: block;
-  position: absolute;
+  position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
-  z-index: -1000; }
+}
 
 <?php if($v = @WPTM::option('theme_background_color')){ ?>
-  #container::before {
+  #container::after {
     background-color: <?php echo $v ?><?php
     if($v = @WPTM::option('theme_background_opacity')){
       echo str_pad(dechex(intval($v)), 2, "0", STR_PAD_LEFT);
@@ -40,10 +41,17 @@ if($v = WPTM::option('theme_background_font_color_visibility')){ ?>
 <?php } ?>
 
 <?php if($v = WPTM::option('theme_background_image')){ ?>
-#container {
+#container::before{
+  content: '';
+  position: fixed;
+  z-index: -100;
+  top:0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image: url('<?php echo $v; ?>');
   background-position: center;
-  background-attachment: fixed;
+  background-size: cover;
   <?php if($v = WPTM::option('theme_background_image_size')){ ?>
     background-size: <?php echo $v; ?>;
     <?php if($v == 'cover'){ ?>
@@ -67,6 +75,23 @@ if($v = WPTM::option('theme_header_font_color')){ ?>
   color: <?php echo $v; ?>
 }
 .theme-header-background-color-escape {
+  background-color: <?php echo $v; ?>;
+}
+<?php } ?>
+
+<?php # Breadcrumb
+if($v = WPTM::option('theme_breadcrumb_background_color')){ ?>
+.theme-breadcrumb-background-color {
+  background-color: <?php echo $v; ?>;
+}
+<?php } ?>
+<?php
+if($v = WPTM::option('theme_breadcrumb_font_color')){ ?>
+.theme-breadcrumb-font-color,
+.theme-breadcrumb-font-color:hover {
+  color: <?php echo $v; ?>
+}
+.theme-breadcrumb-background-color-escape {
   background-color: <?php echo $v; ?>;
 }
 <?php } ?>
@@ -105,27 +130,31 @@ foreach(array_reverse($article_group) as $p => $l){
   $prefix = $c['type'];
   $slug = $c['slug'];
   ?>
-  body.<?php echo $prefix; ?>-<?php echo $slug; ?> #content:before {
+  body.<?php echo $prefix; ?>-<?php echo $slug; ?> #content::before {
     content: '';
     display: block;
-    position: absolute;
+    position: fixed;
     top: 0; right: 0; bottom: 0; left: 0;
-    z-index: -999;
+    z-index: -6;
   }
 
-  <?php if($v = @$c['theme_background_color']){ ?>
+  <?php if($v = @$c['theme_background_color'] && ($v_opa = @$c['theme_background_opacity'])){ ?>
     body.single.<?php echo $prefix; ?>-<?php echo $slug; ?> #content:before {
+      content: '';
+      z-index: -5;
       background-color: <?php echo $v ?><?php
-      if($v = @$c['theme_background_opacity']){
+      if($v_opa){
         echo str_pad(dechex(intval($v)), 2, "0", STR_PAD_LEFT);
       }
       ?>;
     }
+  <?php } ?>
+  <?php if($v = @$c['theme_background_color']){ ?>
     *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-font-color,
     *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-font-color:hover
     {
-      color: <?php echo $c['theme_background_color']; ?>;
-      fill: <?php echo $c['theme_background_color']; ?>;
+      color: <?php echo $v; ?>;
+      fill: <?php echo $v; ?>;
     }
     *:not(body).<?php echo $prefix; ?>-<?php echo $slug; ?> .<?php echo $style_group; ?>-background-color
     {
@@ -134,10 +163,16 @@ foreach(array_reverse($article_group) as $p => $l){
   <?php } ?>
 
   <?php if($v = @$c['theme_background_image']){ ?>
-  body.single.<?php echo $prefix; ?>-<?php echo $slug; ?> #content {
+  body.single.<?php echo $prefix; ?>-<?php echo $slug; ?> #content:before{
+    content: '';
+    position: fixed;
+    z-index: -4;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background-image: url('<?php echo $v; ?>');
     background-position: center;
-    background-attachment: fixed;
     <?php if($v = @$c['theme_background_image_size']){ ?>
       background-size: <?php echo $v; ?>;
       <?php if($v == 'cover'){ ?>
