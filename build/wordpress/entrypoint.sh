@@ -3,7 +3,7 @@
 # Runs original entrypoint script without `exec "$@"`.
 # @see https://github.com/docker-library/wordpress/issues/130#issuecomment-272198161
 sed -i -e 's/^exec "$@"/#exec "$@"/g' /usr/local/bin/docker-entrypoint.sh
-source /usr/local/bin/docker-entrypoint.sh
+. /usr/local/bin/docker-entrypoint.sh
 
 echo "======== WPTM ENTRYPOINT ========"
 
@@ -12,6 +12,12 @@ echo "moving configurations..."
 yes | cp -f /opt/config/apache/.htaccess .htaccess 2>/dev/null || :
 yes | cp -f /opt/config/php/wordpress.ini /usr/local/etc/php/conf.d/wordpress.ini 2>/dev/null || :
 #yes | cp -f /usr/local/etc/php/php.ini-production /usr/local/etc/php/conf.d/php.ini 2>/dev/null || :
+
+# WP Config
+yes | cp -f /opt/config/wordpress/EnvAdaptor.php "$WP_INSTALL_DIR""/EnvAdaptor.php" 2>/dev/null || :
+yes | cp -f /opt/config/wordpress/env-redirect.php "$WP_INSTALL_DIR""/env-redirect.php" 2>/dev/null || :
+yes | cp -f /opt/config/wordpress/wp-config.php "$WP_INSTALL_DIR""/wp-config.php" 2>/dev/null || :
+php "$WP_INSTALL_DIR""/env-redirect.php"
 
 # Copies cert files.
 if [ -e "/opt/config/ssl/$SSL_CERT_FILE" ] && [ -e "/opt/config/ssl/$SSL_CERT_KEY_FILE" ] ; then
