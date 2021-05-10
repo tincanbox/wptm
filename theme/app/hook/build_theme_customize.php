@@ -1,34 +1,28 @@
 <?php
 
-function set_article_group($panel, $type, $name){
+$settings = $customizer->setting();
+var_dump($settings);
+exit;
+
+function set_article_group($panel, $type, $name, $settings){
   $kp = $type.'['.$name.']';
   $panel
     ->section(ucfirst($type).'['.$name.']')
       ->control('checkbox', $kp.'[is_active]')
       ->control('checkbox', $kp.'[show_in_home]')
-      ->control('text', $kp.'[display_priority]', array('label' => 'Display Priority'))
-      ->control('color', $kp.'[theme_background_color]')
-      ->control('number', $kp.'[theme_background_opacity]', array(
-        'description' => '0 ~ 255'
-      ))
-      ->control('color', $kp.'[theme_background_font_color_visibility]')
+      ->control('text', $kp.'[display_priority]',
+        array('label' => 'Display Priority'), ['default' => 0])
+      ->control('color', $kp.'[theme_background_color]', [], ['default' => '#404040'])
+      ->control('number', $kp.'[theme_background_opacity]', ['description' => '0 ~ 255'])
+      ->control('color', $kp.'[theme_background_font_color_visibility]', [])
       ->control('upload', $kp.'[theme_background_image]')
-      ->control('select', $kp.'[theme_background_image_size]',
-        array(
-          'choices' => array('cover' => 'cover', 'repeat' => 'repeat')
-        ), array(
-          'default' => 'cover'
-        ))
+      ->control('select', $kp.'[theme_background_image_size]', ['choices' => ['cover' => 'cover', 'repeat' => 'repeat']])
       ->control('image', $kp.'[icon]')
       ->control('number', $kp.'[article_count]', array('label' => 'TopPage: Article counts'), array('default' => 3))
       ->control('select', $kp.'[list_type]',
-          array(
-            'label' => 'List Type',
-            'choices' => array('default' => 'default', 'with_picture' => 'with_picture', 'simple_row' => 'simple_row')
+          array( 'label' => 'List Type', 'choices' => array('default' => 'default', 'with_picture' => 'with_picture', 'simple_row' => 'simple_row')
           ),
-          array(
-            'default' => 'with_picture'
-          )
+          array( 'default' => 'with_picture')
         )
       ->control('text', $kp.'[article_count]', array('label' => 'TopPage: Article counts'))
       ->control('checkbox', $kp.'[comment_disabled]', array('label' => 'Disable Comment'))
@@ -36,42 +30,64 @@ function set_article_group($panel, $type, $name){
      ;
 }
 
-# Brand logo.
-$customizer->UI->build()->panel('basis', array('title' => 'Basis'))
-  ->section('maintenace', array('title' => 'Maintenance'))
+# Basis
+$customizer->UI->build()->panel('basis')
+  ->section('info')
+    ->control('text', 'basis_owner')
+    ->control('number', 'basis_since_year')
+  ->section('maintenace')
     ->control('checkbox', 'basis_maintenance')
     ->control('text', 'basis_maintenance_secret_key')
     ->control('text', 'basis_maintenance_secret_value')
   ->section('share')
+    ->control('checkbox', 'basis_share_active', [])
     ->control('text', 'facebook_app_id')
+  ->section('search')
+    ->control('checkbox', 'basis_search_active', [])
+  ->section('contact')
+    ->control('checkbox', 'basis_contact_active')
+    ->control('text', 'basis_contact_url')
   ;
 
+# Font
+$customizer->UI->build()->panel('font')
+  ->section('primary', array('title' => 'Primary'))
+    ->control('url', 'font_primary_name', [])
+    ->control('url', 'font_primary_url', [])
+  ;
 
-# Brand logo.
-$customizer->UI->build()->panel('appearance', array('title' => 'Appearance'))
+# Appearance
+$customizer->UI->build()->panel('appearance')
   ->section('logo', array('title' => 'Logo'))
     ->control('upload', 'logo')
     ->control('upload', 'logo_footer')
-  ->section('background', array('title' => 'Background'))
+  ->section('background')
     ->control('color', 'theme_background_color')
     ->control('number', 'theme_background_opacity')
     ->control('color', 'theme_background_font_color_visibility')
     ->control('upload', 'theme_background_image')
     ->control('select', 'theme_background_image_size')
-  ->section('header', array('title' => 'Header'))
+  ->section('header')
     ->control('color', 'theme_header_background_color')
+    ->control('number', 'theme_header_background_initial_opacity')
+    ->control('number', 'theme_header_background_stable_opacity')
     ->control('color', 'theme_header_font_color')
-  ->section('footer', array('title' => 'Footer'))
+  ->section('footer')
     ->control('color', 'theme_footer_background_color')
     ->control('color', 'theme_footer_font_color')
   ;
 
 # Top
 $customizer->UI->build()->panel('top')
+  ->section('home')
+    ->control('checkbox', 'top_use_template', [], ['default' => false])
+    ->control('text', 'top_template_path', [])
   ->section('jumbotron')
-  ->control('text', 'jumbotron_post_type')
-  ->control('text', 'jumbotron_category')
-  ->control('text', 'jumbotron_url_post_meta_key')
+    ->control('checkbox', 'jumbotron_active', [])
+    ->control('checkbox', 'jumbotron_as_background_overlay', [], ['default' => false])
+    ->control('text', 'jumbotron_post_type')
+    ->control('text', 'jumbotron_category')
+    ->control('text', 'jumbotron_url_post_meta_key')
   ;
 
 # Sidebanner

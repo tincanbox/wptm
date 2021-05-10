@@ -20,22 +20,70 @@
 #     This is only necessary if the data to be sent to the customizer window has a special form.
 # 
 return array(
+
   # Default options for add_setting()
   # 'sample' => array(
   #   # Default options for WP_Customize_Control::add_control()
   #   'control' => array()
   # ),
+
+  /**
+   * Basis
+   */
+  'basis_contact_active' => [
+    'default' => false
+  ],
+  'basis_contact_url' => [
+    'default' => 'contact'
+  ],
+  'basis_search_active' => [
+    'default' => true
+  ],
+
+  /**
+   * 
+   */
+  'top_template_path' => [
+    'default' => 'page/home_static'
+  ],
+
+  /**
+   * Logo
+   */
   'logo' => array(
   ),
 
   'logo_footer' => array(
   ),
 
+  /**
+   * Font
+   */
+
+  'font_primary_name' => [
+    'default' => 'Noto Sans JP'
+  ],
+
+  'font_primary_url' => [
+    'default' => '//fonts.googleapis.com/earlyaccess/notosansjapanese.css'
+  ],
+
+  /**
+   * Background
+   */
+
   'theme_background_color' => array(
     'default' => '#eee',
     'control' => array(
       'label' => '背景色',
       'description' => ''
+    )
+  ),
+
+  'theme_background_opacity' => array(
+    'default' => '0',
+    'control' => array(
+      'description' => '背景透過度'
     )
   ),
 
@@ -84,6 +132,16 @@ return array(
       'label' => 'ヘッダー：背景色'
     )
   ),
+  'theme_header_background_initial_opacity' => array(
+    'default' => 255,
+    'control' => array(
+    )
+  ),
+  'theme_header_background_stable_opacity' => array(
+    'default' => 255,
+    'control' => array(
+    )
+  ),
   'theme_header_font_color' => array(
     'default' => '#555555',
     'control' => array(
@@ -105,6 +163,16 @@ return array(
     )
   ),
 
+  'top_use_template' => [
+    'default' => false
+  ],
+
+  /**
+   * Jumbotron
+   */
+  'jumbotron_active' => [
+    'default' => true,
+  ],
   'jumbotron_url_post_meta_key' => array(
     'default' => 'url',
     'control' => array(
@@ -162,7 +230,7 @@ return array(
   ),
 
   'sidebar_toggle' => array(
-    'default' => 'on',
+    'default' => false,
     'control' => array(
       'label' => 'サイドバー　有効化'
     )
@@ -171,7 +239,7 @@ return array(
     'default' => 'right',
     'control' => array(
       'label' => 'サイドバー　位置',
-      'choices' => array('left' => 'lefttt', 'right' => 'righttt')
+      'choices' => array('left' => __('left'), 'right' => __('right'))
     )
   ),
   'sidebar_post_type' => array(

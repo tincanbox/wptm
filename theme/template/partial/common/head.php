@@ -61,7 +61,41 @@ if($post){
 <?php WPTM::render('template/partial/common/share/prepare_twitter'); ?>
 <?php WPTM::render('template/partial/common/share/prepare_line'); ?>
 
+<?php
 
+$vars = [];
+foreach([
+  'theme_background_color',
+  'theme_background_opacity',
+  'theme_background_font_color_visibility',
+  'theme_background_image',
+  'theme_background_image_size',
+  'theme_header_background_color',
+  'theme_header_background_initial_opacity',
+  'theme_header_background_stable_opacity',
+  'theme_header_font_color',
+  'theme_footer_font_color',
+  'theme_footer_background_color',
+  //
+  'font_primary_url',
+  'font_primary_name',
+] as $var => $val){
+  if (is_int($var)) {
+    $var = $val;
+    $val = null;
+  }
+  if ($val !== null) {
+    if (is_callable($val)) {
+      $$vars[$var] = $val(@WPTM::option($var));
+    } else {
+      $vars[$var] = $val;
+    }
+  } else {
+    $vars[$var] = @WPTM::option($var);
+  }
+}
+?>
+
+<?php WPTM::render('template/partial/common/theme_style_var', ['theme_vars' => $vars]); ?>
 <link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/bootstrap.css'; ?>">
-
-<?php WPTM::render('template/partial/common/head_theme_style'); ?>
+<?php WPTM::render('template/partial/common/theme_style_override', ['theme_vars' => $vars]); ?>

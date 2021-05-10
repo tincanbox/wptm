@@ -77,7 +77,8 @@ class WPTM_Customizer_UI {
       $arg = array_merge(@$s['control'] ? $s['control'] : array(), $arg);
       $arg['section'] = $this->section_id_active;
       $arg['settings'] = $name;
-      $arg['label'] = @$arg['label'] ? $arg['label'] : ucfirst(__($name));
+      $arg['label'] = __(@$arg['label'] ? $arg['label'] : ucfirst(__($name)));
+      $arg['description'] = ('[' . $name . '] ') . __(@$arg['description'] ? $arg['description'] : '');
       call_user_func_array(
         array($this, 'add_control'),
         $this->build_control_args($type, $name, $arg)

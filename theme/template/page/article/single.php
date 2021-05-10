@@ -57,9 +57,11 @@ while($mq->have_posts()){
       <div class="post-content"><?php the_content(); ?></div>
     </div>
 
-    <?php WPTM::render('template/partial/common/share/bootstrap_single', array(
-      'post' => $post
-    )); ?>
+    <?php if(WPTM::option('basis_share_active')){ ?>
+      <?php WPTM::render('template/partial/common/share/bootstrap_single', array(
+        'post' => $post
+      )); ?>
+    <?php } ?>
 
     <?php
 

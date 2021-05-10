@@ -8,7 +8,6 @@ $component: 'article-list';
   font-size: 0.65rem;
   border-radius: 3px;
   padding-top: .1rem;
-  margin-bottom: .25rem;
   &:not(:last-child) {
     margin-right: 0.25rem;
   }
@@ -102,6 +101,7 @@ $component: 'article-list';
 
     .article-category-pill-box {
       text-align: right;
+      margin-bottom: .25rem;
     }
 
   }

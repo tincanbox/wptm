@@ -338,13 +338,11 @@ class WPTM {
 
 
   function prepare_theme_customize(){
+    if (!WPTM::option('option_initialized')) {
+      $s = $this->frame->customizer->init_theme_option();
+    }
     add_action('customize_register', array($this->frame->customizer, 'register'));
   }
-
-  function build_theme_customize($customizer){
-    $this->hook(__FUNCTION__, array('customizer' => $customizer));
-  }
-
 
   function prepare_user_meta(){
     $config = $this->config('user_meta');
@@ -459,6 +457,117 @@ class WPTM {
     $this->_cache('article_group', $d);
 
     return $d;
+  }
+
+  /**
+   * @param [type] $menu
+   * @param [type] $config
+   * @return array
+   */
+  static function generate_menu_info($menu, $config): array
+  {
+    $o = [];
+    $o['id'] = $menu->ID;
+    $o['menu'] = $menu;
+    $o['is_active'] = true;
+    $o['title'] = $menu->title;
+    $o['type'] = $menu->type;
+    $o['url'] = $menu->url;
+    $o['slug'] = null;
+    $o['parent'] = null;
+    $o['parent_id'] = null;
+    $o['children'] = [];
+
+    $pid = intval($menu->menu_item_parent);
+    if ($pid) {
+      $o['parent_id'] = $pid;
+    }
+
+    $override = [];
+    switch($menu->type){
+      case "taxonomy":
+        $term = get_term_by("id", $menu->object_id, $menu->object);
+        if(!$term){
+          return false;
+        }
+        switch($menu->object){
+          case "category":
+          case "tag":
+            if($c = @$config[$menu->object][$term->slug]){
+              $override = $c;
+            }
+          break;
+        }
+        $override['slug'] = $term->slug;
+        $override['type'] = $menu->object;
+      break;
+      case "post_type":
+        if($c = @$config['post_type'][$menu->object]){
+          $override = $c;
+        }
+        $o['slug'] = $menu->object;
+      break;
+      default:
+        $o['slug'] = $menu->object;
+      break;
+    }
+
+    return array_merge($o, $override);
+  }
+
+  static function get_menu_flatten($target = null)
+  {
+    $result = [];
+    if ($target) {
+      // recursive
+      $tree = $target;
+    } else {
+      $tree = self::get_menu_tree();
+    }
+
+    foreach ($tree as $info) {
+      if (count($info['children'])) {
+        
+      }
+    }
+
+    return $result;
+  }
+
+  /**
+   * @return array
+   */
+  static function get_menu_tree(): array
+  {
+    $menu_item_list = wp_get_nav_menu_items("WPTM-DEFAULT");
+    $config = WPTM::get_article_group_config(array('grouped' => true));
+    $menu_ref = [];
+    $result = [];
+
+    // build all ref
+    foreach($menu_item_list as $menu ){
+      $info = self::generate_menu_info($menu, $config);
+      if (!$info) {
+        continue;
+      }
+      $menu_ref[$info['id']] = $info;
+    }
+
+    foreach ($menu_ref as $id => $info) {
+      $pid = $info['parent_id'];
+      if($pid && array_key_exists($pid, $menu_ref)){
+        $info['parent'] =& $menu_ref[$pid];
+        $menu_ref[$pid]['children'][$id] = $info;
+      }
+    }
+
+    foreach ($menu_ref as $info) {
+      if (!$info['parent_id']) {
+        $result[] = $info;
+      }
+    }
+
+    return $result;
   }
 
   static function get_article_group_config($opt = array()){

@@ -1,6 +1,7 @@
 body, html {
   position: relative;
   max-width: 100%;
+  min-height: 100vh;
   width: 100%;
   cursor: default;
 }
@@ -8,6 +9,14 @@ body, html {
 #wpadminbar {
   top: auto;
   bottom: 0;
+}
+
+.invisible-onload {
+  transition: all 0.4s;
+  opacity: 0;
+  &.loaded {
+    opacity: 1;
+  }
 }
 
 html { margin-top: 0px !important; }
@@ -45,8 +54,8 @@ img {
 }
 
 .section {
-  padding: .95rem .95rem 0;
-  border-radius: .3em;
+  padding: 1.25rem 1.25rem 0;
+  border-radius: .125em;
   &.append {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
@@ -56,7 +65,7 @@ img {
     border-top-right-radius: 0;
   }
   &.spacing {
-    margin-bottom: 1rem;
+    margin-bottom: 30px;
   }
   &.closing {
     padding-bottom: .95rem;
@@ -87,41 +96,182 @@ img {
 }
 #inner {
   padding-top: 1rem;
-  margin-top: 3.5rem;
+  margin-top: 116px;
 }
+
 #header {
-  &+.container {
-    margin-top: 3.5rem;
-  }
-  .navbar {
-    min-height: 3.5rem;
-    //padding-top: 0;
-    //padding-bottom: 0;
-  }
-  .nav-link {
-    //padding-top: 1rem;
-    //padding-bottom: 1rem;
-  }
+  transition: ease all .4s;
+  & * {transition: ease all .4s;}
+
   .navbar-brand {
     img {
-      max-height: 40px;
+      max-height: 60px;
       width: auto;
     }
   }
-  .navbar-collapse.show {
-    padding-bottom: 1rem;
-    .nav-link {
-      //padding-top: .4rem;
-      //padding-bottom: .4rem;
+
+  &:not(.humble) {
+    .navbar-brand {
+      img {
+        height: 60px;
+      }
     }
   }
+
+  &.humble {
+    .navbar-brand {
+      img {
+        height: 40px;
+      }
+    }
+  }
+
+  .navbar {
+    min-height: 3.5rem;
+  }
+
+  .site-nav-link-container {
+    border-radius: 0;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    text-align: left;
+    border: 0;
+
+    .site-nav-link {
+      display: block;
+      width: 100%;
+      clear: both;
+      padding: .5rem;
+      font-weight: 400;
+      text-align: inherit;
+      white-space: nowrap;
+      background-color: transparent;
+    }
+  }
+
+  .navbar-nav > li > a > .site-nav-interactive {
+    position:relative;
+
+    &.active {
+      &:before {
+        transform: scale(1);
+      }
+    }
+    &:hover {
+      &:before {
+        transform: scale(1);
+      }
+    }
+
+    &:before {
+      content: "";
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      -webkit-transform: scale(0);
+      -ms-transform: scale(0);
+      transform: scale(0);
+      -webkit-transition: .3s transform ease;
+      -o-transition: .3s transform ease;
+      transition: .3s transform ease;
+      background: #fff;
+    }
+  }
+
+  .navbar {
+    padding: 0;
+  }
+
+  .navbar-brand {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    margin-left: .5rem;
+  }
+
+  .navbar-toggle {
+    margin-right: .5rem;
+  }
+
+  .site-nav-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .navbar-brand {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .site-nav-sub-link {
+    color: var(--main-bg-color);
+    &:focus, &:hover {
+      animation: blinker 1s linear infinite;
+      @keyframes blinker {
+        50% {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  .desktop-only {
+    position: absolute;
+    top: 0;
+    right: .75rem;
+    bottom: 0;
+
+    .nav-item {
+      margin-right: .75rem;
+    }
+
+    .navbar-nav {
+      height: 100%;
+      align-self: center;
+
+      li {
+        display: flex;
+        height: 100%;
+        align-self: center;
+      }
+    }
+
+    .site-nav-menu {
+      position: absolute;
+      right: 15px;
+      top: 0;
+      bottom: 0;
+    }
+
+    .site-nav-link-container {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      float: left;
+    }
+
+  }
+
+  .mobile-only {
+    .navbar-nav {
+      li {
+        padding-left: .5rem;
+        padding-right: .5rem;
+      }
+    }
+    
+  }
+
 }
 
 
 #footer {
   margin-top:auto; 
   padding: 2em 1em;
-  background-color: #eee;
   width: 100%;
   .caption {
     font-size: 1.1em;
@@ -155,13 +305,16 @@ img {
 } 
 
 .kamisibai {
-  margin-top: 3.5rem;
   width: 100%;
   .jumbotron-slide-image {
-    padding-bottom: 75%; 
-    @media (min-width: 576px) {
-      padding-bottom: 40%; 
-    }
+    height: 100vh;
+  }
+  .jumbotron-caption {
+    position: absolute;
+    left: clamp(1rem, 12vw, 120px);
+    top: 44vh;
+    font-size: clamp(1rem, 8vw, 32px);
+    line-height: 1.6em;
   }
 }
 .kamisibai + #inner {

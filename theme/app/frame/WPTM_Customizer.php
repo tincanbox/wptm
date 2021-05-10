@@ -16,7 +16,11 @@ class WPTM_Customizer extends WPTM_Factory {
     $this->customizer = $wp_customize;
     $this->setting();
     $this->UI = new WPTM_Customizer_UI($this);
-    $this->core->build_theme_customize($this);
+    $this->core->hook('build_theme_customize', ['customizer' => $this]);
+  }
+
+  function init_theme_option(){
+    $cats = get_categories();
   }
 
 
@@ -34,15 +38,20 @@ class WPTM_Customizer extends WPTM_Factory {
       if(!@$this->_setting[$k]){
         $this->_setting[$k] = array_merge($default);
       }
+
       if(is_array($override)){
         $this->_setting[$k] = array_merge($this->_setting[$k], $override);
       }
+
+      // Init Flag
       if(@$this->customizer){
-        if(!@$this->_setting[$k]['__initialized'] || $override){
+        if(!@$this->_setting[$k]['__initialized']){
           $this->customizer->add_setting($k, $this->_setting[$k]);
           $this->_setting[$k]['__initialized'] = true;
+          $this->option($k);
         }
       }
+
       return @$this->_setting[$k];
     }
 
@@ -56,7 +65,12 @@ class WPTM_Customizer extends WPTM_Factory {
     if($value){
       return set_theme_mod($pn, $value);
     }else{
-      $v = get_theme_mod($pn, $c ? @$c['default'] : null);
+      $default = @$c['default'];
+      $v = get_theme_mod($pn, $default);
+      // set default if empty
+      if($default !== null && $v === null){
+        set_theme_mod($pn, $default);
+      }
       if(!@$this->_option_cache[$name]){
         $this->_option_cache[$name] = $v;
       }

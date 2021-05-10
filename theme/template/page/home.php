@@ -1,7 +1,3 @@
-<?php /* WPTM::render('template/partial/article/list/group_category', array(
-  'list_type' => 'simple_row',
-)); */ ?>
-
 <?php 
 
 $link_read_more_label = ($v = WPTM::option('post_article_list_read_more_label')) ? $v : 'More &raquo;';

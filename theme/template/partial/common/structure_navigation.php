@@ -76,15 +76,21 @@ if ($main_query->is_archive()) {
 ?><div>
 
 <ol class="structure-navigation section spacing">
-  <li><a class="link touchable" href="<?php bloginfo('url'); ?>">Home</a></li>
+  <li>
+    <a
+      class="link touchable"
+      href="<?php bloginfo('url'); ?>"
+    ><?php echo __('Home'); ?></a>
+  </li>
   <?php
 
   if($post_type && !in_array($post_type->name, WPTM::$post_type_builtin_target)){
     ?>
     <li>
       <a
-        class="link touchable"
-        href="<?php echo get_post_type_archive_link($post_type->name); ?>"><?php echo $post_type->labels->name; ?></a>
+        class="link touchable non-builtin-posttype"
+        href="<?php echo get_post_type_archive_link($post_type->name); ?>"
+        ><?php echo $post_type->labels->name; ?></a>
     </li>
     <?php
   }
@@ -99,18 +105,31 @@ if ($main_query->is_archive()) {
         <span class="group">[</span>
         <?php
       }
+      $category_style_class = 'category-' . $c->slug;
+      $category_style_classes = implode(' ', [
+        $category_style_class,
+        $category_style_class . '-font-color-escape',
+        $category_style_class . '-background-color',
+      ]);
+
       $ps = wptm::get_category_parents($c->cat_ID);
       if($ps){
         foreach($ps as $p){
           ?><li class="">
-            <a class="link touchable" href="<?php echo get_category_link($p->cat_ID); ?>"><?php echo __($p->name); ?></a>
+            <a
+              class="link touchable article-category-pill <?php echo $category_style_classes; ?>"
+              href="<?php echo get_category_link($p->cat_ID); ?>"
+              ><?php echo __($p->name); ?></a>
           </li>
           <?php
         }
       }
       ?>
       <li>
-        <a class="link touchable" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo __($c->name); ?></a>
+        <a
+          class="link touchable article-category-pill <?php echo $category_style_classes; ?>"
+          href="<?php echo get_category_link($c->cat_ID); ?>"
+          ><?php echo __($c->name); ?></a>
       </li>
       <?php
 
@@ -134,6 +153,7 @@ if ($main_query->is_archive()) {
 </ul>
 
 <?php
+// Archive Page
 if($main_query->is_archive() && @$category){
   $p = $category;
   if($b = get_categories('child_of='.$p->cat_ID)){
@@ -148,11 +168,15 @@ if($main_query->is_archive() && @$category){
       ?>
       <div class="section">
         <div style="margin-bottom: .4em;"><?php echo __('related categories'); ?></div>
-        <ul class="related-categories"><?php
-        foreach($cs as $cb){
-          ?><li><a class="link touchable" href="<?php echo get_category_link($cb->cat_ID); ?>"><?php echo $cb->name; ?></a></li><?php
-        }
-        ?>
+        <ul class="related-categories">
+          <?php foreach($cs as $cb){ ?>
+            <li>
+              <a
+                class="link touchable category-<?php echo $cb->slug; ?>"
+                href="<?php echo get_category_link($cb->cat_ID); ?>"
+                ><?php echo $cb->name; ?></a>
+            </li>
+          <?php } ?>
         </ul>
       </div><?php
     }

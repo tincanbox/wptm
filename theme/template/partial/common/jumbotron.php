@@ -30,7 +30,7 @@ $posts = get_posts(array_merge(array(
 ), @$query ? $query : array()));
 
 ?>
-<div class="owl-carousel owl-theme">
+<div class="jumbotron-wrapper owl-carousel owl-theme">
 <?php
 
 foreach($posts as $post){
@@ -41,9 +41,14 @@ foreach($posts as $post){
   $link = @$meta[0] ? $meta[0] : get_permalink();
   ?>
   <a
-    class="jumbotron-slide-image"
+    class="jumbotron-slide-image theme-background-image-overlay"
     href="<?php echo $link; ?>"
-    style="display: block; background-image: url('<?php echo $image_uri[0]; ?>'); background-position: center center; background-size: cover; width: 100%;">
+    style="display: block; ">
+    <div
+      class="fill"
+      style="background-image: url('<?php echo $image_uri[0]; ?>'); background-position: center center; background-size: cover; width: 100%; height: 100%;"
+      ></div>
+    <span class="jumbotron-caption theme-font-color-escape"><?php echo get_the_title($post); ?></span>
   </a>
   <?php
   wp_reset_postdata();
@@ -57,7 +62,9 @@ $(function(){
   $(document).ready(function(){
     $(".owl-carousel").owlCarousel({
       items: 1,
+      <?php if (count($posts) > 1){ ?> 
       loop: true,
+      <?php } ?>
       autoplay: true,
       autoplayTimeout: 4000,
       autoplayHoverPause: true

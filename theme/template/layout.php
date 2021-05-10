@@ -20,11 +20,13 @@ if( WPTM::option('basis_maintenance') == 1){
     'main_query' => $wp_query
   )); ?>
   </head>
-  <body <?php body_class(); ?>>
+  <body id="app" <?php body_class(); ?>>
     <div id="container">
       <?php WPTM::render('template/partial/common/header'); ?>
       <div id="content" class="invisible-onload">
-        <?php WPTM::render('template/partial/common/jumbotron'); ?>
+        <?php if(WPTM::option('jumbotron_active')) { ?>
+          <?php WPTM::render('template/partial/common/jumbotron'); ?>
+        <?php } ?>
         <div id="inner" class="container">
           <div class="row align-middle">
             <?php

@@ -125,6 +125,8 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   init: function init($) {
+    var DOM_HEADER = $('#header');
+    var HEADER_HEIGHT = DOM_HEADER.height();
     $("body").on("click", ".gototop", function () {
       $("html,body").animate({
         scrollTop: 0
@@ -134,10 +136,25 @@ __webpack_require__.r(__webpack_exports__);
       $(".invisible-onload").addClass("loaded");
     }, 1400);
     window.onbeforeunload = null;
-    $(window).on("beforeunload", function () {
+    $(window).on("beforeunload", function (event) {
       event.preventDefault();
       $(".invisible-onload").removeClass("loaded");
     });
+
+    function init_header() {
+      var scroll_top = $(window).scrollTop();
+
+      if (scroll_top > HEADER_HEIGHT) {
+        DOM_HEADER.addClass('humble');
+      } else {
+        DOM_HEADER.removeClass('humble');
+      }
+    }
+
+    $(window).on("scroll", function (e) {
+      init_header();
+    });
+    init_header();
     return this;
   }
 });

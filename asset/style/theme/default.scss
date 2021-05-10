@@ -16,14 +16,6 @@ a {
   background-color: #ffffff !important;
 }
 
-.invisible-onload {
-  transition: all 0.4s;
-  opacity: 0;
-  &.loaded {
-    opacity: 1;
-  }
-}
-
 .btn-default {
   background-color: #ffffff;
   &:hover {
@@ -44,14 +36,6 @@ a {
   }
   & > span {
     padding-top: 0.01em;
-  }
-}
-
-#header {
-  .navbar-brand {
-  }
-  .navbar {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.24);
   }
 }
 
@@ -79,7 +63,7 @@ a {
 
 .attractive {
   &:hover {
-    transform: scale(1.14);
+    transform: scale(1.075);
   }
 }
 
@@ -190,4 +174,40 @@ a {
     cursor: pointer;
     text-decoration: none;
   }
+}
+
+#header {
+
+  .desktop-only {
+    // desktop can hover
+    .nav-item {
+      .site-nav-link-container {
+        list-style: none;
+        border-radius: 0;
+        max-height: 0;
+        opacity: 0;
+      }
+      &:hover {
+        .site-nav-link-container {
+          opacity: 100;
+          max-height: 4rem;
+        }
+      }
+    }
+    .site-nav-link {
+      &:hover, &focus {
+        text-decoration: none;
+        animation: blinker .8s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+      }
+      @keyframes blinker { to { opacity: .33; } }
+    }
+  }
+
+  .mobile-only {
+    .show {
+      opacity: 100;
+      max-height: 4rem;
+    }
+  }
+
 }
