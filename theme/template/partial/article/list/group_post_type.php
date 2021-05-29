@@ -7,7 +7,7 @@ $post_type = (@$query['post_type']
 $group_name = 'post-type-'.$post_type;
 $group_caption = $post_type;
 
-$conf = WPTM::option('posttype');
+$conf = WPTM::option('post_type');
 
 if(!@$conf[$post_type] || !$conf[$post_type]['is_active']){
   WPTM::show_404();
@@ -35,7 +35,7 @@ WPTM::render('template/partial/article/list/group_default', array(
   'grouop_name' => $group_name,
   'group_caption' => $group_caption,
   'show_total_count' => @$show_total_count,
-  'list_type' => @$list_type,
+  'list_type' => @$conf[$post_type]['list_type'],
   'query' => array_merge(array(
     'posts_per_page'   => 6,
     #'offset'           => 0,

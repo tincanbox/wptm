@@ -1,14 +1,17 @@
 <?php
 
-# @see https://codex.wordpress.org/Function_Reference/register_post_type
+# @see https://developer.wordpress.org/reference/functions/register_post_type/
 
 return array(
 
-  #'sample' => array(
-  #  'labels' => array(
-  #    'name' => 'Sample',
-  #    'singular_name' => 'Sample',
-  #  ),
-  #)
+  'page' => [
+  ],
+
+  'topic' => array(
+    'labels' => array(
+      'name' => 'Topics',
+      'singular_name' => 'Topic',
+    ),
+  )
 
 );

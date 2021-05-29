@@ -75,7 +75,7 @@ if ($main_query->is_archive()) {
 
 ?><div>
 
-<ol class="structure-navigation section spacing">
+<ol class="structure-navigation section spacing font-ornament">
   <li>
     <a
       class="link touchable"
@@ -116,20 +116,22 @@ if ($main_query->is_archive()) {
       if($ps){
         foreach($ps as $p){
           ?><li class="">
-            <a
-              class="link touchable article-category-pill <?php echo $category_style_classes; ?>"
-              href="<?php echo get_category_link($p->cat_ID); ?>"
-              ><?php echo __($p->name); ?></a>
+            <?php echo WPTM::template('template/partial/common/category_pill', [
+              'label' => $p->name,
+              'link' => get_category_link($p->cat_ID),
+              'additional_classes' => $category_style_classes
+            ]); ?>
           </li>
           <?php
         }
       }
       ?>
       <li>
-        <a
-          class="link touchable article-category-pill <?php echo $category_style_classes; ?>"
-          href="<?php echo get_category_link($c->cat_ID); ?>"
-          ><?php echo __($c->name); ?></a>
+        <?php echo WPTM::template('template/partial/common/category_pill', [
+          'label' => $c->name,
+          'link' => get_category_link($c->cat_ID),
+          'additional_classes' => $category_style_classes
+        ]); ?>
       </li>
       <?php
 

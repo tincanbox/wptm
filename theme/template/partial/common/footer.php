@@ -2,11 +2,13 @@
 
 $menu_tree = WPTM::get_menu_tree();
 
-?><div id="footer" class="theme-footer-background-color invisible-onload">
+?><div id="footer" class="theme-footer-background-color invisible-onload font-ornament">
 
   <div class="container">
   <div class="row mb-4">
   <?php
+
+  $percent = 100 / count($menu_tree);
 
   foreach($menu_tree as $info ){
 
@@ -17,7 +19,7 @@ $menu_tree = WPTM::get_menu_tree();
     $has_children = (count($info['children'])) > 0;
 
     ?>
-    <div class="col-md-3 theme-footer-font-color">
+    <div class="col-12 col-sm-6 col-md-<?php echo $percent; ?>pc theme-footer-font-color">
 
       <p class="caption <?php
           echo $info['type']; ?>-<?php echo $info['slug'];
@@ -79,15 +81,18 @@ $menu_tree = WPTM::get_menu_tree();
     </div>
 
     <div class="col-xs-12 col-md-6 text-right">
-      <div class="mb-2">
-        <?php if($s = WPTM::option('logo_footer')){ ?>
-          <img src="<?php echo $s; ?>" style="width: 180px;"/>
-        <?php }else{ ?>
-          <span class="site-title theme-footer-font-color"><?php echo get_bloginfo('title'); ?></span>
-        <?php } ?>
-      </div>
+      <?php if (WPTM::option('footer_show_brand')) { ?>
+        <div class="mb-2">
+            <?php if($s = WPTM::option('logo_footer')){ ?>
+              <img src="<?php echo $s; ?>" style="width: 180px;"/>
+            <?php }else{ ?>
+              <span class="site-title theme-footer-font-color"><?php echo get_bloginfo('title'); ?></span>
+            <?php } ?>
+        </div>
+      <?php } ?>
     </div>
-    <div class="col-12 text-right">
+
+    <div class="col-12 <?php if (WPTM::option('footer_show_brand')) { ?>text-right<?php }else{ ?>text-center<?php } ?>">
       <div class="theme-footer-font-color copyright">
         <?php
         $current = new DateTime();

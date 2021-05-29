@@ -1,7 +1,7 @@
 export default {
   init($) {
-    const DOM_HEADER = $('#header');
-    const HEADER_HEIGHT = DOM_HEADER.height();
+
+    const HUMBLE_HEIGHT = (screen.height / 3);
 
     $("body").on("click", ".gototop", function () {
       $("html,body").animate({ scrollTop: 0 });
@@ -19,13 +19,19 @@ export default {
 
     function init_header(){
       let scroll_top = $(window).scrollTop();
-      if (scroll_top > HEADER_HEIGHT) {
-        DOM_HEADER.addClass('humble');
+      let target = $('.wait-humble');
+      if (scroll_top > HUMBLE_HEIGHT) {
+        target.addClass('humble');
+        if (scroll_top > HUMBLE_HEIGHT * 3 * 1.2) {
+          target.filter('.more-humble').addClass('d-none');
+        } else {
+          target.filter('.more-humble').removeClass('d-none');
+        }
       } else {
-        DOM_HEADER.removeClass('humble');
+        $('.wait-humble').removeClass('humble');
       }
     }
-    $(window).on("scroll", (e) => {
+    $(window).on("scroll", () => {
       init_header();
     });
     init_header();

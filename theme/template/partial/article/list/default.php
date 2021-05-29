@@ -30,6 +30,7 @@ if($posts){
   $conf = array();
   foreach(array(
     'post_article_list_noimage_url',
+    'post_show_date',
     'post_show_time',
     'post_badge_new_interval'
   ) as $cn){
@@ -42,6 +43,10 @@ if($posts){
     $cls .= ' list-group';
   }
 
+  if ($list_type == 'minimum') {
+    $cls .= ' m-0';
+  }
+
   if(@$show_total_count){
     ?>
     <div class="article-list-total-count theme-font-color-background-escape">
@@ -52,7 +57,7 @@ if($posts){
     <?php
   }
 
-  ?><div class="article-list row <?php echo @$list_type ? 'list-type-'.$list_type : ''; ?> <?php echo $cls; ?>"><?php
+  ?><div class="article-list row p-0 <?php echo @$list_type ? 'list-type-'.$list_type : ''; ?> <?php echo $cls; ?>"><?php
 
   foreach($posts as $post){
 

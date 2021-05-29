@@ -15,7 +15,7 @@ if (!$image_uri) {
 <article class="article list-type-with-picture <?php echo implode(' ', get_post_class()); ?> col-xs-12 col-sm-6 col-md-4">
   <div class="entry animatable" title="<?php the_title(); ?>">
     <a class="feature-image <?php echo !@$image_uri ? 'no-image' : ''; ?>" href="<?php the_permalink(); ?>" style="<?php echo @$image_uri ? "background-image:url('" . $image_uri[0] . "');" : ''; ?>"></a>
-    <div class="article-list-column-caption article-background-color article-font-color-escape">
+    <div class="article-list-column-caption post_type-<?php echo $post->post_type; ?> article-background-color article-font-color-escape">
       <div class="upper">
         <?php if ($opt_post_show_time) { ?>
           <div class="article-font-color-escape data date"><?php the_date(); ?> <?php the_time(); ?></div>
@@ -24,12 +24,12 @@ if (!$image_uri) {
         $now = time();
         $time = get_the_time('U');
         if ($now - $time < 60 * 60 * 24 * ((int)$opt_post_badge_new_interval)) {
-        ?><div class="badge badge-new" style="">New</div><?php
-                                                        }
-                                                          ?>
+          ?><div class="badge badge-new" style="">New</div><?php
+        }
+        ?>
       </div>
       <div class="data title article-font-color-escape">
-        <a class="article-font-color-escape" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+        <a class="link article-font-color-escape" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
       </div>
       <div class="article-category-pill-box article-font-color-escape inline-block-wrapper data category">
         <?php
@@ -38,17 +38,17 @@ if (!$image_uri) {
         $cnfs = WPTM::option('category');
         $valid = array();
         foreach ($cnfs as $slug => $b) {
-          if(@$b['is_active']){
+          if (@$b['is_active']) {
             $valid[] = $slug;
           }
         }
         foreach ($cats as $c) {
           if (in_array($c->slug, $valid) || true) {
-            ?>
-            <div class="article-category-pill article-background-color-escape">
-              <a class="article-font-color" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
+        ?>
+            <div class="article-category-pill category-<?php echo $c->slug; ?> article-background-color">
+              <a class="category-<?php echo $c->slug; ?> article-font-color-escape" href="<?php echo get_category_link($c->cat_ID); ?>"><?php echo $c->name; ?></a>
             </div>
-            <?php
+        <?php
           }
         }
         ?>

@@ -15,7 +15,11 @@ class WPTM {
   static private $instance_storage = array();
   static public $post_type_builtin_target = array('post', 'page');
 
-
+  /**
+   * Undocumented function
+   *
+   * @param array $conf
+   */
   function __construct($conf = array()){
     $this->__config = array_merge_recursive(array(
       'name'      => 'WPTM',
@@ -25,7 +29,13 @@ class WPTM {
     $this->frame = new stdClass;
   }
 
-
+  /**
+   * Undocumented function
+   *
+   * @param [type] $f
+   * @param array $arg
+   * @return void
+   */
   function __call($f, $arg = array()){
     if(@$this){
       if(method_exists($this, '_'.$f)){
@@ -35,9 +45,12 @@ class WPTM {
     return null;
   }
 
-
-  # setup :: Array -> Object
-  #
+  /**
+   * Undocumented function
+   *
+   * @param array $config
+   * @return void
+   */
   static function setup(array $config = array()){
 
     $instance = new self($config);
@@ -62,11 +75,11 @@ class WPTM {
     $instance->prepare_admin_menu();
     $instance->prepare_theme_customize();
     $instance->prepare_subtheme();
-    $instance->prepare_customizer();
     $instance->prepare_editor();
 
     add_action('init', array($instance, 'prepare_user_meta'));
     add_action('init', array($instance, 'prepare_post_type'));
+    add_action('init', array($instance, 'prepare_theme_mod'));
     add_action('init', array($instance, 'prepare_route'));
 
     add_action('init', array($instance, 'init'));
@@ -75,7 +88,12 @@ class WPTM {
     return $instance;
   }
 
-
+  /**
+   * Undocumented function
+   *
+   * @param integer $n
+   * @return void
+   */
   static function instance($n = 0){
     if(count(self::$instance_storage)){
       if(isset(self::$instance_storage[$n])){
@@ -88,33 +106,58 @@ class WPTM {
     }
   }
 
-
+  /**
+   * Undocumented function
+   *
+   * @param [type] $key
+   * @return void
+   */
   static function config($key){
     return self::instance()->_config($key);
   }
 
-
-  #
-  #
-  static function option($name, $value = null){
+  /**
+   * Undocumented function
+   *
+   * @param [type] ...$args
+   * @return void
+   */
+  static function option(...$args){
     $c = self::instance()->frame->customizer;
-    return $c->option($name, $value);
+    return $c->option(...$args);
   }
 
-  #
-  #
+  /**
+   * Undocumented function
+   *
+   * @param [type] $name
+   * @param array $variables
+   * @param boolean $output
+   * @param boolean $inherit
+   * @return void
+   */
   static function render($name, $variables = array(), $output = true, $inherit = false){
     WPTM::instance()->frame->view->render($name, $variables, $output, $inherit);
   }
 
-  #
-  #
+  /**
+   * Undocumented function
+   *
+   * @param [type] $name
+   * @param array $variables
+   * @param boolean $inherit
+   * @return void
+   */
   static function template($name, $variables = array(), $inherit = true){
     return WPTM::instance()->frame->view->render($name, $variables, false, $inherit);
   }
 
-  #
-  #
+  /**
+   * Undocumented function
+   *
+   * @param [type] $cat_ID
+   * @return void
+   */
   static function get_category_parents($cat_ID){
     $c = get_category($cat_ID);
     $r = array();
@@ -132,6 +175,11 @@ class WPTM {
     return $r;
   }
 
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   static function show_404(){
     WPTM::instance()->frame->view->clear();
     global $wp_query;
@@ -142,15 +190,22 @@ class WPTM {
     exit;
   }
 
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   function init(){
     $this->setup_article_group();
     add_action('pre_get_posts', array($this, 'generate_search_condition'), 1);
   }
 
-
-  #
-  #
-  #
+  /**
+   * Undocumented function
+   *
+   * @param string $key
+   * @return void
+   */
   function _config($key = ''){
     if(!is_string($key)){
       trigger_error('$key must be a string.');
@@ -180,6 +235,13 @@ class WPTM {
     return $surr;
   }
 
+  /**
+   * Undocumented function
+   *
+   * @param [type] $k
+   * @param [type] $v
+   * @return void
+   */
   function _cache($k, $v = null){
     if(isset($v)){
       $this->__cache[$k] = $v;
@@ -196,11 +258,12 @@ class WPTM {
     }
   }
 
-
-  # autoload :: String -> Nothing
-  #
-  # Frame Autoloader
-  #
+  /**
+   * Undocumented function
+   *
+   * @param [type] $class
+   * @return void
+   */
   function autoload($class){
     $app  = $this->config('path.app');
     $ns   = $this->config('namespace');
@@ -228,10 +291,13 @@ class WPTM {
     }
   }
 
-
-  # preload :: Array -> Nothing
-  #
-  #
+  /**
+   * Undocumented function
+   *
+   * @param array $preload_list
+   * @param array $args
+   * @return void
+   */
   function preload($preload_list = array(), $args = array()){
     foreach($preload_list as $d => $c){
       if(!is_array($c)) $c = array($c);
@@ -241,15 +307,22 @@ class WPTM {
     }
   }
 
-
+  /**
+   * Undocumented function
+   *
+   * @param [type] $name
+   * @param array $args
+   * @return void
+   */
   function hook($name, $args = array()){
     return $this->frame->loader->load('hook/'.$name, $args);
   }
 
-
-  #
-  #
-  #
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   function prepare_config(){
     foreach(glob($this->config('path.app').'/config/*') as $c){
       $r = include_once($c);
@@ -260,15 +333,20 @@ class WPTM {
     }
   }
 
+  function prepare_theme_mod(){
+    $this->frame->customizer->init();
+  }
+
 
   function prepare_editor(){
     $this->frame->loader->load('hook/prepare_tinymce');
   }
 
-
-  #
-  #
-  #
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   function prepare_filter(){
     $filter = $this->config('filter');
     foreach($filter as $f){
@@ -278,17 +356,41 @@ class WPTM {
     add_filter('template_include', WPTM_Proxy::bind('WPTM_Filter::template_include'));
   }
 
-
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   function prepare_theme_support(){
     $c = $this->config('theme_support');
     if($c){
       foreach($c as $n => $a){
-        call_user_func_array('add_theme_support', is_array($a) ? $a : array($a));
+        $feature = '';
+        $args = [];
+        if (is_int($n)) {
+          $feature = $a;
+          $args = [$feature];
+        } else {
+          $feature = $n;
+          if (is_bool($a)) {
+            if ($a === false) {
+              continue;
+            }
+            $args = [$feature];
+          } else {
+            $args = [$feature, (is_array($a)) ? $a : [$a]];
+          }
+        }
+        ($feature) && call_user_func_array('add_theme_support', $args);
       }
     }
   }
 
-
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   function prepare_post_type(){
     $c = $this->config('post_type');
     if($c){
@@ -300,31 +402,40 @@ class WPTM {
           'publicly_queryable' => true,
           'show_ui' => true,
           'taxonomies' => array('category', 'post_tag'),
-          'rewrite' => true,
+          'rewrite' => [
+            'slug' => $n,
+            'with_front' => true
+          ],
           'supports' => array(
             'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks',
             'custom-fields', 'comments', 'revisions', 'page-attributes', 'post-formats',
           ),
         );
 
-        if($n === 'post'){
-        }else{
-          $o = array_merge($def, is_array($a) ? $a : array($a));
-          if(@$o['taxonomies']){
-            foreach($o['taxonomies'] as $t){
-              register_taxonomy_for_object_type($t, $n);
-            }
+        $o = array_merge($def, is_array($a) ? $a : array($a));
+
+        if(@$o['taxonomies']){
+          foreach($o['taxonomies'] as $t){
+            register_taxonomy_for_object_type($t, $n);
           }
+        }
+
+        if($n === 'page'){
+          foreach ($o['supports'] as $feature) {
+            add_post_type_support('page', $feature);
+          }
+        }else{
           call_user_func_array('register_post_type', array($n, $o));
         }
       }
     }
   }
 
-
-  #
-  #
-  #
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   function prepare_subtheme(){
     $d = $this->config('path.theme');
     foreach($this->config('theme.include') as $tm){
@@ -336,14 +447,18 @@ class WPTM {
     }
   }
 
-
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   function prepare_theme_customize(){
-    if (!WPTM::option('option_initialized')) {
-      $s = $this->frame->customizer->init_theme_option();
-    }
     add_action('customize_register', array($this->frame->customizer, 'register'));
   }
 
+  /**
+   * 
+   */
   function prepare_user_meta(){
     $config = $this->config('user_meta');
     foreach(get_users() as $user){
@@ -356,12 +471,20 @@ class WPTM {
     }
   }
 
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   function prepare_admin_menu(){
     // This tells WordPress to call the function named "setup_theme_admin_menus"
     // when it's time to create the menu pages.
     add_action("admin_menu", array($this->frame->admin, 'prepare'));
   }
 
+  /**
+   * 
+   */
   function prepare_route(){
     $routes = $this->config('route');
     foreach($routes as $regex => $prop){
@@ -411,12 +534,24 @@ class WPTM {
     }
   }
 
+  /**
+   * Undocumented function
+   *
+   * @param [type] $q
+   * @param array $prop
+   * @return void
+   */
   function prepare_route_query_var($q, $prop = array()){
     $qv = @$prop['query_vars'];
     $q = $qv ? array_merge($q, $qv) : $q;
     return $q;
   }
 
+  /**
+   * Undocumented function
+   *
+   * @return void
+   */
   function setup_article_group(){
     if($v = $this->_cache('article_group')){
       return $v; 

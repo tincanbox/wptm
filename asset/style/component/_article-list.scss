@@ -91,9 +91,6 @@ $component: 'article-list';
             font-size: 1.1rem;
             height: 3.5rem;
             text-overflow: ellipsis;
-            &:hover {
-              text-decoration: underline;
-            }
           }
         }
       }
@@ -138,6 +135,15 @@ $component: 'article-list';
       border-bottom-width: 0;
       &:last-child {
         border-bottom-width: 1px;
+      }
+    }
+  }
+
+  &.list-type-minimum {
+    .post-datetime {
+      &:after {
+        content: '|';
+        margin: 0 .75rem;
       }
     }
   }

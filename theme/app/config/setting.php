@@ -27,15 +27,73 @@ return array(
   #   'control' => array()
   # ),
 
+  '__group' => [
+    'is_active' => [
+      'default' => true
+    ],
+    'show_in_home' => [
+      'default' => true
+    ],
+    'show_eyecatch' => [
+      'default' => true
+    ],
+    'show_related_article' => [
+      'default' => true
+    ],
+    'show_date' => [
+      'default' => true
+    ],
+    'show_time' => [
+      'default' => true
+    ],
+    'display_priority' => [
+      'default' => 0
+    ],
+    'theme_background_color' => [
+      'default' => ''
+    ],
+    'theme_background_opacity' => [
+      'default' => 144,
+      'control' => [
+        'description' => '0 ~ 255'
+      ]
+    ],
+    'theme_background_font_color_visibility' => [
+      'default' => '#2f2f2f'
+    ],
+    'theme_background_image' => [
+      'default' => ''
+    ],
+    'theme_background_image_size' => [
+      'default' => 'cover',
+      'choices' => ['cover' => 'cover', 'repeat' => 'repeat']
+    ],
+    'icon' => [
+      'default' => ''
+    ],
+    'article_count' => [
+      'default' => 8
+    ],
+    'list_type' => [
+      'default' => 'with_picture',
+      'choices' => array(
+        'default' => 'default',
+        'with_picture' => 'with_picture',
+        'simple_row' => 'simple_row',
+        'minimum' => 'minimum'
+      )
+    ],
+    'comment_disabled' => [
+      'default' => true
+    ],
+    'search_excluded' => [
+      'default' => false
+    ],
+  ],
+
   /**
    * Basis
    */
-  'basis_contact_active' => [
-    'default' => false
-  ],
-  'basis_contact_url' => [
-    'default' => 'contact'
-  ],
   'basis_search_active' => [
     'default' => true
   ],
@@ -43,6 +101,9 @@ return array(
   /**
    * 
    */
+  'top_use_template' => [
+    'default' => false,
+  ],
   'top_template_path' => [
     'default' => 'page/home_static'
   ],
@@ -53,6 +114,10 @@ return array(
   'logo' => array(
   ),
 
+  'logo_initial_height' => [
+    'default' => 48
+  ],
+
   'logo_footer' => array(
   ),
 
@@ -60,16 +125,21 @@ return array(
    * Font
    */
 
-  'font_primary_name' => [
+  'font_default_name' => [
     'default' => 'Noto Sans JP'
   ],
-
-  'font_primary_url' => [
+  'font_default_url' => [
     'default' => '//fonts.googleapis.com/earlyaccess/notosansjapanese.css'
+  ],
+  'font_ornament_name' => [
+    'default' => 'Shippori Mincho'
+  ],
+  'font_ornament_url' => [
+    'default' => '//fonts.googleapis.com/css2?family=Shippori+Mincho&display=swap'
   ],
 
   /**
-   * Background
+   * Appearance
    */
 
   'theme_background_color' => array(
@@ -81,14 +151,14 @@ return array(
   ),
 
   'theme_background_opacity' => array(
-    'default' => '0',
+    'default' => '40',
     'control' => array(
       'description' => '背景透過度'
     )
   ),
 
   'theme_background_font_color_visibility' => array(
-    'default' => '#eee',
+    'default' => '#2f2f2f',
     'control' => array(
       'label' => '背景色対応フォントカラー',
       'description' => '指定した色が .theme-font-color-background-escape に反映されます'
@@ -149,22 +219,45 @@ return array(
     )
   ),
 
+  'footer_show_brand' => [
+    'default' => true,
+  ],
   'theme_footer_background_color' => array(
-    'default' => '#eeeeee',
+    'default' => '#404040',
     'control' => array(
       'label' => 'フッター：背景色'
     )
   ),
 
   'theme_footer_font_color' => array(
-    'default' => '#555555',
+    'default' => '#ffffff',
     'control' => array(
       'label' => 'フッター：文字色`'
     )
   ),
 
+  'section_background_color' => [
+    'default' => '#ffffff'
+  ],
+  'section_background_opacity' => [
+    'default' => '255'
+  ],
+  'section_font_color' => [
+    'default' => '#2f2f2f'
+  ],
+
+  /**
+   * Top
+   */
+
   'top_use_template' => [
     'default' => false
+  ],
+  'top_static_primary_posts' => [
+    'default' => ''
+  ],
+  'top_static_secondary_posts' => [
+    'default' => ''
   ],
 
   /**
@@ -194,6 +287,31 @@ return array(
       'description' => 'ジャンボトロンとして表示する記事のカテゴリーを指定します。'
     )
   ),
+  'jumbotron_caption_active' => [
+    'default' => true
+  ],
+  'jumbotron_caption_stroke' => [
+    'default' => true
+  ],
+  'jumbotron_caption_stroke_color' => [
+    'default' => '#ffffff'
+  ],
+  'jumbotron_caption_stroke_opacity' => [
+    'default' => '0.8'
+  ],
+  'jumbotron_caption_stroke_width' => [
+    'default' => '.275em'
+  ],
+
+  'post_show_related_article' => [
+    'default' => true
+  ],
+  'post_show_date' => [
+    'default' => true
+  ],
+  'post_show_time' => [
+    'default' => true
+  ],
 
   'post_comment_disabled_category_list' => array(
     'control' => array(
@@ -309,4 +427,5 @@ return array(
       'description' => ''
     )
   ),
+
 );

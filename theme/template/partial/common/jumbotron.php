@@ -3,7 +3,19 @@
 if(is_home()){
 
 ?>
-<div class="kamisibai">
+<div class="kamisibai wait-humble more-humble">
+
+<style><?php
+
+$stroke_width = WPTM::option('jumbotron_caption_stroke_width');
+$stroke_color = WPTM::option('jumbotron_caption_stroke_color');
+$stroke_opacity = WPTM::option('jumbotron_caption_stroke_opacity');
+?>.jumbotron-caption text {
+  stroke: <?php echo $stroke_color ?: '#ffffff'; ?>;
+  stroke-width: <?php echo $stroke_width ?: '.25em'; ?>;
+  stroke-opacity: <?php echo $stroke_opacity ?: '1'; ?>;
+}<?php
+?></style>
 
 <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/owl.carousel/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="<?php echo get_bloginfo('template_directory'); ?>/static/vendor/owl.carousel/assets/owl.theme.default.min.css">
@@ -29,6 +41,8 @@ $posts = get_posts(array_merge(array(
   'suppress_filters' => true
 ), @$query ? $query : array()));
 
+$no_link = WPTM::option('jumbotron_no_link');
+
 ?>
 <div class="jumbotron-wrapper owl-carousel owl-theme">
 <?php
@@ -38,17 +52,31 @@ foreach($posts as $post){
   $image_uri = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'single-post-thumbnail');
   $k = WPTM::option('jumbotron_url_post_meta_key');
   $meta = $k ? get_post_meta($post->ID, $k) : array();
-  $link = @$meta[0] ? $meta[0] : get_permalink();
+  $link = ($no_link) ? '' : (@$meta[0] ? $meta[0] : get_permalink());
   ?>
   <a
     class="jumbotron-slide-image theme-background-image-overlay"
     href="<?php echo $link; ?>"
     style="display: block; ">
     <div
-      class="fill"
-      style="background-image: url('<?php echo $image_uri[0]; ?>'); background-position: center center; background-size: cover; width: 100%; height: 100%;"
+      class="jumbotron-image fill"
+      style="background-image: url('<?php echo $image_uri[0]; ?>');"
       ></div>
-    <span class="jumbotron-caption theme-font-color-escape"><?php echo get_the_title($post); ?></span>
+    <?php
+
+    $lines = preg_split("/(<br>|\n|,|…|\/)/", get_the_title($post));
+
+    ?>
+    <svg class="jumbotron-caption" style="top: calc(50vh - <?php echo (1.8 * (count($lines))) / 2; ?>em);">
+      <text
+        class="theme-font-color-escape"
+        x="0" y="50"
+        ><?php
+          echo implode('', array_map(function ($text, $i) {
+            return '<tspan x=".5em" dy="'.($i ? 1.8 : 0).'em">' . $text . '</tspan>';
+          }, $lines, range(0, count($lines) - 1)));
+        ?></text>
+    </svg>
   </a>
   <?php
   wp_reset_postdata();

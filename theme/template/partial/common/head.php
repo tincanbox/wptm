@@ -1,6 +1,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-
+<link rel="icon" type="image/png" href="<?php echo get_bloginfo('template_directory'); ?>/static/favicon.png">
 
 <title><?php
 
@@ -76,9 +76,16 @@ foreach([
   'theme_header_font_color',
   'theme_footer_font_color',
   'theme_footer_background_color',
+  'section_background_color',
+  'section_background_opacity',
+  'section_font_color',
   //
-  'font_primary_url',
-  'font_primary_name',
+  'font_default_name',
+  'font_default_url',
+  //
+  'font_ornament_url',
+  'font_ornament_name',
+
 ] as $var => $val){
   if (is_int($var)) {
     $var = $val;
@@ -97,5 +104,5 @@ foreach([
 ?>
 
 <?php WPTM::render('template/partial/common/theme_style_var', ['theme_vars' => $vars]); ?>
-<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/bootstrap.css'; ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('template_directory').'/asset/bootstrap.css'; ?>?ver=<?php echo time(); ?>">
 <?php WPTM::render('template/partial/common/theme_style_override', ['theme_vars' => $vars]); ?>

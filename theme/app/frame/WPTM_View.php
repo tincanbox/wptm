@@ -109,7 +109,12 @@ class WPTM_View extends WPTM_Factory {
       }
     }catch(\Error $e){
       while(ob_get_level() > $oblv) ob_end_clean();
-      $buff = "";
+      $buff = '<pre>' . implode(PHP_EOL, [
+        'ERROR:' . $e->getMessage(),
+        'File:' . $e->getFile(),
+        'Line:' . $e->getLine(),
+      ]) . '</pre>';
+      return $buff;
     }
 
   }

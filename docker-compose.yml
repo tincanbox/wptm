@@ -13,7 +13,6 @@ services:
     links:
       - database:mysql
     volumes:
-      - ./volume/static:${WP_INSTALL_DIR}/static
       - ./volume/content:${WP_INSTALL_DIR}/wp-content
       - ./theme:${WP_INSTALL_DIR}/wp-content/themes/wptm
       - ./config:/opt/config

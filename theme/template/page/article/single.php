@@ -4,9 +4,14 @@
 $mq = $main_query;
 
 while($mq->have_posts()){
+
   global $post;
   $mq->the_post();
   $post = get_post();
+
+  $post_type = $post->post_type;
+  $post_type_option = WPTM::option('post_type.' . $post_type);
+  $show_eyecatch = @$post_type_option['show_eyecatch'];
 
   $query_related = array(
     'post__not_in' => array($post->ID),
@@ -21,38 +26,49 @@ while($mq->have_posts()){
   ?>
 
   <div class="post-title section append closing">
-    <h2 class="mb-0"><?php the_title(); ?></h2>
+    <h5 class="mb-0"><?php the_title(); ?></h5>
+    <div class="post-time font-ornament">
+      <?php if(WPTM::option('post_show_date') && @$post_type_option['show_date']){ ?>
+          <span class="date"><?php the_time('Y.m.d'); ?></span>
+      <?php } ?>
+      <?php if(WPTM::option('post_show_time') && @$post_type_option['show_time']){ ?>
+          <span class="time"><?php echo the_time('H:i'); ?></span>
+      <?php } ?>
+    </div>
   </div>
 
-  <?php if(has_post_thumbnail()): ?>
-    <div class="post-image">
+  <?php if(has_post_thumbnail() && $show_eyecatch): ?>
+    <?php
+
+    ?>
+    <div
+      class="post-image image-fill-ratio"
+      >
       <?php
 
       $k = WPTM::option('post_meta_key_eyecatch_link');
       $meta = $k ? get_post_meta($post->ID, $k) : array();
       $val = @$meta[0] ? $meta[0] : null;
+      $thumbnail_url = get_the_post_thumbnail_url($post, 'full');
 
       ?>
-      <div class="post-thumbnail"><?php
-        if($val){
-          ?><a href="<?php echo $val; ?>" target="_blank"><?php
-            the_post_thumbnail('full');
-          ?></a><?php
-        }else{
-          the_post_thumbnail('full');
-        }
-      ?>
-      </div>
+      <?php if($val){ ?>
+        <a href="<?php echo $val; ?>" target="_blank"
+      <?php }else{ ?>
+        <span
+      <?php } ?>
+          class="post-thumbnail"
+          style="background-image: url('<?php echo $thumbnail_url; ?>');"
+          >
+      <?php if($val){ ?>
+        </a>
+      <?php }else{ ?>
+        </span>
+      <?php } ?>
     </div>
   <?php endif; ?>
 
-  <div class="post-content section prepend closing spacing">
-
-    <?php if(WPTM::option('post_show_time')){ ?>
-      <div class="post-time">
-        <span class="date"><?php the_time('Y.m.d'); ?></span> <span class="time"><?php echo the_time('H:i'); ?></span>
-      </div>
-    <?php } ?>
+  <div class="section prepend closing spacing">
     <div class="post-yield">
       <div class="post-content"><?php the_content(); ?></div>
     </div>
@@ -126,7 +142,7 @@ while($mq->have_posts()){
     $query_related['post_type'] = $post->post_type;
   }
 
-?>
+  ?>
 
   </div>
 
@@ -138,7 +154,6 @@ while($mq->have_posts()){
       'field'    => 'term_id',
       'terms'    => $query_category_in,
     );
-    //$query_related['category__in'] = $query_category_in;
   }
 
   if($query_tag_in){
@@ -153,19 +168,21 @@ while($mq->have_posts()){
 
   ?>
 
-  <div class="section mb-3">
-  <?php
-  // Related articles
-  WPTM::render('template/partial/article/list/group_related', array(
-    'main_query' => $main_query,
-    'show_group_caption' => true,
-    'group_caption' => __('Related Contents'),
-    'list_type' => 'with_picture',
-    'query' => $query_related
-  ));
+  <?php if (WPTM::option('post_show_related_article') && @$post_type_option['show_related_article']) { ?>
+    <div class="mb-3">
+    <?php
+    // Related articles
+    WPTM::render('template/partial/article/list/group_related', array(
+      'main_query' => $main_query,
+      'show_group_caption' => true,
+      'group_caption' => __('Related Contents'),
+      'list_type' => 'with_picture',
+      'query' => $query_related
+    ));
 
-  ?>
-  </div>
+    ?>
+    </div>
+  <?php } ?>
 
   <?php
   // Comments

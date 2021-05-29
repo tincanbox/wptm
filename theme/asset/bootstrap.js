@@ -125,8 +125,7 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()(function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   init: function init($) {
-    var DOM_HEADER = $('#header');
-    var HEADER_HEIGHT = DOM_HEADER.height();
+    var HUMBLE_HEIGHT = screen.height / 3;
     $("body").on("click", ".gototop", function () {
       $("html,body").animate({
         scrollTop: 0
@@ -143,15 +142,22 @@ __webpack_require__.r(__webpack_exports__);
 
     function init_header() {
       var scroll_top = $(window).scrollTop();
+      var target = $('.wait-humble');
 
-      if (scroll_top > HEADER_HEIGHT) {
-        DOM_HEADER.addClass('humble');
+      if (scroll_top > HUMBLE_HEIGHT) {
+        target.addClass('humble');
+
+        if (scroll_top > HUMBLE_HEIGHT * 3 * 1.2) {
+          target.filter('.more-humble').addClass('d-none');
+        } else {
+          target.filter('.more-humble').removeClass('d-none');
+        }
       } else {
-        DOM_HEADER.removeClass('humble');
+        $('.wait-humble').removeClass('humble');
       }
     }
 
-    $(window).on("scroll", function (e) {
+    $(window).on("scroll", function () {
       init_header();
     });
     init_header();

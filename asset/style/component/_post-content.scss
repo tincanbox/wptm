@@ -1,4 +1,49 @@
+.post-image {
+  position: relative;
+
+  .post-thumbnail {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+.post-time {
+  font-size: .65rem;
+  opacity: .5;
+}
+
 .post-content {
+
+  padding-top: 0.75rem;
+  padding-bottom: 2rem;
+
+  h1, h2, h3, h4, h5 {
+    margin-bottom: 1.25em;
+  }
+
+  input, textarea {
+    transition: ease all .4s;
+    color: inherit;
+    background-color: inherit;
+  }
+
+  .wpcf7-not-valid-tip {
+    background-color: #dc3232;
+    display: inline-block;
+    margin-top: .75em;
+    color: #fff;
+    padding: .25rem .5rem;
+    border-radius: .2rem;
+    font-family: var(--font-ornament-name);
+  }
+
+  p {
+    line-height: 1.8rem;
+    margin-bottom: 1.75rem;
+  }
 
   .post-title {
   }
@@ -6,10 +51,6 @@
   .post-yield {
     min-height: 240px;
     margin-bottom: 2em;
-  }
-
-  .post-thumbnail {
-    margin: 1.5em auto 2em;
   }
 
   .post-time {

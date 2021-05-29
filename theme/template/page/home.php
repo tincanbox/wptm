@@ -22,11 +22,11 @@ foreach($article_group as $pri => $step){
             <?php if(@$c['icon']){ ?>
               <i class="theme-article-icon mr-1" style="background-image: url(<?php echo $c['icon']; ?>);"></i>
             <?php } ?>
-            <span class="mr-3"><?php echo $c['name']; ?></span>
+            <span class="mr-3"><?php echo __(ucfirst($c['name'])); ?></span>
             <a
               class="theme-font-color-escape animatable attractive d-inline-block"
               href="<?php echo $c['link']; ?>">
-              <div class="theme-font-color-escape" style="width:1em; height:1em; transform:rotate(90deg);">
+              <div class="theme-font-color-escape" style="margin-top: .1em; width:.95em; height:.95em; transform:rotate(90deg);">
                 <svg id="svg" viewBox="0 0 512 512"><use xlink:href="#chevron-up"></use></svg>
               </div>
             </a>

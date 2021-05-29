@@ -1,0 +1,161 @@
+.app-caption {
+    display: flex;
+    font-size: 1.75rem;
+    * {
+        align-self: center;
+    }
+    span {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}
+
+.app-caption-acce {
+    height: 1em;
+    width: 1em;
+}
+
+.app-section-excerpt {
+    font-size: 1.125rem;
+}
+
+.app-section-catch-image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 1.25rem 1.25rem 0px rgba(0, 0, 0, 0.25);
+}
+
+.app-view-more {
+    display: inline-block;
+    position: relative;
+    background-color: transparent;
+    margin-top: 2.4rem;
+    margin-right: 3rem;
+    padding: 1rem 2.5rem;
+    color: var(--theme-background-color);
+    &::after,
+    &::before {
+        content: "";
+        background-color: #d8ab47;
+        border-radius: 0.1rem;
+        position: absolute;
+        height: 3rem;
+        width: 45%;
+        transform: skewX(24deg);
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: -2;
+        padding: 0.75rem;
+    }
+    &::before {
+        top: -0.25rem;
+        left: 1rem;
+    }
+    &::after {
+        top: 0.75rem;
+        left: 5.25rem;
+    }
+    &:hover {
+        color: var(--theme-background-color);
+        text-decoration: none;
+        &::before,
+        &::after {
+            top: 0.25rem;
+            transform: skewx(0deg);
+        }
+        &::after {
+            left: 1rem;
+        }
+        &::before {
+            left: 5.25rem;
+        }
+    }
+}
+
+.app-normal-content {
+    padding-top: 2.5rem;
+    color: #fff;
+    border-top: 4px solid #fff;
+}
+.app-content-row {
+    padding: 0.25rem 0 0.25rem;
+}
+
+.app-contact-method {
+    padding-bottom: 2.5rem;
+    margin-bottom: 1.25rem;
+}
+.app-contact-button {
+    transition: all 0.6s ease;
+    display: inline-block;
+    margin: auto;
+    padding: 2rem 4rem;
+    color: #fff;
+    min-width: 320px;
+    max-width: 90vh;
+    position: relative;
+    &:hover {
+        background-color: #ffffff14;
+        text-decoration: none;
+    }
+}
+
+.button.type1.type1::after,
+.button.type1.type1::before {
+    content: "";
+    transition: all 0.6s ease;
+    display: block;
+    position: absolute;
+    width: 20%;
+    height: 40%;
+    border: 3px solid;
+    border-radius: 2px;
+}
+.button.type1.type1::after {
+    bottom: 0;
+    right: 0;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-bottom-color: #d8ab47;
+    border-right-color: #d8ab47;
+}
+.button.type1.type1::before {
+    top: 0;
+    left: 0;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    border-top-color: #d8ab47;
+    border-left-color: #d8ab47;
+}
+.button.type1.type1:hover:after,
+.button.type1.type1:hover:before {
+    width: 100%;
+    height: 100%;
+}
+
+@mixin col-with-percent($percent) {
+    $percent_unit: $percent * 1%;
+    .col-xs-#{$percent}pc,
+    .col-sm-#{$percent}pc,
+    .col-md-#{$percent}pc,
+    .col-lg-#{$percent}pc {
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .col-#{$percent}pc {
+        width: $percent_unit;
+        float: left;
+    }
+    @include respond-above(sm) { .col-sm-#{$percent}pc {flex: 0 0 $percent_unit; max-width: $percent_unit;} }
+    @include respond-above(md) { .col-md-#{$percent}pc {flex: 0 0 $percent_unit; max-width: $percent_unit;} }
+    @include respond-above(lg) { .col-lg-#{$percent}pc {flex: 0 0 $percent_unit; max-width: $percent_unit;} }
+}
+
+@include col-with-percent(10);
+@include col-with-percent(20);
+@include col-with-percent(25);
+@include col-with-percent(33.33);
+@include col-with-percent(50);

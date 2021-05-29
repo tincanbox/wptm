@@ -1,19 +1,18 @@
 // Basis ----------------------------
 // DO NOT apply transition to svg related elements.
 // Most of browsers fail to draw colors in `use` tag.
+
 html {
   background: #efefef;
 }
 
-a {
-  color: #3f3f3f;
+.link {
+  transition: all 0.25s;
   &:hover {
-    color: #555555;
+    color: inherit;
+    opacity: .75;
+    text-decoration: none;
   }
-}
-
-.section {
-  background-color: #ffffff !important;
 }
 
 .btn-default {
@@ -36,13 +35,6 @@ a {
   }
   & > span {
     padding-top: 0.01em;
-  }
-}
-
-.link {
-  color: #3f3f3f;
-  &:hover {
-    color: #555555;
   }
 }
 
@@ -178,6 +170,12 @@ a {
 
 #header {
 
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0);
+
+  &.humble {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  }
+
   .desktop-only {
     // desktop can hover
     .nav-item {
@@ -204,10 +202,14 @@ a {
   }
 
   .mobile-only {
-    .show {
-      opacity: 100;
-      max-height: 4rem;
+    .dropdown-menu {
+      max-height: 0;
+      &.show {
+        opacity: 100;
+        max-height: 4rem;
+      }
     }
   }
 
 }
+
